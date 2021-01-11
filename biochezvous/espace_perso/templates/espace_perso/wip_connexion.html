@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Connexion d'un utilisateur</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Lannion Game" />
+    <meta name="keywords" content="jeux, game, retro, gaming, lannion" />
+    <meta name="author" content="ALIX Baptiste, LAHAROTTE Thomas" />
+    <link rel="stylesheet" href="https://infolannion.com/b11/web/html/public/css/style.css">
+    <link rel="stylesheet" href="https://infolannion.com/b11/web/html/public/css/bootstrap.css">
+    <link rel="icon" type="image/png" href="https://infolannion.com/b11/web/html/public/images/fusee.png">
+    <script src="https://infolannion.com/b11/web/html/public/js/jquery-1.11.3.min.js"></script>
+    <script src="https://infolannion.com/b11/web/html/public/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="row">
+            <img alt="Logo du site" class="d-none d-lg-block headerimage"
+                src="https://infolannion.com/b11/web/html/public/images/fusee.png" height="50" width="50">
+            <div class="d-none d-lg-block row">
+                <h1>LANNION GAME</h1>
+            </div>
+            <div>
+                <nav>
+                    <div class="button d-none d-lg-block">
+                        <a href="https://infolannion.com/b11/web/html/index.php/jeux/index">
+                            <div class="raise headerbtn">Catalogue</div>
+                        </a>
+                        <a href="https://infolannion.com/b11/web/html/index.php/user/login">
+                            <div class="raise headerbtn">Connexion</div>
+                        </a>
+                        <a href="https://infolannion.com/b11/web/html/index.php/user/signup">
+                            <div class="raise headerbtn">S'inscrire</div>
+                        </a>
+                    </div>
+                </nav>
+                <nav class="d-block d-lg-none">
+                    <div id="menuToggle">
+                        <input type="checkbox" />
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <div id="menu">
+                            <ul>
+                                <li>
+                                    <a href="https://infolannion.com/b11/web/html/index.php/jeux/index">Catalogue</a>
+                                </li>
+                                <li>
+                                    <a href="https://infolannion.com/b11/web/html/index.php/user/login">Connexion</a>
+                                </li>
+                                <li>
+                                    <a href="https://infolannion.com/b11/web/html/index.php/user/signup">S'inscrire</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <img alt="Logo du site" class="d-block d-lg-none headerimage"
+                src="https://infolannion.com/b11/web/html/public/images/fusee.png" height="50" width="50">
+            <div class="d-block d-lg-none">
+                <h1>LANNION GAME</h1>
+            </div>
+        </div>
+    </header>
+    <main id="global">
+        <!--# contenu -->
+        <div id="contenu">
+            <h2 id="connexion">Connexion</h2>
+            <form action="https://infolannion.com/b11/web/html/index.php/user/login" method="post"
+                accept-charset="utf-8">
+                <div class="container">
+
+
+                    <div class="form-input"><i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                        <input type="text" name="identifiant" placeholder="Pseudo" />
+                    </div>
+                    <div class="form-input"><i class="fa fa-lock fa-2x" aria-hidden="true"></i>
+                        <input type="password" name="mot_de_passe" placeholder="Mot de passe" />
+                    </div>
+                    <input type="submit" id="submit" value="valider" /><br>
+                    <a href="https://infolannion.com/b11/web/html/index.php/user/signup">S'inscrire ?</a>
+                </div>
+            </form>
+        </div>
+    </main>
+    <!--#global-->
+
+    <footer>
+        <div>
+            <p>@2020 copyright: Thomas & Baptiste</p>
+        </div>
+    </footer>
+
+    <div class="d-none d-lg-block">
+        <a class="scrollup">Scroll</a>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var scrollbtn = false;
+            //detect scroll
+            $(window).scroll(function () {
+                if (scrollbtn == false) {
+                    var scrollTop = $(window).scrollTop();
+                    var docHeight = $(document).height();
+                    var winHeight = $(window).height();
+                    var scrollPercent = (scrollTop) / (docHeight - winHeight);
+                    var scrollPercentRounded = Math.round(scrollPercent * 100);
+                    if (scrollPercentRounded > 10) {
+                        $('.scrollup').css({
+                            'bottom': 20
+                        }).fadeIn();
+                    } else {
+                        $('.scrollup').fadeOut();
+                    }
+                }
+            });
+            //scroll-to-top
+            $('.scrollup').click(function () {
+                scrollbtn = true;
+                var docheight = $(window).height();
+                $('.scrollup').stop().animate({
+                    'bottom': docheight
+                }, 2000).fadeOut(function () {
+                    scrollbtn = false;
+                });
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 1200);
+                return false;
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

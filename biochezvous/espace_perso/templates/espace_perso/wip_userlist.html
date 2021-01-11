@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Liste des utilisateurs</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Lannion Game" />
+    <meta name="keywords" content="jeux, game, retro, gaming, lannion" />
+    <meta name="author" content="ALIX Baptiste, LAHAROTTE Thomas" />
+    <link rel="stylesheet" href="https://infolannion.com/b11/web/html/public/css/style.css">
+    <link rel="stylesheet" href="https://infolannion.com/b11/web/html/public/css/bootstrap.css">
+    <link rel="icon" type="image/png" href="https://infolannion.com/b11/web/html/public/images/fusee.png">
+    <script src="https://infolannion.com/b11/web/html/public/js/jquery-1.11.3.min.js"></script>
+    <script src="https://infolannion.com/b11/web/html/public/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div id="pseudo" class="d-none d-lg-block">
+            Connecté(e) en tant que : admin</div>
+
+        <div class="row">
+            <img alt="Logo du site" class="d-none d-lg-block headerimage"
+                src="https://infolannion.com/b11/web/html/public/images/fusee.png" height="50" width="50">
+            <div class="d-none d-lg-block row">
+                <h1>LANNION GAME</h1>
+            </div>
+            <div>
+                <nav>
+                    <div class="button d-none d-lg-block">
+                        <a href="https://infolannion.com/b11/web/html/index.php/jeux/index">
+                            <div class="raise headerbtn">Catalogue</div>
+                        </a>
+                        <a href="https://infolannion.com/b11/web/html/index.php/collection/index">
+                            <div class="raise headerbtn">Ma Collection</div>
+                        </a>
+                        <a href="https://infolannion.com/b11/web/html/index.php/user/list">
+                            <div class="raise headerbtn">Collectionneur</div>
+                        </a>
+                        <a href="https://infolannion.com/b11/web/html/index.php/user/disconnect">
+                            <div class="raise headerbtn">Déconnexion</div>
+                        </a>
+                    </div>
+
+                </nav>
+            </div>
+            <nav class="d-block d-lg-none">
+                <div id="menuToggle">
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <div id="menu">
+                        Connecté(e) en tant que : admin <ul>
+                            <li>
+                                <a href="https://infolannion.com/b11/web/html/index.php/jeux/index">Catalogue</a>
+                            </li>
+                            <li>
+                                <a href="https://infolannion.com/b11/web/html/index.php/collection/index">Ma
+                                    Collection</a>
+                            </li>
+                            <li>
+                                <a href="https://infolannion.com/b11/web/html/index.php/user/list">Collectionneur</a>
+                            </li>
+                            <li>
+                                <a href="https://infolannion.com/b11/web/html/index.php/user/disconnect">Déconnexion</a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://infolannion.com/b11/web/html/index.php/user/newadmin">Administration</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <img alt="Logo du site" class="d-block d-lg-none headerimage"
+            src="https://infolannion.com/b11/web/html/public/images/fusee.png" height="50" width="50">
+        <div class="d-block d-lg-none">
+            <h1>LANNION GAME</h1>
+        </div>
+        </div>
+    </header>
+    <main id="global">
+        <!--# contenu -->
+        <div id="contenu">
+            <h2>Liste des utilisateurs</h2>
+
+            <div id="demo">
+
+                <div class="shadow-z-1">
+                    <!-- Table starts here -->
+
+                    <table id="table" class="table table-hover table-mc-light-blue">
+                        <thead>
+                            <tr>
+                                <th>Identifiant</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>mdp</th>
+                                <th>mail</th>
+                                <th>tel</th>
+
+                            </tr>
+                        </thead>
+                        {% for user in userlist %}
+                        <tr>
+                            <td>{{user.id }}</td>
+                            <td>{{user.nom }}</td>
+                            <td>{{user.prenom }}</td>
+                            <td>{{user.mot_de_passe }}</td>
+                            <td>{{user.mail }}</td>
+                            <td>{{user.num_tel }}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+</html>

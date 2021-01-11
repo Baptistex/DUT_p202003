@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import connection
 from collections import namedtuple
+from django.template import loader
 # Create your views here.
 
 
@@ -20,13 +21,23 @@ def namedtuplefetchall(cursor):
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
 
-def index(request):
+def wip_userlist(request):
+    template = loader.get_template('espace_perso/wip_userlist.html')
+    context = {
+        'userlist': my_custom_sql(),
+    }
+
+
+
+
+    """
     texte = "hello"
     texte += "<ul>"
     for i in my_custom_sql():
         texte+= "<li>"
-        for j in i:
-            texte+= " - "+str(j)
+        for fld in i._fields:
+            texte+= " - "+str(fld)+": "+str(getattr(i, fld))
         texte += "</li>\n"
     texte += "</ul>"
-    return HttpResponse(texte)
+    """
+    return HttpResponse(template.render(context,request))
