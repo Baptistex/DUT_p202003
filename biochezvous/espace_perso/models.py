@@ -1,3 +1,21 @@
 from django.db import models
 
-# Create your models here.
+
+class Personne(models.Model):
+
+    person_id = models.AutoField(primary_key=True)
+    nom = models.TextField()
+    prenom = models.TextField()
+    mot_de_passe = models.TextField()
+    mail = models.TextField()
+    num_tel = models.TextField()
+
+
+    def __str__(self):
+        return str(self.person_id)+str(nom)
+    
+    class Meta:
+        db_table = 'personne'
+
+
+

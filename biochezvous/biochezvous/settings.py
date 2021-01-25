@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'espace_perso.apps.EspacePersoConfig',
+    #'espace_perso.apps.EspacePersoConfig',
+    'espace_perso',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
