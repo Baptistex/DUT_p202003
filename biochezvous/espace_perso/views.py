@@ -4,6 +4,7 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from espace_perso.models import Personne, Utilisateur, Producteur
+from .forms import ContactForm
 
 
 # Create your views here.
