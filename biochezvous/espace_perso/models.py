@@ -16,6 +16,19 @@ class Personne(models.Model):
     
     class Meta:
         db_table = 'personne'
+        abstract = True
+    
+class Utilisateur(Personne):
+
+
+    class Meta(Personne.Meta):
+        db_table = 'utilisateur'
 
 
 
+
+class Producteur(Personne):
+
+
+    class Meta(Personne.Meta):
+        db_table = 'producteur'
