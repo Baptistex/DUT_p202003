@@ -23,6 +23,13 @@ def wip_userlist(request):
     context = {
         'userlist': table_pers
     }
-    
-
     return HttpResponse(template.render(context,request))
+
+
+def wip_connexion(request):
+    template = loader.get_template('espace_perso/wip_connexion.html')
+    return HttpResponse(template.render({},request))
+
+def wip_inscription(request):
+    template = loader.get_template('espace_perso/wip_inscription.html')
+    return HttpResponse(template.render({},request))
