@@ -23,12 +23,23 @@
             <form class="form-inline" action="http://melvinmathurin.fr/" method="post">
                 {% csrf_token %}
                 
+                    <label for="name" class="control-label">Nom</label>
+                    <input type="text" name="name" value="" id="name">
+
+                    <label for="name" class="control-label">prénom</label>
+                    <input type="text" name="lastname" value="" id="lastname">
+
                     <label for="name" class="control-label">email</label>
                     <input type="text" name="email" value="" id="email">
             
+                    <label for="email" class="control-label">téléphone</label>
+                    <input type="text" name="tel" value="" id="tel">
+
                     <label for="email" class="control-label">Mot de passe</label>
                     <input type="text" name="mdp" value="" id="mdp">
 
+                    <label for="email" class="control-label">redonner votre mot de passe</label>
+                    <input type="text" name="vmdp" value="" id="vmdp">
 
                 <!-- <input type="hidden" class="hidden" value="{{ album_id }}" name="album_id"> -->
 

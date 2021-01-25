@@ -20,6 +20,7 @@ urlpatterns = [
     path('', include('espace_perso.urls')),
 
 
+
     path('admin/', admin.site.urls),
 ]
 
