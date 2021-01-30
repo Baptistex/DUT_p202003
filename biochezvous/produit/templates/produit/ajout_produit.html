@@ -1,42 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
+{% extends "produit/base.html" %}
 
-<head>
-    <title>Connexion d'un utilisateur</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Lannion Game" />
-    <meta name="keywords" content="jeux, game, retro, gaming, lannion" />
-    <meta name="author" content="ALIX Baptiste, LAHAROTTE Thomas" />
-    <link rel="stylesheet" href="https://infolannion.com/b11/web/html/public/css/style.css">
-    <link rel="stylesheet" href="https://infolannion.com/b11/web/html/public/css/bootstrap.css">
-    <link rel="icon" type="image/png" href="https://infolannion.com/b11/web/html/public/images/fusee.png">
-    <script src="https://infolannion.com/b11/web/html/public/js/jquery-1.11.3.min.js"></script>
-    <script src="https://infolannion.com/b11/web/html/public/js/bootstrap.min.js"></script>
-</head>
+{% block title %}Ajout d'un produit{% endblock %}
 
-<body>
-
-    <main id="global">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Upload</button>
-        </form>
-    </main>
-
-    <footer>
-        <div>
-            <p>@2020 copyright: Thomas & Baptiste</p>
-        </div>
-    </footer>
-
-    <div class="d-none d-lg-block">
-        <a class="scrollup">Scroll</a>
-    </div>
-
-
-
-
-</body>
-
-</html>
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}

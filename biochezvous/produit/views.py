@@ -29,8 +29,8 @@ def ajout_prod(request):
             return HttpResponseRedirect('/')
     else:
         form = TypeProduitForm()
-    return render(request, 'produit/ajout_quantite.html', {'form': form})
+    return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def ajout_quantite(request):
-    template = loader.get_template('produit/ajout_produit.html')
+    template = loader.get_template('produit/ajout_quantite.html')
     return HttpResponse(template.render({},request))
