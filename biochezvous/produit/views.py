@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from produit.models import TypeProduit, Produit
+from .models import TypeProduit, Produit
+from .forms import TypeProduitForm
 
 
 # Create your views here.
@@ -19,7 +20,17 @@ def liste_produit(request):
 
 
 def ajout_prod(request):
+    if request.method == 'POST':
+        form = TypeProduitForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            #TODO: changer la redirection
+            return HttpResponseRedirect('/')
+    else:
+        form = TypeProduitForm()
+    return render(request, 'produit/ajout_quantite.html', {'form': form})
+
+def ajout_quantite(request):
     template = loader.get_template('produit/ajout_produit.html')
-    produit_exemple = TypeProduit(nom = "Patate", info = "Pomme de terre rouge", prix = 2.3, tva = 0.20, unit = False)
-    produit_exemple.save()
     return HttpResponse(template.render({},request))
