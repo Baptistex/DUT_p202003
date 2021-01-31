@@ -21,6 +21,7 @@ class TypeProduit(models.Model):
 class Produit(models.Model):
     produit_id = models.AutoField(primary_key=True)
     type_id = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
+    cat_id = models.ForeignKey('CategorieProduits', on_delete=models.CASCADE)
     date = models.DateField()
     quantite = models.FloatField()
     unite = models.IntegerField()
@@ -30,3 +31,15 @@ class Produit(models.Model):
     
     class Meta:
         db_table = 'produit'
+
+
+class CategorieProduits(models.Model):
+    cat_nom = models.TextField()
+    cat_id = models.AutoField(primary_key=True)
+
+
+    class Meta:
+        db_table = 'CategorieProduits'
+        
+    def __str__(self):
+        return "Categorie : "+str(self.produit_id)+str(type_id)

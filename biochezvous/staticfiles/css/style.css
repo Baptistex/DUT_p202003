@@ -66,7 +66,7 @@ h6 {
     z-index: 997;
     transition: all 0.5s;
     padding: 15px 0;
-    background: rgba(103, 176, 209, 0.8);
+    background: #555555;
 }
 
 #header.header-transparent {
@@ -906,6 +906,11 @@ section {
     padding: 20px 0 30px 0;
 }
 
+.contact .info-box:hover i {
+    background-color: #555555;
+    transition: 0.5s;
+}
+
 .contact .info-box i {
     font-size: 32px;
     color: #00ffc6;
@@ -1013,7 +1018,7 @@ section {
 }
 
 .contact .php-email-form button[type="submit"]:hover {
-    background: #00ffc6;
+    background: #555555;
 }
 
 @-webkit-keyframes animate-loading {
@@ -1084,13 +1089,18 @@ section {
 #
 ---------------------------------------------------------------*/
 
-
+/*--------------------------------------------------------------
+# Service 
+---------------------------------------------------------------*/
+#services .row {
+    align-items: center;
+}
 
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
 .prod .portfolio-item,
-.prod .filtre_leg_fruit{
+.prod .filtre_leg_fruit {
     margin-bottom: 30px;
 }
 
@@ -1103,30 +1113,35 @@ section {
     width: 0;
 }
 
-#portfolio-flters {
-    padding-left: 20px;
-}
+@media screen and (min-width: 640px) {
 
-#prod li {
-    cursor: pointer;
-    background-color: #555555;
-    width: 90px;
-    list-style: none;
-    padding: 10px 10px;
-    text-align: center;
-    font-size: 35px;
-    color: #00ffc6;
-}
 
-#prod li:hover {
-    background-color: #00ffc6;
-    color: #f8fbfd;
-    transition: background-color 0.3s, color 0.3s;
-}
+    #portfolio-flters {
+        padding-left: 20px;
+    }
 
-#prod li:active {
-    background-color: #00ffc6;
-    color: #555555;
+    #prod #portfolio-flters li {
+        cursor: pointer;
+        background-color: #555555;
+        width: 90px;
+        list-style: none;
+        padding: 10px 10px;
+        text-align: center;
+        font-size: 35px;
+        color: #00ffc6;
+    }
+
+    #prod #portfolio-flters li:hover {
+        background-color: #00ffc6;
+        color: #f8fbfd;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    #prod #portfolio-flters .filter-active {
+        background-color: #00ffc6;
+        color: #55555555;
+    }
+
 }
 
 .prod .portfolio-container {
@@ -1160,45 +1175,219 @@ section {
     opacity: 0;
 }
 
-.prod .prod-wrap .prod-links {
-    opacity: 1;
-    left: 0;
-    right: 0;
-    bottom: -60px;
-    z-index: 3;
-    position: absolute;
-    transition: all ease-in-out 0.3s;
-    display: flex;
-    justify-content: center;
+@media screen and (min-width: 640px) {
+
+
+    .prod .prod-wrap .prod-links {
+        opacity: 1;
+        left: 0;
+        right: 0;
+        bottom: -60px;
+        z-index: 3;
+        position: absolute;
+        transition: all ease-in-out 0.3s;
+        display: flex;
+        justify-content: center;
+    }
+
+    .prod .prod-wrap .prod-links a {
+        color: #fff;
+        font-size: 28px;
+        text-align: center;
+        background: rgba(0, 255, 192, 0.75);
+        transition: 0.3s;
+        width: 50%;
+    }
+
+    .prod .prod-wrap .prod-links a:hover {
+        background: rgba(0, 255, 192, 0.99);
+    }
+
+    .prod .prod-wrap .prod-links a + a {
+        border-left: 1px solid #00ffc6;
+    }
+
+    .prod .prod-wrap:hover::before {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
+
+    .prod .prod-wrap:hover .prod-links {
+        opacity: 1;
+        bottom: 0;
+    }
 }
 
-.prod .prod-wrap .prod-links a {
-    color: #fff;
-    font-size: 28px;
-    text-align: center;
-    background: rgba(0, 255, 192, 0.75);
-    transition: 0.3s;
-    width: 50%;
+.liste_fruits {
+    display: none;
 }
 
-.prod .prod-wrap .prod-links a:hover {
-    background: rgba(0, 255, 192, 0.99);
+/*----MEDIA QUERIES--------------------------------------------*/
+
+@media screen and (max-width: 640px) {
+    .prod .prod-wrap {
+        transition: 0.3s;
+        position: relative;
+        overflow: visible;
+        z-index: 1;
+        /*clip-path: circle(40%);*/
+    }
+
+    .prod .prod-wrap img {
+        clip-path: circle(40%);
+    }
+    
+
+    .prod .prod-links {
+        display: flex;
+        justify-content: space-around;
+        padding: 20px 70px;
+    }
+
+    .prod .prod-links a {
+        color: #555555;
+        font-size: 25px;
+    }
+
+    .filtre_leg_fruit {
+        display: none;
+    }
+
+    .liste_fruits {
+        display: block;
+    }
+
+    .prod .portfolio-container {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+
+    #prod h2 {
+        text-align: left;
+    }
+
+    #prod .section-title h2::after {
+        left: 40%;
+        top: 50%;
+    }
+
+
+    .prod .prod-wrap:hover .prod-links {
+        bottom: 20px;
+    }
 }
 
-.prod .prod-wrap .prod-links a + a {
-    border-left: 1px solid #00ffc6;
+
+
+
+/**************************************************************/
+
+/*--------------------------------------------------------------
+# Barre de recherche
+--------------------------------------------------------------*/
+
+#moteur_recherche input {
+    height: 50px;
 }
 
-.prod .prod-wrap:hover::before {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 1;
+
+#moteur_recherche button {
+    width: 150px;
+    height: 50px;
+    color: #00ffc6;
+    background-color: #555555;
 }
 
-.prod .prod-wrap:hover .prod-links {
-    opacity: 1;
-    bottom: 0;
+
+/*--------------------------------------------------------------
+#                                                                          
+#
+#
+#
+                    PAGE LAYOUT PRODUITS
+#
+#
+#
+#
+---------------------------------------------------------------*/
+
+.desc_prod header {
+    background: rgba(85, 85, 85, 0.9);
 }
 
+.desc_prod main {
+    margin-top: 100px;
+}
+
+/*--------------------------------------------------------------
+# description
+---------------------------------------------------------------*/
+
+/* CARROUSSEL */
+
+#description img {
+    width: 500px;
+}
+
+#description .carousel-inner {
+    margin-left: 80px;
+    
+}
+
+/* DESCRIPTION */
+.note li{
+    display: inline-block;
+    list-style: none;
+    font-size: 25px;
+    cursor: pointer;
+    color: #00ffc6;
+}
+
+
+#le_producteur {
+    text-align: right;
+}
+
+#description p {
+    text-align: justify;
+}
+
+#description {
+    padding-right: 50px;
+}
+
+#description h4 {
+    font-family: 'Architects Daughter', cursive;
+    font-size: 30px;
+}
+
+#description a {
+    font-family: 'Architects Daughter', cursive;
+    cursor: pointer;
+    font-size: 18px;
+}
+#description i {
+    font-size: 35px;
+}
+
+.couleur,
+#description li:hover{
+    color: #555555;
+}
+
+#description button {
+    background-color: #00ffc6;
+    border-color: #00ffc6;
+    color: #555555;
+    padding: 10px 40px;
+    font-family: 'Fugaz One';
+}
+
+input[type=range].quantite {
+    color: #555555;
+    background-color: #555555;
+    width: 200px;
+}

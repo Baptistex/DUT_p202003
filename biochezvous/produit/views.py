@@ -12,6 +12,10 @@ def produit(request):
     template = loader.get_template('produit/produits.html')
     return HttpResponse(template.render({},request))
 
+def produit_django(request):
+    template = loader.get_template('produit/produit.html')
+    return HttpResponse(template.render({},request))
+
 
 def liste_produit(request):
     template = loader.get_template('produit/produits.html')
