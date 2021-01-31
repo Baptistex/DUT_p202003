@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db import connection
 from collections import namedtuple
 from django.template import loader
-from espace_perso.models import Personne, Utilisateur, Producteur
+from .models import Personne, Utilisateur, Producteur
 
 
 # Create your views here.
