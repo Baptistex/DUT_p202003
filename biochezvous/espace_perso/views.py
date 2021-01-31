@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db import connection
 from collections import namedtuple
 from django.template import loader
-from espace_perso.models import Personne, Utilisateur, Producteur
+from .models import Personne, Utilisateur, Producteur
 
 
 # Create your views here.
@@ -33,3 +33,8 @@ def wip_connexion(request):
 def wip_inscription(request):
     template = loader.get_template('espace_perso/wip_inscription.html')
     return HttpResponse(template.render({},request))
+
+def paiement(request):
+    template = loader.get_template('espace_perso/paiement.html')
+    return HttpResponse(template.render({},request))
+

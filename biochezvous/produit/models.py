@@ -6,11 +6,14 @@ from django.db import models
 
 class TypeProduit(models.Model):
     type_id = models.AutoField(primary_key=True)
+    #Pour plus tard, quand le modele sera utilisable avec des sessions
+    #producteur_id = models.ForeignKey('Producteur', on_delete=models.CASCADE)
     nom = models.TextField()
     info = models.TextField()
     prix = models.FloatField()
     tva = models.FloatField()
     unit = models.BooleanField()
+    image = models.ImageField(upload_to='images/')
     def __str__(self):
         return "TypeProduit : "+str(type_id)
     

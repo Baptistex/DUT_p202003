@@ -1,0 +1,330 @@
+{% extends "produit/base.html"%}
+{% load static %}
+{% block title%}Paiement{% endblock title%}
+{% block content%}
+        <div id="paiementTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>Finaliser votre commande</h2>
+        </div>
+        <div class="row col-lg-12">
+
+            <section id="facturation" class="col-lg-5 offset-lg-1" data-aos="fade-right" data-aos-delay="100">
+                <h3>Adresse de facturation</h3>
+                <input type="name" placeholder="Nom">
+                <input type="name" placeholder="Prénom"><br>
+                <input type="Address" placeholder="Adresse" class="info"><br>
+                <input type="Address" placeholder="Code Postal" class="info"><br>
+                <input type="Address" placeholder="Ville" class="info"><br>
+                <input type="phone" placeholder="Téléphone" class="info">
+            </section>
+            <section id="paiement" class="col-lg-4 offset-lg-1" data-aos="fade-left" data-aos-delay="100">
+                <h3>Mode de Paiement</h3>
+                <script>
+                    jQuery(document).ready(function() {
+                        // On cache la zone de texte
+                        jQuery('#toggle').hide();
+                        // toggle() lorsque le lien avec l'ID #toggler est cliqué
+                        jQuery('a#toggler').click(function() {
+                            jQuery('#toggle').toggle(400);
+                            jQuery('#toggle2').hide();
+                            jQuery('#toggle3').hide();
+                            jQuery('#toggle4').hide();
+                            return false;
+                        });
+                    });
+
+                </script>
+
+                <a href="#" id="toggler"><img src={% static 'img/icon/visa.png' %} height="40px" width="60px"> </a>
+                <script>
+                    jQuery(document).ready(function() {
+                        // On cache la zone de texte
+                        jQuery('#toggle2').hide();
+                        // toggle() lorsque le lien avec l'ID #toggler est cliqué
+                        jQuery('a#toggler2').click(function() {
+                            jQuery('#toggle2').toggle(400);
+                            jQuery('#toggle').hide();
+                            jQuery('#toggle3').hide();
+                            jQuery('#toggle4').hide();
+                            return false;
+                        });
+                    });
+
+                </script>
+
+                <a href="#" id="toggler2"><img src={% static 'img/icon/mastercard.png' %} height="40px" width="60px"> </a>
+                <script>
+                    jQuery(document).ready(function() {
+                        // On cache la zone de texte
+                        jQuery('#toggle3').hide();
+                        // toggle() lorsque le lien avec l'ID #toggler est cliqué
+                        jQuery('a#toggler3').click(function() {
+                            jQuery('#toggle3').toggle(400);
+                            jQuery('#toggle2').hide();
+                            jQuery('#toggle').hide();
+                            jQuery('#toggle4').hide();
+                            return false;
+                        });
+                    });
+
+                </script>
+
+                <a href="#" id="toggler3"><img src={% static 'img/icon/cb.jpg' %} height="40px" width="60px"> </a>
+                <script>
+                    jQuery(document).ready(function() {
+                        // On cache la zone de texte
+                        jQuery('#toggle4').hide();
+                        // toggle() lorsque le lien avec l'ID #toggler est cliqué
+                        jQuery('a#toggler4').click(function() {
+                            jQuery('#toggle4').toggle(400);
+                            jQuery('#toggle2').hide();
+                            jQuery('#toggle3').hide();
+                            jQuery('#toggle').hide();
+                            return false;
+                        });
+                    });
+
+                </script>
+
+                <a href="#" id="toggler4"><img src={% static 'img/icon/paypal.png' %} height="40px" width="60px"> </a>
+
+
+                <div id="toggle">
+                    <h3>
+                        Visa
+                    </h3>
+
+                    <p>Numéro de carte : <input placeholder="Numero de carte"></p><br>
+                    <p>CCV : <input placeholder="Code de sécurité (CVV)"></p><br>
+                    <p>Date d'expiration : <select>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                        <select>
+                            <option>2021</option>
+                            <option>2022</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                            <option>2026</option>
+                        </select>
+                    </p>
+                    <br>
+
+                </div>
+                <div id="toggle2">
+                    <h3>
+                        MasterCard
+                    </h3>
+
+                    <p>Numéro de carte : <input placeholder="Numero de carte"></p><br>
+                    <p>CCV : <input placeholder="Code de sécurité (CVV)"></p><br>
+                    <p>Date d'expiration : <select>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                        <select>
+                            <option>2021</option>
+                            <option>2022</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                            <option>2026</option>
+                        </select>
+                    </p>
+                    <br>
+                </div>
+                <div id="toggle3">
+                    <h3>
+                        CB
+                    </h3>
+
+                    <p>Numéro de carte : <input placeholder="Numero de carte"></p><br>
+                    <p>CCV : <input placeholder="Code de sécurité (CVV)"></p><br>
+                    <p>Date d'expiration : <select>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                        <select>
+                            <option>2021</option>
+                            <option>2022</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                            <option>2026</option>
+                        </select>
+                    </p>
+                    <br>
+                </div>
+                <div id="toggle4">
+                    <h3>
+                        PayPal
+                    </h3>
+
+                    <p>Numéro de carte : <input placeholder="Numero de carte"></p><br>
+                    <p>CCV : <input placeholder="Code de sécurité (CVV)"></p><br>
+                    <p>Date d'expiration : <select>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                        <select>
+                            <option>2021</option>
+                            <option>2022</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                            <option>2026</option>
+                        </select>
+                    </p>
+                    <br>
+                </div>
+            </section>
+        </div>
+        <a href="confirm.html"><button id="validButton" type="button" class="btn btn-success" data-aos="fade-up" data-aos-delay="100">Valider votre commande</button></a>
+    {% endblock content%}
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact section-bg">
+            <div class="container">
+
+                <div class="row" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-6">
+                        <div class="info-box mb-4">
+                            <i class="bx bx-map"></i>
+                            <h3>Our Address</h3>
+                            <p>A108 Adam Street, New York, NY 535022</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="info-box  mb-4">
+                            <i class="bx bx-envelope"></i>
+                            <h3>Email Us</h3>
+                            <p>contact@example.com</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="info-box  mb-4">
+                            <i class="bx bx-phone-call"></i>
+                            <h3>Call Us</h3>
+                            <p>+1 5589 55488 55</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="col-lg-6 ">
+                        <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 100%;" allowfullscreen></iframe>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                                    <div class="validate"></div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                                <div class="validate"></div>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                                <div class="validate"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                            </div>
+                            <div class="text-center"><button type="submit">Send Message</button></div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Contact Section -->
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Squadfree</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/ -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="assets/vendor/counterup/counterup.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/venobox/venobox.min.js"></script>
+    <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
