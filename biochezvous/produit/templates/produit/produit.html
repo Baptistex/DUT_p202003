@@ -1,69 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+{% extends "produit/base.html" %}
 
-    <title>BIO CHEZ VOUS</title>
-    <meta content="" name="descriptison">
-    <meta content="" name="keywords">
+{% load static %}
 
-    <!-- Favicons -->
-    {% load static %}
-    <link href="{% static 'img/spoon-and-fork.svg' %}" rel="icon">
+{% block title %}TITRE{% endblock %}
 
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-    <!-- Vendor CSS Files -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fugaz+One&family=Poppins&display=swap"
-        rel="stylesheet">
-
-</head>
-
-<body>
-
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top header-transparent">
-        <div class="container d-flex align-items-center">
-
-            <div class="logo mr-auto">
-                <h1 class="text-light"><a href="index.html"><span>BIO CHEZ VOUS</span></a></h1>
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!--<a href="index.html"><img src="assets/img/logo" alt="" class="img-fluid"></a>-->
-            </div>
-
-            <nav class="nav-menu d-none d-lg-block">
-                <ul>
-                    <li class="active"><a href="index.html">Accueil</a></li>
-                    <li><a href="#">Nos Produits</a></li>
-                    <li><a href="#">A propos</a></li>
-                    <li><a href="teams.html"><i class="icofont-boy"></i></a></li>
-                    <li><a href="#"><i class="icofont-spoon-and-fork"></i></a></li>
-
-                </ul>
-            </nav><!-- .nav-menu -->
-
-        </div>
-    </header><!-- End Header -->
-
+{% block hero %}
     <!-- ======= Hero Section ======= -->
     <section id="hero">
         <div class="hero-container">
@@ -72,10 +15,9 @@
             <a href="#services" class="btn-get-started scrollto" data-aos="fade-up" data-aos-delay="800"><i class="fas fa-carrot"></i></a>
         </div>
     </section><!-- End Hero  <i class="bx bx-chevrons-down"> -->
+{% endblock %}
 
-
-
-    <main id="main">
+{% block content %}
 
         <!-- ======= Services Section ======= -->
         <section id="services" class="services">
@@ -157,11 +99,11 @@
 
                     <div class="col col-lg-4 col-md-6 portfolio-item filter-fruit">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
@@ -169,88 +111,88 @@
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="Ajouter 1kg "><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
                         <div class="prod-wrap">
-                            <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
-                                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="layout_description_produit.html" title="More Details"><i class="icofont-search-2"></i></a>
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
                     </div>
@@ -278,122 +220,7 @@
             </div>
         </section>
 
+{% endblock %}
 
 
-    </main><!-- End #main -->
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact section-bg">
-            <div class="container">
-
-                <div class="row" data-aos="fade-up" data-aos-delay="100">
-                    <div class="col-lg-6">
-                        <div class="info-box mb-4">
-                            <i class="bx bx-map"></i>
-                            <h3>Our Address</h3>
-                            <p>A108 Adam Street, New York, NY 535022</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="info-box  mb-4">
-                            <i class="bx bx-envelope"></i>
-                            <h3>Email Us</h3>
-                            <p>contact@example.com</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="info-box  mb-4">
-                            <i class="bx bx-phone-call"></i>
-                            <h3>Call Us</h3>
-                            <p>+1 5589 55488 55</p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row" data-aos="fade-up" data-aos-delay="200">
-
-                    <div class="col-lg-6 ">
-                        <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 100%;" allowfullscreen></iframe>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                                    <div class="validate"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                                <div class="validate"></div>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                                <div class="validate"></div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-                            </div>
-                            <div class="text-center"><button type="submit">Send Message</button></div>
-                        </form>
-                    </div>
-
-                </div>
-
-            </div>
-        </section><!-- End Contact Section -->
-
-        <div class="container">
-            <div class="copyright">
-                &copy; Copyright <strong><span>Squadfree</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
-        </div>
-    </footer><!-- End Footer -->
-
-    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-
-    <!-- Vendor JS Files -->
-    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.js'%}"></script>
-    <script src="{% static 'assets/vendor/bootstrap/js/'%}"></script>
-
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
-    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-    <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
-    <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
-    <script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'vendor/aos/aos.js' %}"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{% static 'js/main.js' %}"></script>
-
-</body>
-
-</html>
 

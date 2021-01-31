@@ -11,5 +11,8 @@ urlpatterns = [
 
     path('ajoutquantite',views.ajout_quantite, name='ajout_quantite'),
 
+    #Partie test lien entre pages django
+    path('description',views.produit_description, name='produit_description'),
+
 
 ]
