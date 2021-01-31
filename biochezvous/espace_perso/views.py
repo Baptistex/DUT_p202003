@@ -33,3 +33,8 @@ def wip_connexion(request):
 def wip_inscription(request):
     template = loader.get_template('espace_perso/wip_inscription.html')
     return HttpResponse(template.render({},request))
+
+def paiement(request):
+    template = loader.get_template('espace_perso/paiement.html')
+    return HttpResponse(template.render({},request))
+
