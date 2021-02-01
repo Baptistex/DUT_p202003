@@ -1,0 +1,226 @@
+
+{% extends "produit/base.html" %}
+
+{% load static %}
+
+{% block title %}TITRE{% endblock %}
+
+
+{% block hero %}
+    <!-- ======= Hero Section ======= -->
+    <section id="hero">
+        <div class="hero-container">
+            <h1 data-aos="fade-up" data-aos-delay="300">Pour une agriculture</h1>
+            <h2 data-aos="fade-up" data-aos-delay="500">plus saine et dans le respect de la nature</h2>
+            <a href="#services" class="btn-get-started scrollto" data-aos="fade-up" data-aos-delay="800"><i class="fas fa-carrot"></i></a>
+        </div>
+    </section><!-- End Hero  <i class="bx bx-chevrons-down"> -->
+{% endblock %}
+
+{% block content %}
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                            <h2>L'amour est dans le bio</h2>
+                            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="{% static 'img/portfolio/portfolio-1.jpg' %}" alt="First slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="{% static 'img/portfolio/portfolio-1.jpg' %}" alt="Second slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="{% static 'img/portfolio/portfolio-1.jpg' %}" alt="Third slide">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </section><!-- End Services Section -->
+
+
+
+        <!-- ======= Portfolio Section ======= -->
+        <section id="prod" class="prod">
+
+            <div class="container-fluid">
+
+                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                    <div class="row">
+                        <div class="col-8 col-md-12">
+                            <h2>Les Fraicheurs</h2>
+                        </div>
+                        <div class="col-4 liste_fruits">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Carotte
+                                </button>
+                                <ul class="dropdown-menu" id="portfolio-flters" aria-labelledby="dropdownMenu2">
+                                    <!-- <li><button class="dropdown-item" type="button">Action</button></li>
+                                    <li><button class="dropdown-item" type="button">Another action</button></li>
+                                    <li><button class="dropdown-item" type="button">Something else here</button></li>-->
+
+                                    <li data-filter="*" class="dropdown-item filter-active"><i class="icofont-culinary"></i><span>Tous</span></li>
+                                    <li class="dropdown-item" data-filter=".filter-fruit"><i class="icofont-apple"></i><span>Fruits</span></li>
+                                    <li class="dropdown-item" data-filter=".filter-leg"><i class="icofont-broccoli"></i><span>Légumes</span></li>
+                                    <li class="dropdown-item" data-filter=".filter-viande"><i class="icofont-steak"></i><span>Viandes</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                </div>
+
+                <div class="filtre_leg_fruit" data-aos="fade-in">
+                    <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active"><i class="icofont-culinary"></i></li>
+                        <li data-filter=".filter-fruit"><i class="icofont-apple"></i></li>
+                        <li data-filter=".filter-leg"><i class="icofont-broccoli"></i></li>
+                        <li data-filter=".filter-viande"><i class="icofont-steak"></i></li>
+                    </ul>
+                </div>
+
+                <div class="row portfolio-container" data-aos="fade-up">
+
+                    <div class="col col-lg-4 col-md-6 portfolio-item filter-fruit">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                        <div class="prod-wrap">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                            <div class="prod-links">
+                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section><!-- End Portfolio Section -->
+
+
+        <section id="moteur_recherche" class="prod">
+            <div class="container">
+                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                    <h2>Une idée en tête ?</h2>
+                    <p>Vous avez une envie particulière ? N'hésitez plus tapez votre demande juste en dessous dans la barre de recherche.</p>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Patate douce ?" aria-label="Patate douce" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn" type="button">Button</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
+
+
+

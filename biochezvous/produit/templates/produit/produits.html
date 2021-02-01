@@ -1,0 +1,165 @@
+{% extends "produit/base.html" %}
+{% load static %}
+
+{% block title %}BIO CHEZ VOUS - Produits {% endblock %}
+
+
+
+    
+{% block hero %}
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div class="hero-container">
+        <h1 data-aos="fade-up" data-aos-delay="300">Pour une agriculture</h1>
+        <h2 data-aos="fade-up" data-aos-delay="500">plus saine et dans le respect de la nature</h2>
+        <a href="#services" class="btn-get-started scrollto" data-aos="fade-up" data-aos-delay="800"><i
+                class="fas fa-carrot"></i></a>
+    </div>
+</section><!-- End Hero  <i class="bx bx-chevrons-down"> -->
+{% endblock %}
+
+
+{% block content%}
+<!-- ======= Services Section ======= -->
+<section id="services" class="services">
+    <div class="container">
+        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>L'amour est dans le bio</h2>
+            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit
+                sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias
+                ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+    </div>
+</section><!-- End Services Section -->
+
+
+
+<!-- ======= Portfolio Section ======= -->
+<section id="prod" class="prod">
+
+    <div class="container-fluid">
+
+        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>Les Fraicheurs</h2>
+            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit
+                sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias
+                ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="filtre_leg_fruit" data-aos="fade-in">
+            <ul id="portfolio-flters">
+                <li data-filter="*" class="filter-active"><i class="icofont-culinary"></i></li>
+                <li data-filter=".filter-fruit"><i class="icofont-apple"></i></li>
+                <li data-filter=".filter-leg"><i class="icofont-broccoli"></i></li>
+                <li data-filter=".filter-viande"><i class="icofont-steak"></i></li>
+            </ul>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up">
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-1.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="App 1"><i class="icofont-heart"></i></a>
+                        <a href="portfolio-details.html" title="More Details"><i class="icofont-plus"></i></a>
+                        <a href="portfolio-details.html" title="More Details"><i
+                                class="icofont-food-basket"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-2.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>
+                        <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-3.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-3.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="App 2"><i class="bx bx-plus"></i></a>
+                        <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-4.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-4.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="Card 2"><i class="bx bx-plus"></i></a>
+                        <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-5.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-5.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="Web 2"><i class="bx bx-plus"></i></a>
+                        <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-6.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-6.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="App 3"><i class="bx bx-plus"></i></a>
+                        <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-7.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-7.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="Card 1"><i class="bx bx-plus"></i></a>
+                        <a href="#" title=""><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-8.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-8.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="Card 3"><i class="bx bx-plus"></i></a>
+                        <a href="#" title=""><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                <div class="prod-wrap">
+                    <img src="{% static 'img/portfolio/portfolio-9.jpg' %}" class="img-fluid" alt="">
+                    <div class="prod-links">
+                        <a href="{% static 'img/portfolio/portfolio-9.jpg' %}" data-gall="portfolioGallery"
+                            class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>
+                        <a href="#" title=""><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Portfolio Section -->
+{% endblock %}
+
+
