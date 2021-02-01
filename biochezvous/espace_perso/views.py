@@ -3,12 +3,8 @@ from django.http import HttpResponse
 from django.db import connection
 from collections import namedtuple
 from django.template import loader
-<<<<<<< HEAD
 from espace_perso.models import Personne, Utilisateur, Producteur
 from .forms import ContactFormInscription
-=======
-from .models import Personne, Utilisateur, Producteur
->>>>>>> ad561bc8a99c38f63a9facce69f955ff5b8525ef
 
 
 # Create your views here.
