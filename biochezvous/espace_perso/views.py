@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.db import connection
 from collections import namedtuple
 from django.template import loader
-from espace_perso.models import Personne, Utilisateur, Producteur
+
+from .models import Personne, Utilisateur, Producteur
 from .forms import ContactFormInscription
 
 
@@ -32,8 +33,17 @@ def wip_connexion(request):
     return HttpResponse(template.render({},request))
 
 def wip_inscription(request):
-    template = loader.get_template('espace_perso/wip_inscription.html')
-    return HttpResponse(template.render({},request))
+    if request.method == 'POST':
+        form = ContactFormInscription(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            #TODO: changer la redirection
+            return HttpResponseRedirect('/')
+    else:
+        form = ContactFormInscription()
+    return render(request, 'espace_perso/wip_inscription.html', {'form': form})
+
 
 def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')

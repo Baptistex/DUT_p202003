@@ -2,7 +2,7 @@
 <html lang="fr"> 
 
 <head>
-    <title>Connexion d'un utilisateur</title>
+    <title>Inscription d'un utilisateur</title>
     <meta charset="UTF-8">
     <meta name="description" content="Lannion Game" />
     <meta name="keywords" content="jeux, game, retro, gaming, lannion" />
@@ -19,28 +19,10 @@
     <main id="global">
         <!--# contenu -->
         <div id="contenu">
-            <h2 id="connexion">Connexion</h2>
-            <form class="form-inline" action="http://melvinmathurin.fr/" method="post">
+            <h2 id="connexion">Inscription</h2>
+            <form class="form-inline" action="paiement.html" method="POST">
                 {% csrf_token %}
-                
-                    <label for="name" class="control-label">Nom</label>
-                    <input type="text" name="name" value="" id="name">
-
-                    <label for="lastname" class="control-label">prénom</label>
-                    <input type="text" name="lastname" value="" id="lastname">
-
-                    <label for="email" class="control-label">email</label>
-                    <input type="text" name="email" value="" id="email">
-            
-                    <label for="tel" class="control-label">téléphone</label>
-                    <input type="text" name="tel" value="" id="tel">
-
-                    <label for="mdp" class="control-label">Mot de passe</label>
-                    <input type="text" name="mdp" value="" id="mdp">
-
-                    <label for="vmdp" class="control-label">redonner votre mot de passe</label>
-                    <input type="text" name="vmdp" value="" id="vmdp">
-
+                    {{ form.as_p }}
                 <!-- <input type="hidden" class="hidden" value="{{ album_id }}" name="album_id"> -->
 
                 <button type="submit" class="btn btn-success">Réserver</button>
