@@ -913,12 +913,12 @@ section {
     box-shadow: 0 0 30px #263f49;
     padding: 20px 0 30px 0;
 }
-
+/*
 .contact .info-box:hover i {
     background-color: #555555;
     transition: 0.5s;
 }
-
+*/
 .contact .info-box i {
     font-size: 32px;
     color: #00ffc6;
@@ -1306,6 +1306,10 @@ section {
     background-color: #555555;
 }
 
+#moteur_recherche button:focus {
+    outline: none;
+}
+
 
 /*--------------------------------------------------------------
 #                                                                          
@@ -1400,8 +1404,45 @@ input[type=range].quantite {
 /*------------AVIS CLIENT ----------------------------------*/
 
 #avis_client {
-    color: blue;
+    background-color: #00ffc6;
 }
+
+.bloc-com {
+    background-color: white;
+    padding: 25px;
+    border-radius: 0 15px;
+    box-shadow: #555555 7px 7px;
+}
+
+#formulaire .col-md-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+#formulaire .repas,
+#formulaire .comm {
+    width: 100%;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#formulaire .repas {
+    height: 100%;
+}
+
+#formulaire .comm {
+    height: 50%;
+}
+
+
+
+#formulaire input:focus {
+    border-color: #00ffc6;
+    border-width: 2px;
+    outline: none;
+}
+
 
 /*--------------------------------------------------------------
 #                                                                          
