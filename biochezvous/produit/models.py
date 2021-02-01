@@ -40,7 +40,6 @@ class TypeProduit(models.Model):
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
 
-
     def __str__(self):
         return "Produit : "+str(nom)+str(id_type)
     
@@ -52,7 +51,6 @@ class Categorie(models.Model):
     id_categorie = models.AutoField(primary_key=True)
     id_type = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
     nom = models.TextField()
-
         
     def __str__(self):
         return "Categorie : "+str(nom)+str(id_categorie)
