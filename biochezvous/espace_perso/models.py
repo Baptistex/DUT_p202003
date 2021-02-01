@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Personne(models.Model):
-    person_id = models.AutoField(primary_key=True)
+    id_personne = models.AutoField(primary_key=True)
     nom = models.TextField()
     prenom = models.TextField()
     mot_de_passe = models.TextField()

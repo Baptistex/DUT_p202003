@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit
-from .forms import TypeProduitForm
+from .forms import ProduitForm
 
 
 # Create your views here.
@@ -28,14 +28,14 @@ def liste_produit(request):
 
 def ajout_prod(request):
     if request.method == 'POST':
-        form = TypeProduitForm(request.POST, request.FILES)
+        form = ProduitForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/')
     else:
-        form = TypeProduitForm()
+        form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def ajout_quantite(request):
