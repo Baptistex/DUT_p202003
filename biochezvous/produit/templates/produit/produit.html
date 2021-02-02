@@ -74,9 +74,9 @@
                                     <li><button class="dropdown-item" type="button">Something else here</button></li>-->
 
                                     <li data-filter="*" class="dropdown-item filter-active"><i class="icofont-culinary"></i><span>Tous</span></li>
-                                    <li class="dropdown-item" data-filter=".filter-fruit"><i class="icofont-apple"></i><span>Fruits</span></li>
-                                    <li class="dropdown-item" data-filter=".filter-leg"><i class="icofont-broccoli"></i><span>Légumes</span></li>
-                                    <li class="dropdown-item" data-filter=".filter-viande"><i class="icofont-steak"></i><span>Viandes</span></li>
+                                    <li class="dropdown-item" data-filter=".FRUITS"><i class="icofont-apple"></i><span>Fruits</span></li>
+                                    <li class="dropdown-item" data-filter=".LEGUMES"><i class="icofont-broccoli"></i><span>Légumes</span></li>
+                                    <li class="dropdown-item" data-filter=".VIANDES"><i class="icofont-steak"></i><span>Viandes</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -86,18 +86,30 @@
                     <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
                 </div>
 
+                {% if lesproduits %}
                 <div class="filtre_leg_fruit" data-aos="fade-in">
                     <ul id="portfolio-flters">
                         <li data-filter="*" class="filter-active"><i class="icofont-culinary"></i></li>
-                        <li data-filter=".filter-fruit"><i class="icofont-apple"></i></li>
-                        <li data-filter=".filter-leg"><i class="icofont-broccoli"></i></li>
-                        <li data-filter=".filter-viande"><i class="icofont-steak"></i></li>
+                        <li data-filter=".FRUITS"><i class="icofont-apple"></i></li>
+                        <li data-filter=".LEGUMES"><i class="icofont-broccoli"></i></li>
+                        <li data-filter=".VIANDES"><i class="icofont-steak"></i></li>
                     </ul>
                 </div>
+                {% endif %}
 
-                <div class="row portfolio-container" data-aos="fade-up">
+                {% if not lesproduits %}
+                    <div class="row mt-5">
+                        <div class="col text-center">
+                            <i class="icofont-panda display-1"></i>
+                            <p style="font-family: 'Architects Daughter', cursive;"> Les produits arrivent prochainement</p>
+                        </div>
+                    </div>
+                {% endif %}
 
-                    <div class="col col-lg-4 col-md-6 portfolio-item filter-fruit">
+                <div class="row portfolio-container mt-5" data-aos="fade-up">
+                    
+                    {% for produit in lesproduits %}
+                    <div class="col col-lg-4 col-md-6 portfolio-item FRUITS">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -106,10 +118,10 @@
                                 <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                    </div>                        
+                    {% endfor %}
+<!--
+                    <div class="col-lg-4 col-md-6 portfolio-item VIANDES">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -120,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
+                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -131,7 +143,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -142,7 +154,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -153,7 +165,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-fruit">
+                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -164,7 +176,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                    <div class="col-lg-4 col-md-6 portfolio-item LEGUMES">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -175,7 +187,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-leg">
+                    <div class="col-lg-4 col-md-6 portfolio-item LEGUMES">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -186,7 +198,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-viande">
+                    <div class="col-lg-4 col-md-6 portfolio-item VIANDES">
                         <div class="prod-wrap">
                             <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
@@ -196,7 +208,7 @@
                             </div>
                         </div>
                     </div>
-
+-->
                 </div>
 
             </div>

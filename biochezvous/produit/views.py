@@ -15,6 +15,14 @@ def produit(request):
 
 def produit_django(request):
     template = loader.get_template('produit/produit.html')
+
+    #Recuperation de toute la table personne dans une variable table_pers
+    #  et passage a la template via context
+    table_produits = Produit.objects.all()
+    context = {
+        'lesproduits': table_produits
+    }
+
     return HttpResponse(template.render({},request))
 
 def produit_description(request):

@@ -65,7 +65,7 @@
 
 {% load static %}
    
-{% block title %}BIO CHEZ VOUS - Nos Produits{% endblock %}
+{% block title %}BIO CHEZ VOUS - Accueil{% endblock %}
 
 {% block hero %}
     <!-- ======= Hero Section ======= -->
@@ -146,6 +146,16 @@
                     <h2>Les Fraicheurs</h2>
                     <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
                 </div>
+
+                {% if not lesfraicheurs %}
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <i class="icofont-panda display-1"></i>
+                        <p style="font-family: 'Architects Daughter', cursive;"> Les fraicheurs de la semaine arrivent prochainement</p>
+                    </div>
+                </div>
+                {% else %}
+                
 
                 <div class="row" data-aos="fade-in">
                     <div class="col-lg-12 d-flex justify-content-center">
@@ -252,7 +262,7 @@
                     </div>
 
                 </div>
-
+                {% endif %}
             </div>
         </section><!-- End Portfolio Section -->
 
