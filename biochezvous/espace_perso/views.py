@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from collections import namedtuple
 from django.template import loader
-
+from django.contrib.auth import authenticate
 from .models import Personne, Utilisateur, Producteur
 from .forms import ContactFormInscription, ProducteurFormConnexion, ProducteurFormInscription
 
@@ -50,17 +50,27 @@ def paiement(request):
     return HttpResponse(template.render({},request))
 
 def inscription_prod(request):
-    template = loader.get_template('espace_perso/inscription_prod.html')
-    return HttpResponse(template.render({},request))
-
-def connexion_prod(request):
     if request.method == 'POST':
-        form = ProducteurFormConnexion(request.POST, request.FILES)
+        form = ProducteurFormInscription(request.POST)
         if form.is_valid():
-            
+            instance = form.save()
+            instance.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/')
     else:
+        form = ProducteurFormInscription()
+    return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
+
+def connexion_prod(request):
+    if request.method == 'POST':
+        form = ProducteurFormConnexion(request, data=request.POST)
+        if form.is_valid():
+            print("valid")
+            return HttpResponseRedirect('/')
+        else :
+            print("invalid")
+            print(request.POST)
+
+    else:
         form = ProducteurFormConnexion()
     return render(request, 'espace_perso/connexion_prod.html', {'form' : form})
-

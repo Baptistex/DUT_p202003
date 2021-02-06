@@ -9,6 +9,8 @@ class Personne(AbstractBaseUser):
     mail = models.EmailField(max_length=100)
     num_tel = models.CharField(max_length=100)
 
+    USERNAME_FIELD = 'mail'
+
     def __str__(self):
         return str(self.person_id)+str(nom)
     
@@ -22,7 +24,7 @@ class Utilisateur(Personne):
         db_table = 'utilisateur'
 
 class Producteur(Personne):
-
+    
     class Meta(Personne.Meta):
         db_table = 'producteur'
 

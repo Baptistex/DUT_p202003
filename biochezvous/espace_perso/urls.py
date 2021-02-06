@@ -1,5 +1,6 @@
 from django.urls import path
-
+from .forms import ProducteurFormConnexion
+from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 
 urlpatterns = [
