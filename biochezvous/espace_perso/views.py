@@ -5,12 +5,8 @@ from collections import namedtuple
 from django.template import loader
 
 from .models import Personne, Utilisateur, Producteur
-<<<<<<< HEAD
 from .forms import ContactFormInscription
 
-=======
-from .forms import ProducteurFormConnexion, ProducteurFormInscription
->>>>>>> ac0be71c693cde282b98625599c6ca68a40e9903
 
 # Create your views here.
 
