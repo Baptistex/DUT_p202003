@@ -1,4 +1,6 @@
 from django import forms
+from .models import Producteur
+from django.forms import ModelForm
 
 class ContactFormInscription(forms.Form):
     name = forms.CharField(
@@ -35,3 +37,15 @@ class ContactFormInscription(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
         required=True
         )
+
+
+
+class ProducteurFormInscription(ModelForm):
+    class Meta:
+        model = Producteur
+        fields = ['nom', 'prenom', 'mail', 'num_tel', 'password']
+
+class ProducteurFormConnexion(ModelForm):
+    class Meta:
+        model = Producteur
+        fields = ['nom', 'password']
