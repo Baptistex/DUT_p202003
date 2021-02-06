@@ -7,3 +7,12 @@ class ContactFormInscription(ModelForm):
         model = Utilisateur
         fields = ['nom','prenom','password','mail','num_tel']
 
+class ProducteurFormInscription(ModelForm):
+    class Meta:
+        model = Producteur
+        fields = ['nom', 'prenom', 'mail', 'num_tel', 'password']
+
+class ProducteurFormConnexion(ModelForm):
+    class Meta:
+        model = Producteur
+        fields = ['nom', 'password']
