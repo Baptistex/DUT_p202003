@@ -380,7 +380,7 @@ section {
     transform: translate(-50%, -50%);
     width: 122px;
     height: 66px;
-    background: url(../img/section-title-bg.png) no-repeat;
+    background: url(../img/section-title-bg-test2.png) no-repeat;
     z-index: -1;
 }
 
@@ -913,12 +913,15 @@ section {
     box-shadow: 0 0 30px #263f49;
     padding: 20px 0 30px 0;
 }
+
+
 /*
 .contact .info-box:hover i {
     background-color: #555555;
     transition: 0.5s;
 }
 */
+
 .contact .info-box i {
     font-size: 32px;
     color: #00ffc6;
@@ -1091,12 +1094,15 @@ section {
 #
 ---------------------------------------------------------------*/
 
+
 /*--------------------------------------------------------------
 # Service 
 ---------------------------------------------------------------*/
+
 #services .row {
     align-items: center;
 }
+
 
 /*--------------------------------------------------------------
 # Portfolio
@@ -1117,12 +1123,9 @@ section {
 }
 
 @media screen and (min-width: 640px) {
-
-
     #portfolio-flters {
         padding-left: 20px;
     }
-
     #prod #portfolio-flters li {
         cursor: pointer;
         background-color: #555555;
@@ -1133,18 +1136,15 @@ section {
         font-size: 35px;
         color: #00ffc6;
     }
-
     #prod #portfolio-flters li:hover {
         background-color: #00ffc6;
         color: #f8fbfd;
         transition: background-color 0.3s, color 0.3s;
     }
-
     #prod #portfolio-flters .filter-active {
         background-color: #00ffc6;
         color: #55555555;
     }
-
 }
 
 .prod .portfolio-container {
@@ -1177,8 +1177,6 @@ section {
 }
 
 @media screen and (min-width: 640px) {
-
-
     .prod .prod-wrap .prod-links {
         opacity: 1;
         left: 0;
@@ -1190,7 +1188,6 @@ section {
         display: flex;
         justify-content: center;
     }
-
     .prod .prod-wrap .prod-links a {
         color: #fff;
         font-size: 28px;
@@ -1199,15 +1196,12 @@ section {
         transition: 0.3s;
         width: 50%;
     }
-
     .prod .prod-wrap .prod-links a:hover {
         background: rgba(0, 255, 192, 0.99);
     }
-
-    .prod .prod-wrap .prod-links a + a {
+    .prod .prod-wrap .prod-links a+a {
         border-left: 1px solid #00ffc6;
     }
-
     .prod .prod-wrap:hover::before {
         top: 0;
         left: 0;
@@ -1215,7 +1209,6 @@ section {
         bottom: 0;
         opacity: 1;
     }
-
     .prod .prod-wrap:hover .prod-links {
         opacity: 1;
         bottom: 0;
@@ -1225,6 +1218,7 @@ section {
 .liste_fruits {
     display: none;
 }
+
 
 /*----MEDIA QUERIES--------------------------------------------*/
 
@@ -1236,55 +1230,43 @@ section {
         z-index: 1;
         /*clip-path: circle(40%);*/
     }
-
     .prod .prod-wrap img {
         clip-path: circle(40%);
     }
-    
-
     .prod .prod-links {
         display: flex;
         justify-content: space-around;
         padding: 20px 70px;
     }
-
     .prod .prod-links a {
         color: #555555;
         font-size: 25px;
     }
-
     .filtre_leg_fruit {
         display: none;
     }
-
     .liste_fruits {
         display: block;
     }
-
     .prod .portfolio-container {
         margin-top: 0px;
         margin-left: 0px;
     }
-
     #prod h2 {
         text-align: left;
     }
-
     #prod .section-title h2::after {
         left: 40%;
         top: 50%;
     }
-
-
     .prod .prod-wrap:hover .prod-links {
         bottom: 20px;
     }
 }
 
 
-
-
 /**************************************************************/
+
 
 /*--------------------------------------------------------------
 # Barre de recherche
@@ -1297,7 +1279,6 @@ section {
 .prod .prod-wrap .prod-links a+a {
     border-left: 1px solid #00ffc6;
 }
-
 
 #moteur_recherche button {
     width: 150px;
@@ -1331,9 +1312,11 @@ section {
     margin-top: 100px;
 }
 
+
 /*--------------------------------------------------------------
 # description
 ---------------------------------------------------------------*/
+
 
 /* CARROUSSEL */
 
@@ -1343,18 +1326,18 @@ section {
 
 #description .carousel-inner {
     margin-left: 80px;
-    
 }
 
+
 /* DESCRIPTION */
-.note li{
+
+.note li {
     display: inline-block;
     list-style: none;
     font-size: 25px;
     cursor: pointer;
     color: #00ffc6;
 }
-
 
 #le_producteur {
     text-align: right;
@@ -1378,12 +1361,13 @@ section {
     cursor: pointer;
     font-size: 18px;
 }
+
 #description i {
     font-size: 35px;
 }
 
 .couleur,
-#description li:hover{
+#description li:hover {
     color: #555555;
 }
 
@@ -1400,6 +1384,7 @@ input[type=range].quantite {
     background-color: #555555;
     width: 200px;
 }
+
 
 /*------------AVIS CLIENT ----------------------------------*/
 
@@ -1434,8 +1419,6 @@ input[type=range].quantite {
 #formulaire .comm {
     height: 50%;
 }
-
-
 
 #formulaire input:focus {
     border-color: #00ffc6;

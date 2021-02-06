@@ -1,12 +1,16 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from collections import namedtuple
 from django.template import loader
 
 from .models import Personne, Utilisateur, Producteur
+<<<<<<< HEAD
 from .forms import ContactFormInscription
 
+=======
+from .forms import ProducteurFormConnexion, ProducteurFormInscription
+>>>>>>> ac0be71c693cde282b98625599c6ca68a40e9903
 
 # Create your views here.
 
@@ -48,4 +52,19 @@ def wip_inscription(request):
 def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')
     return HttpResponse(template.render({},request))
+
+def inscription_prod(request):
+    template = loader.get_template('espace_perso/inscription_prod.html')
+    return HttpResponse(template.render({},request))
+
+def connexion_prod(request):
+    if request.method == 'POST':
+        form = ProducteurFormConnexion(request.POST, request.FILES)
+        if form.is_valid():
+            
+            #TODO: changer la redirection
+            return HttpResponseRedirect('/')
+    else:
+        form = ProducteurFormConnexion()
+    return render(request, 'espace_perso/connexion_prod.html', {'form' : form})
 

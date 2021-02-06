@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     #'espace_perso.apps.EspacePersoConfig',
     'espace_perso',
     'produit',
+    'accueil',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

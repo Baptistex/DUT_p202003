@@ -7,6 +7,8 @@ urlpatterns = [
     path('connexion', views.wip_connexion, name='wip_connexion'),
     path('inscription',views.wip_inscription, name='wip_inscription'),
     path('paiement',views.paiement, name='paiement'),
+    path('inscription_prod',views.inscription_prod, name='inscription_prod'),
+    path('connexion_prod', views.connexion_prod, name='connexion_prod'),
 
 
 ]

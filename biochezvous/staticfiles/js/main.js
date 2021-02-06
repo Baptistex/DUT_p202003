@@ -84,6 +84,7 @@
     $(".mobile-nav, .mobile-nav-toggle").hide();
   }
 
+  /*
   // Navigation active state on scroll
   var nav_sections = $('section');
   var main_nav = $('.nav-menu, .mobile-nav');
@@ -106,7 +107,7 @@
       }
     });
   });
-
+*/
   // Toggle .header-scrolled class to #header when page is scrolled
   $(window).scroll(function() {
     if ($(this).scrollTop() > 0) { // valeur de scroll pour savoir quand afficher le fond de color #555555 de la barre de nav
