@@ -1,11 +1,10 @@
 from django.db import models
+from django.contrib.auth.base_user import AbstractBaseUser
 
-
-class Personne(models.Model):
+class Personne(AbstractBaseUser):
     id_personne = models.AutoField(primary_key=True)
     nom = models.TextField()
     prenom = models.TextField()
-    mot_de_passe = models.TextField()
     mail = models.TextField()
     num_tel = models.TextField()
 
