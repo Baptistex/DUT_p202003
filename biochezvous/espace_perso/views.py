@@ -38,3 +38,7 @@ def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')
     return HttpResponse(template.render({},request))
 
+def espacePerso(request):
+    template = loader.get_template('espace_perso/espacePerso.html')
+    return HttpResponse(template.render({},request))
+
