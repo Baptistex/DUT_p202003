@@ -1,5 +1,4 @@
 from django.urls import path
-from .forms import ProducteurFormConnexion
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 
@@ -10,6 +9,7 @@ urlpatterns = [
     path('paiement',views.paiement, name='paiement'),
     path('inscription_prod',views.inscription_prod, name='inscription_prod'),
     path('connexion_prod', views.connexion_prod, name='connexion_prod'),
+    path('deconnexion', views.deconnexion, name='deconnexion'),
 
 
 ]

@@ -3,9 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from collections import namedtuple
 from django.template import loader
-from django.contrib.auth import authenticate
-from .models import Personne, Utilisateur, Producteur
-from .forms import ContactFormInscription, ProducteurFormConnexion, ProducteurFormInscription
+from django.contrib.auth import authenticate, login, logout
+from .models import Utilisateur
+from .forms import FormInscription, FormConnexion
 
 
 # Create your views here.
@@ -34,14 +34,14 @@ def wip_connexion(request):
 
 def wip_inscription(request):
     if request.method == 'POST':
-        form = ContactFormInscription(request.POST, request.FILES)
+        form = FormInscription(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/')
     else:
-        form = ContactFormInscription()
+        form = FormInscription()
     return render(request, 'espace_perso/wip_inscription.html', {'form': form})
 
 
@@ -51,26 +51,39 @@ def paiement(request):
 
 def inscription_prod(request):
     if request.method == 'POST':
-        form = ProducteurFormInscription(request.POST)
+        form = FormInscription(request.POST)
         if form.is_valid():
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/')
     else:
-        form = ProducteurFormInscription()
+        form = FormInscription()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
 def connexion_prod(request):
+    verif_connexion = "Vous n'êtes pas connecté."
+    if request.user.is_authenticated:
+        verif_connexion = "Vous êtes connecté."
+
     if request.method == 'POST':
-        form = ProducteurFormConnexion(request, data=request.POST)
+        form = FormConnexion(data=request.POST)
         if form.is_valid():
-            print("valid")
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+
             return HttpResponseRedirect('/')
-        else :
-            print("invalid")
-            print(request.POST)
 
     else:
-        form = ProducteurFormConnexion()
-    return render(request, 'espace_perso/connexion_prod.html', {'form' : form})
+        form = FormConnexion()
+    return render(request, 'espace_perso/connexion_prod.html', {'form' : form, 'verif_connexion' : verif_connexion})
+
+
+def deconnexion(request):
+    template = loader.get_template('espace_perso/deconnexion.html')
+    if request.user.is_authenticated:
+        logout(request)
+    return HttpResponse(template.render({},request))

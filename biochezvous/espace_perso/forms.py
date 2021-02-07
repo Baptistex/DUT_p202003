@@ -1,18 +1,15 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Utilisateur, Producteur
+from .models import Utilisateur, Personne
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-class ContactFormInscription(ModelForm):
-    class Meta:
-        model = Utilisateur
-        fields = ['nom','prenom','password','mail','num_tel']
 
-class ProducteurFormInscription(UserCreationForm):
-    class Meta:
-        model = Producteur
-        fields = ['nom', 'prenom', 'mail', 'num_tel']
 
-class ProducteurFormConnexion(AuthenticationForm):
+class FormInscription(UserCreationForm):
     class Meta:
-        model = Producteur
-        fields = ['mail', 'password']
+        model = Personne
+        fields = ['nom','prenom','mail','num_tel']
+
+class FormConnexion(AuthenticationForm):
+    class Meta:
+        model = Personne
+        fields = ['username', 'password']

@@ -17,7 +17,7 @@ class Produit(models.Model):
     date = models.DateTimeField()
 
     def __str__(self):
-        return "Produit : "+str(nom)
+        return "Produit : "+str(self.nom)
     
     class Meta:
         db_table = 'produit'
@@ -41,7 +41,7 @@ class TypeProduit(models.Model):
     tva = models.FloatField()
 
     def __str__(self):
-        return "Produit : "+str(nom)+str(id_type)
+        return "Produit : "+str(self.nom)+str(self.id_type)
     
     class Meta:
         db_table = 'typeproduit'
@@ -53,7 +53,7 @@ class Categorie(models.Model):
     nom = models.TextField()
         
     def __str__(self):
-        return "Categorie : "+str(nom)+str(id_categorie)
+        return "Categorie : "+str(self.nom)+str(self.id_categorie)
 
     class Meta:
         db_table = 'categorie'
