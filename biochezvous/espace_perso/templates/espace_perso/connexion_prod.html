@@ -1,0 +1,15 @@
+{% extends "produit/base.html" %}
+{% load static %}
+
+{% block title %}Connexion d'un producteur{% endblock %}
+
+
+{% block content %}
+{{ verif_connexion }}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+{% endblock %}
+

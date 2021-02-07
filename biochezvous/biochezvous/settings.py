@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     #'espace_perso.apps.EspacePersoConfig',
     'espace_perso',
     'produit',
+    'accueil',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +53,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    ('django.contrib.auth.backends.ModelBackend'),
+)
+
+AUTH_USER_MODEL = 'espace_perso.Personne'
 
 ROOT_URLCONF = 'biochezvous.urls'
 
