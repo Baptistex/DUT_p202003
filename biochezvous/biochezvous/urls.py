@@ -20,7 +20,6 @@ urlpatterns = [
     path('', include('espace_perso.urls')),
     path('', include('produit.urls')   ),
     path('', include('accueil.urls')   ),
-    path('', include('espace_admin.urls')),
     path('admin/', admin.site.urls),
 ]
 
