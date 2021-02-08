@@ -1,0 +1,71 @@
+{% extends "produit/base.html" %}
+{% load static %}
+{% block title %}Espace Administrateur - Utiisateurs inscris{% endblock %}
+{% block content %}
+<div class="container admin">
+    <div class="row">
+        <div class="col">
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Espace Administrateur</h2><br>
+                <h3>Liste d'utilisateurs inscrit</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Les Producteurs -->
+    <div class="row">
+        <div class="col-12">
+            <h3>Les producteurs</h3>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+
+            <!-- Nom des colonnes-->
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Nombre de produits</th>
+                    <th>Identifiant</th>
+                    <th>Mot de passe</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            
+            <!--Contenu-->
+            <tbody>
+                <!-- Requête SQL pour afficher les producteurs-->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Les Consommateurs -->
+    <div class="row">
+        <div class="col-12">
+            <h3>Les consommateurs</h3>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+
+            <!-- Nom des colonnes-->
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Nombre d'achats</th>
+                    <th>Identifiant</th>
+                    <th>Mot de passe</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            
+            <!--Contenu-->
+            <tbody>
+                <!-- Requête SQL pour afficher les consommateurs-->
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
