@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     #'espace_perso.apps.EspacePersoConfig',
     'espace_perso',
+    #'espace_admin',
     'produit',
     'accueil',
     'django.contrib.admin',
