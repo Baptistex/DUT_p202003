@@ -4,7 +4,7 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
-from .models import Utilisateur
+from .models import Utilisateur,Personne
 from .forms import FormInscription, FormConnexion
 
 
@@ -12,16 +12,15 @@ from .forms import FormInscription, FormConnexion
 
 
 def wip_userlist(request):
+#Suppression
+#b = Blog.objects.get(pk=1)
+# This will delete the Blog and all of its Entry objects.
+#b.delete()
 
     template = loader.get_template('espace_perso/wip_userlist.html')
-    #Creation de manière statique d'une personne (exemple)
-    pers = Utilisateur(nom = "paul", prenom = "patate", mot_de_passe = "aaa", mail = "a@a.fr", num_tel = "01")
-    #Sauvegarde de la personne dans la bdd
-    pers.save()
-
     #Recuperation de toute la table personne dans une variable table_pers
     #  et passage a la template via context
-    table_pers = Utilisateur.objects.all()
+    table_pers = Personne.objects.all()
     context = {
         'userlist': table_pers
     }
@@ -39,7 +38,7 @@ def wip_inscription(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/connexion')
     else:
         form = FormInscription()
     return render(request, 'espace_perso/wip_inscription.html', {'form': form})
@@ -60,7 +59,7 @@ def inscription_prod(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/connexion')
     else:
         form = FormInscription()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})

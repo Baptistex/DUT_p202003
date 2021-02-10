@@ -9,6 +9,12 @@ class Personne(AbstractBaseUser):
     prenom = models.CharField(max_length=100)
     mail = models.EmailField(max_length=100, unique=True)
     num_tel = models.CharField(max_length=100)
+    code_postal = models.CharField(max_length=10, blank=True)
+    ville  = models.CharField(max_length=60, blank=True)
+    adresse = models.CharField(max_length = 100,  blank=True)
+    #Pour plus tard :
+    #coord_x = models.FloatField()
+    #coord_y = models.FloatField()
 
     USERNAME_FIELD = 'mail'
     objects = UserManager()
