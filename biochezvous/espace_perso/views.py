@@ -6,6 +6,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
 from .forms import FormInscription, FormConnexion, TestForm
+from espace_perso.forms import FormInscriptionProd
 
 
 # Create your views here.
@@ -54,14 +55,14 @@ def espacePerso(request):
 
 def inscription_prod(request):
     if request.method == 'POST':
-        form = FormInscription(request.POST)
+        form = FormInscriptionProd(request.POST)
         if form.is_valid():
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/connexion')
     else:
-        form = FormInscription()
+        form = FormInscriptionProd()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
 def connexion_prod(request):
