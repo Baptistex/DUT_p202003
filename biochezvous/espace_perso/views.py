@@ -105,11 +105,30 @@ def modif_data(request):
     else:
         #form = FormInscription()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
+
 """
 
-
-def Test(request):
+def Test2(request):
     form = TestForm()
+    if request.method == 'POST' :
+        form = TestForm(request.POST)
+        if form.is_valid():
+            form.save()
     context = {'form':form}
-    return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
+    return render(request, 'espace_perso/Test.html', context)
 
+
+#def modifDataUtilisateur(request):
+def Test(request):
+    #form = TestForm()
+    id_personne = 9
+    u = Personne.objects.get(id_personne=id_personne)
+    form = TestForm(instance=u)
+
+    if request.method == 'POST' :
+        form = TestForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+
+    context = {'form':form}
+    return render(request, 'espace_perso/Test.html', context)
