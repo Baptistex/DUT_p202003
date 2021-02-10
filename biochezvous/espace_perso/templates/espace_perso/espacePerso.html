@@ -28,43 +28,52 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="Nom">Nom</label>
-                    <input type="text" class="form-control" id="Nom">
+                    <input type="text" name="nom" class="form-control" id="Nom">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="Prenom">Prénom</label>
-                    <input type="text" class="form-control" id="Prenom">
+                    <input type="text"  name="prenom" class="form-control" id="Prenom">
                 </div>
             </div>
-            <div class="form-row justify-content-between">
+        <!--   <div class="form-row justify-content-between">
                 <div class="form-group col-md-10">
                     <label for="mail">Adresse mail</label>
-                    <input type="email" class="form-control" id="mail">
+                    <input type="email"  name="mail" class="form-control" id="mail">
                 </div>
                 <div class="form-group col-md-2 align-self-end text-right">
                     <button type="submit" class="btn btn-primary">Modifier mot de passe</button>
                 </div>
+            </div>--> 
+            <div class="form-row justify-content-between">
+                <div class="form-group col-md-6">
+                    <label for="mail">Adresse mail</label>
+                    <input type="email"  name="mail" class="form-control" id="mail">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="mail">Numéro de téléphone</label>
+                    <input type="text"  name="num_tel" class="form-control" id="num_tel">                </div>
             </div>
             <div class="form-group">
                 <label for="adrPostale">Addresse postale</label>
-                <input type="text" class="form-control" id="adrPostale" placeholder="128 rue des tulipes">
+                <input type="text" name="adresse" class="form-control" id="adresse" placeholder="128 rue des tulipes">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-8">
                     <label for="Ville">Ville</label>
-                    <input type="text" class="form-control" id="Ville">
+                    <input type="text" name="ville" class="form-control" id="Ville">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="CodePostal">Code Postal</label>
-                    <input type="text" class="form-control" id="CodePostal">
+                    <input type="text" name="code_postal" class="form-control" id="CodePostal">
                 </div>
             </div>
-            <div class="form-group">
+        <!--    <div class="form-group">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="gridCheck">
                     <label class="form-check-label" for="gridCheck">
                         Check me out
                     </label>
-                </div>
+                </div>-->
             </div>
             <button type="submit" class="btn btn-primary">Modifier</button>
         </form>

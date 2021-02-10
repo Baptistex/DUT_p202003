@@ -5,7 +5,7 @@ from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
-from .forms import FormInscription, FormConnexion, TestForm
+from .forms import FormInscription, FormConnexion, FormDataModification
 
 
 # Create your views here.
@@ -46,10 +46,6 @@ def wip_inscription(request):
 
 def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')
-    return HttpResponse(template.render({},request))
-
-def espacePerso(request):
-    template = loader.get_template('espace_perso/espacePerso.html')
     return HttpResponse(template.render({},request))
 
 def inscription_prod(request):
@@ -109,9 +105,9 @@ def modif_data(request):
 """
 
 def Test2(request):
-    form = TestForm()
+    form = FormDataModification()
     if request.method == 'POST' :
-        form = TestForm(request.POST)
+        form = FormDataModification(request.POST)
         if form.is_valid():
             form.save()
     context = {'form':form}
@@ -119,16 +115,16 @@ def Test2(request):
 
 
 #def modifDataUtilisateur(request):
-def Test(request):
+def espacePerso(request):
     #form = TestForm()
     id_personne = 9
     u = Personne.objects.get(id_personne=id_personne)
-    form = TestForm(instance=u)
+    form = FormDataModification(instance=u)
 
     if request.method == 'POST' :
-        form = TestForm(request.POST, instance=u)
+        form = FormDataModification(request.POST, instance=u)
         if form.is_valid():
             form.save()
 
     context = {'form':form}
-    return render(request, 'espace_perso/Test.html', context)
+    return render(request, 'espace_perso/espacePerso.html', context)
