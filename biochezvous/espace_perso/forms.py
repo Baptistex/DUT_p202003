@@ -17,6 +17,6 @@ class FormConnexion(AuthenticationForm):
 class TestForm(ModelForm):
     class Meta:
         model = Personne
-        fields = ['nom','prenom','mail','num_tel'] #Mettre adr ici pour modifier l'adresse
+        fields = '__all__' #Mettre adr ici pour modifier l'adresse
 
         
