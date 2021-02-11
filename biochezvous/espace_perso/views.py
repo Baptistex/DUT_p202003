@@ -14,7 +14,7 @@ from django.contrib.auth.models import Group, Permission
 # Create your views here.
 
 
-def wip_userlist(request,person_id=1):
+def wip_userlist(request,person_id):
     template = loader.get_template('espace_perso/wip_userlist.html')
     if  person_id == None:
         person = Personne()
@@ -25,7 +25,7 @@ def wip_userlist(request,person_id=1):
             'userlist': table_pers
         }
     #Suppression
-        #person.delete();
+        person.delete();
     return HttpResponse(template.render(context,request))
 
 
