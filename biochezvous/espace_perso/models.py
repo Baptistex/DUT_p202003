@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import Group, Permission, PermissionsMixin, UserManager
 
 
-class Personne(AbstractBaseUser):
+class Personne(AbstractBaseUser, PermissionsMixin):
     id_personne = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
@@ -26,17 +26,24 @@ class Personne(AbstractBaseUser):
         db_table = 'personne'
 
 
-class Utilisateur(models.Model):
-    user = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
-
+class Utilisateur(Group):
+    user_user = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
+    name = "utilisateur"
 
     class Meta:
         db_table = 'utilisateur'
+        permissions = [
+            ('can_view_espace_perso', 'Peux acceder a la page espace perso')
+        ]
 
 
-class Producteur(models.Model):
-    user = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
-
+class Producteur(Group):
+    user_prod = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
+    name = "producteur"
     class Meta:
         db_table = 'producteur'
-
+        permissions = [
+            ('can_view_espace_perso', 'Peux acceder a la page espace perso')
+        ]
+            
+        

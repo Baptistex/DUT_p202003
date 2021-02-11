@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
 from .forms import FormInscription, FormConnexion, TestForm
 from espace_perso.forms import FormInscriptionProd
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import Group, Permission
 
 
 # Create your views here.
@@ -44,7 +46,7 @@ def wip_inscription(request):
         form = FormInscription()
     return render(request, 'espace_perso/wip_inscription.html', {'form': form})
 
-
+@permission_required ('espace_perso.can_view_espace_perso')
 def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')
     return HttpResponse(template.render({},request))
@@ -114,3 +116,10 @@ def Test(request):
     context = {'form':form}
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
+#   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
+#def update_Permissions(request):
+#    prod_group, created = Group.objects.get_or_create(name='producteur')
+#    print(prod_group.permissions)
+#    prod_group.permissions.add(
+#        Permission.objects.get(codename='can_view_espace_perso')
+#    )
