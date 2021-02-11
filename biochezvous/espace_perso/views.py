@@ -11,19 +11,18 @@ from .forms import FormInscription, FormConnexion
 # Create your views here.
 
 
-def wip_userlist(request):
-#Suppression
-#b = Blog.objects.get(pk=1)
-# This will delete the Blog and all of its Entry objects.
-#b.delete()
-
+def wip_userlist(request,person_id=1):
     template = loader.get_template('espace_perso/wip_userlist.html')
-    #Recuperation de toute la table personne dans une variable table_pers
-    #  et passage a la template via context
-    table_pers = Personne.objects.all()
-    context = {
-        'userlist': table_pers
-    }
+    if  person_id == None:
+        person = Personne()
+    else:
+        person = Personne.objects.get(id_personne = person_id)
+        table_pers = Personne.objects.all()
+        context = {
+            'userlist': table_pers
+        }
+    #Suppression
+        #person.delete();
     return HttpResponse(template.render(context,request))
 
 
