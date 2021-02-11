@@ -115,16 +115,18 @@ def Test2(request):
 
 
 #def modifDataUtilisateur(request):
-def espacePerso(request):
-    #form = TestForm()
+#def espacePerso(request):
+def Test(request):
+    #TODO changer et unifier le bazar
+    #TODO voir les sessions pour récupérer l'id
+    #TODO Vérifier les champs
     id_personne = 9
     u = Personne.objects.get(id_personne=id_personne)
     form = FormDataModification(instance=u)
-
     if request.method == 'POST' :
         form = FormDataModification(request.POST, instance=u)
         if form.is_valid():
             form.save()
 
     context = {'form':form}
-    return render(request, 'espace_perso/espacePerso.html', context)
+    return render(request, 'espace_perso/Test.html', context)
