@@ -11,7 +11,14 @@
             </div>
         </div>
     </div>
-
+    <nav class="navigation">
+        <ul>
+            <li><a href="listeUtilisateurs"><i class="icofont-ui-user"></i></a></li>
+            <li><a href="transactions"><i class="icofont-envelope"></i></a></li>
+            <li><a href="transactions"><i class="icofont-exchange"></i></a></li>
+            <li><a href="transactions"><i class="icofont-help-robot"></i></a></li>
+        </ul>
+    </nav>
     <!-- Les Producteurs -->
     <div class="row">
         <div class="col-12">
@@ -26,16 +33,25 @@
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th>Nombre de produits</th>
                     <th>Identifiant</th>
-                    <th>Mot de passe</th>
+                    <th>Mail</th>
+                    <th>Numéro téléphone</th>
                     <th>Action</th>
                 </tr>
             </thead>
             
             <!--Contenu-->
             <tbody>
-                <!-- Requête SQL pour afficher les producteurs-->
+                {% for prod in listeProd %}
+                <tr>
+                    <td>{{prod.nom }}</td>
+                    <td>{{prod.prenom }}</td>
+                    <td>{{prod.id_personne }}</td>            
+                    <td>{{prod.mail }}</td>
+                    <td>{{prod.num_tel }}</td>
+                    <td><button class="btn supp" id="btnSuppr" type="submit">Supprimer</button></td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
@@ -54,16 +70,25 @@
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th>Nombre d'achats</th>
                     <th>Identifiant</th>
-                    <th>Mot de passe</th>
+                    <th>Mail</th>
+                    <th>Numéro téléphone</th>
                     <th>Action</th>
                 </tr>
             </thead>
             
             <!--Contenu-->
             <tbody>
-                <!-- Requête SQL pour afficher les consommateurs-->
+                {% for conso in listeConso %}
+                <tr>
+                    <td>{{conso.nom }}</td>
+                    <td>{{conso.prenom }}</td>
+                    <td>{{conso.id_personne }}</td>            
+                    <td>{{conso.mail }}</td>
+                    <td>{{conso.num_tel }}</td>
+                    <td><button class="btn suppr" id="btnSuppr" type="submit">Supprimer</button></td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
