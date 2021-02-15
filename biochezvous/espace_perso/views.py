@@ -5,7 +5,7 @@ from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
-from .forms import FormInscription, FormConnexion, TestForm
+from .forms import FormInscription, FormConnexion, TestForm , Supression
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
@@ -13,20 +13,21 @@ from django.contrib.auth.models import Group, Permission
 
 # Create your views here.
 
-
-def wip_userlist(request,person_id):
+def wip_userlist(request):
     template = loader.get_template('espace_perso/wip_userlist.html')
-    if  person_id == None:
-        person = Personne()
-    else:
-        person = Personne.objects.get(id_personne = person_id)
-        table_pers = Personne.objects.all()
-        context = {
-            'userlist': table_pers
-        }
+    #if  person_id == None:
+       #person = Personne()
+    #else:
+    #person = Personne.objects.get(id_personne = 10)
+    table_pers = Personne.objects.all()
+    context = {
+        'userlist': table_pers
+    }
     #Suppression
-        person.delete();
+    #person.delete();
     return HttpResponse(template.render(context,request))
+
+
 
 
 def wip_connexion(request):

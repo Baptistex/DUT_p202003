@@ -37,4 +37,3 @@ class TestForm(ModelForm):
         model = Personne
         fields = ['nom','prenom','mail','num_tel'] #Mettre adr ici pour modifier l'adresse
 
-        
