@@ -20,9 +20,9 @@ class FormDataModification(ModelForm):
     prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
     mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
     num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-10'}))
+    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
     ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-5'}))
+    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3'}))
 
     class Meta:
         model = Personne

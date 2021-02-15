@@ -116,7 +116,7 @@ def Test2(request):
 
 #def modifDataUtilisateur(request):
 #def espacePerso(request):
-def Test(request):
+def espacePerso(request):
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
     #TODO Vérifier les champs
@@ -129,4 +129,4 @@ def Test(request):
             form.save()
 
     context = {'form':form}
-    return render(request, 'espace_perso/Test.html', context)
+    return render(request, 'espace_perso/espacePerso.html', context)

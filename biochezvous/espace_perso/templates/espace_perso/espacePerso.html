@@ -4,11 +4,6 @@
 {% block title %}Mon espace{% endblock %}
 
 {% block content %}
-<!-- <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload</button>
-</form>-->
 
 
 
@@ -18,65 +13,32 @@
         <h2> Espace personnel </h2>
     </div>
 
-    <div class="row justify-content-center">
-        <h3> Mes informations personnelles </h3>
-    </div>
 
-    <div class="row justify-content-center">
-        <form class="col-md-10" action="http://127.0.0.1:8000/inscription_prod" method="post">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="Nom">Nom</label>
-                    <input type="text" name="nom" class="form-control" id="Nom">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="Prenom">Prénom</label>
-                    <input type="text"  name="prenom" class="form-control" id="Prenom">
-                </div>
+    
+
+
+    <!-- Bouton pour afficher le formulaire pour modifier les infos persos -->
+    <button class="btn btn-primary mb-2" type="button" data-target="#MonCollapse" data-toggle="collapse"
+        aria-expanded="false" aria-controls="MonCollapse">Modifier mes informations</button>
+
+    <!-- le formulaire -->
+
+    <section id="MonCollapse" class="collapse">
+        <div class="well">
+            <h2> Mes informations </h2>
+            <div class="form-group col-md-10">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Go</button>
+                </form>
             </div>
-        <!--   <div class="form-row justify-content-between">
-                <div class="form-group col-md-10">
-                    <label for="mail">Adresse mail</label>
-                    <input type="email"  name="mail" class="form-control" id="mail">
-                </div>
-                <div class="form-group col-md-2 align-self-end text-right">
-                    <button type="submit" class="btn btn-primary">Modifier mot de passe</button>
-                </div>
-            </div>--> 
-            <div class="form-row justify-content-between">
-                <div class="form-group col-md-6">
-                    <label for="mail">Adresse mail</label>
-                    <input type="email"  name="mail" class="form-control" id="mail">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="mail">Numéro de téléphone</label>
-                    <input type="text"  name="num_tel" class="form-control" id="num_tel">                </div>
-            </div>
-            <div class="form-group">
-                <label for="adrPostale">Addresse postale</label>
-                <input type="text" name="adresse" class="form-control" id="adresse" placeholder="128 rue des tulipes">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8">
-                    <label for="Ville">Ville</label>
-                    <input type="text" name="ville" class="form-control" id="Ville">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="CodePostal">Code Postal</label>
-                    <input type="text" name="code_postal" class="form-control" id="CodePostal">
-                </div>
-            </div>
-        <!--    <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Check me out
-                    </label>
-                </div>-->
-            </div>
-            <button type="submit" class="btn btn-primary">Modifier</button>
-        </form>
-    </div>
+        </div>
+    </section>
+
+
 </div>
 {% endblock %}
+
+
+
