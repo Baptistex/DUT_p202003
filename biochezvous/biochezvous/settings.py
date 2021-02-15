@@ -140,3 +140,14 @@ STATICFILES_DIRS = [
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
+
+
+# Django Emails
+
+
+
+EMAIL_HOST = ''
+EMAIL_PORT = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = 'Ventes!?loc2021'
+EMAIL_USE_TLS = True
