@@ -9,12 +9,10 @@ from .forms import ProduitForm
 
 
 
-def produit(request):
-    template = loader.get_template('produit/produits.html')
-    return HttpResponse(template.render({},request))
+
 
 def produit_django(request):
-    template = loader.get_template('produit/produit.html')
+    # template = loader.get_template('produit/produit.html')
 
     #Recuperation de toute la table personne dans une variable table_pers
     #  et passage a la template via context
@@ -22,12 +20,27 @@ def produit_django(request):
     context = {
         'lesproduits': table_produits
     }
+    return render(request, 'produit/produit.html', context)
 
-    return HttpResponse(template.render({},request))
 
-def produit_description(request):
-    template = loader.get_template('produit/description_prod.html')
-    return HttpResponse(template.render({},request))
+
+
+def produit(request, idProduit):
+    #template = loader.get_template('produit/description_prod.html')
+    # affichage de la description du produit
+    produit = Produit.objects.get(id_produit = idProduit)
+    producteur = Personne.objects.get(id_personne = produit.id_producteur)
+    context = {
+        'leproduit': produit,
+        'id': produit.id_produit
+    }
+    return render(request, 'produit/description_prod.html', context)
+
+
+
+
+
+
 
 def liste_produit(request):
     template = loader.get_template('produit/produits.html')
