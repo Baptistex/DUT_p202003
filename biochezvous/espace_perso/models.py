@@ -27,23 +27,15 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 
 
 class Utilisateur(Group):
-    user_user = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
-    name = "utilisateur"
-
     class Meta:
+        proxy = True
         db_table = 'utilisateur'
-        permissions = [
-            ('can_view_espace_perso', 'Peux acceder a la page espace perso')
-        ]
 
 
 class Producteur(Group):
-    user_prod = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
-    name = "producteur"
     class Meta:
+        
+        proxy = True
         db_table = 'producteur'
-        permissions = [
-            ('can_view_espace_perso', 'Peux acceder a la page espace perso')
-        ]
             
         

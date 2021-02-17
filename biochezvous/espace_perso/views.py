@@ -4,7 +4,7 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
-from .models import Utilisateur,Personne
+from .models import Utilisateur, Personne, Producteur
 from .forms import FormInscription, FormConnexion, TestForm #, Suppression
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
@@ -71,7 +71,8 @@ def connexion_prod(request):
     verif_connexion = "Vous n'êtes pas connecté."
     if request.user.is_authenticated:
         verif_connexion = "Vous êtes connecté."
-
+    #Affiche tous les proucteurs
+    print(Personne.objects.filter(groups__name='producteur'))
     if request.method == 'POST':
         form = FormConnexion(data=request.POST)
         if form.is_valid():
