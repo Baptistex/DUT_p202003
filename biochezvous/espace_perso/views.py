@@ -5,7 +5,7 @@ from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
-from .forms import FormInscription, FormConnexion, TestForm #, Suppression
+from .forms import FormInscription, FormConnexion, FormInscriptionUser, TestForm #, Suppression
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
@@ -53,7 +53,21 @@ def paiement(request):
 
 def espacePerso(request):
     template = loader.get_template('espace_perso/espacePerso.html')
+    
     return HttpResponse(template.render({},request))
+
+def inscription_user(request):
+    if request.method == 'POST':
+        form = FormInscriptionUser(request.POST)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            #TODO: changer la redirection
+            return HttpResponseRedirect('/connexion')
+    else:
+        form = FormInscriptionProd()
+    #TODO : un template propre à chaque type d'inscription
+    return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
 def inscription_prod(request):
     if request.method == 'POST':
@@ -71,6 +85,7 @@ def connexion_prod(request):
     verif_connexion = "Vous n'êtes pas connecté."
     if request.user.is_authenticated:
         verif_connexion = "Vous êtes connecté."
+        print(request.user.groups.all())
 
     if request.method == 'POST':
         form = FormConnexion(data=request.POST)

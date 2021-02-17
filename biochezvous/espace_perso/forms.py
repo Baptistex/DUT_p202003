@@ -17,7 +17,6 @@ class FormConnexion(AuthenticationForm):
 
 class FormInscriptionProd(UserCreationForm):
     
-
     def save(self):
         user = super().save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
@@ -29,7 +28,18 @@ class FormInscriptionProd(UserCreationForm):
         model = Personne
         fields = ['nom','prenom','mail','num_tel']
 
-
+class FormInscriptionUser(UserCreationForm):
+    
+    def save(self):
+        user = super().save(commit=False)
+        user_group, created = Group.objects.get_or_create(name='utilisateur')
+        user.save()
+        user.groups.add(user_group)
+        user.save()
+        return user
+    class Meta:
+        model = Personne
+        fields = ['nom','prenom','mail','num_tel']
 
 
 class TestForm(ModelForm):
