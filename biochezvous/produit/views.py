@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import TypeProduit, Produit
+from .models import TypeProduit, Produit, Image
+from espace_perso.models import Personne
 from .forms import ProduitForm
 
 
@@ -9,16 +10,18 @@ from .forms import ProduitForm
 
 
 
-
-
 def produit_django(request):
-    # template = loader.get_template('produit/produit.html')
-
     #Recuperation de toute la table personne dans une variable table_pers
     #  et passage a la template via context
     table_produits = Produit.objects.all()
+    
+    #table_image = []
+    #for i in range (len(table_produits)):
+    #   table_image.append(Image.objects.filter(id_produit=table_produits[i].id_produit)[0])
+ 
     context = {
-        'lesproduits': table_produits
+        'lesproduits': table_produits,
+        #'image': table_image,
     }
     return render(request, 'produit/produit.html', context)
 
@@ -29,10 +32,15 @@ def produit(request, idProduit):
     #template = loader.get_template('produit/description_prod.html')
     # affichage de la description du produit
     produit = Produit.objects.get(id_produit = idProduit)
-    producteur = Personne.objects.get(id_personne = produit.id_producteur)
+    producteur = Personne.objects.get(id_personne = produit.id_producteur.user_prod_id)
+    print(produit.id_categorie.id_type.nom)
+    
+      
+    
     context = {
         'leproduit': produit,
-        'id': produit.id_produit
+        'id': produit.id_produit,
+        'producteur': producteur,
     }
     return render(request, 'produit/description_prod.html', context)
 

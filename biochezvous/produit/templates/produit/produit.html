@@ -106,14 +106,14 @@
                     </div>
                 {% endif %}
 
-                <div class="row portfolio-container mt-5" data-aos="fade-up">
+                <div class="row portfolio-container" data-aos="fade-up">
                     
             
 
                     {% for produit in lesproduits %}
-                    <div class="col col-lg-4 col-md-6 portfolio-item FRUITS">
+                    <div class="col col-lg-4 col-md-6 portfolio-item {{produit.id_categorie.id_type.nom}}">
                         <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="prod-links">
                                 <a href="#" title="App 1"><i class="icofont-heart"></i></a>
                                 <a href="{% url 'produit' produit.id_produit %}" title="More Details"><i class="icofont-plus"></i></a>
