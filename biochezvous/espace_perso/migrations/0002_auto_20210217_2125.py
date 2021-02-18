@@ -2,14 +2,16 @@
 
 from django.db import migrations
 from django.contrib.auth.models import Group, Permission
+from espace_perso.models import Personne
+from django.contrib.contenttypes.models import ContentType
 
+def add_group_permissions(apps, schema_editor):
 
-def add_group_permissions():
-
-
+    content_type = ContentType.objects.get_for_model(Personne)
     permission = Permission.objects.create(
-    codename='can_view_espace_perso',
-    name='Peut voir la page espace perso',
+        codename='can_view_espace_perso',
+        name='Peut voir la page espace perso',
+        content_type=content_type
     )
     user_group, created = Group.objects.get_or_create(name='utilisateur')
     prod_group, created = Group.objects.get_or_create(name='producteur')
