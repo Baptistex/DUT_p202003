@@ -85,8 +85,8 @@ def connexion_prod(request):
     verif_connexion = "Vous n'êtes pas connecté."
     if request.user.is_authenticated:
         verif_connexion = "Vous êtes connecté."
-        print(request.user.groups.all())
-
+    #Affiche tous les proucteurs
+    print(Personne.objects.filter(groups__name='producteur'))
     if request.method == 'POST':
         form = FormConnexion(data=request.POST)
         if form.is_valid():
