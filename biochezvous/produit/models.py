@@ -6,7 +6,7 @@ from django.db import models
 
 class Produit(models.Model):
     id_produit = models.AutoField(primary_key=True)
-    id_producteur = models.ForeignKey('espace_perso.Producteur', on_delete=models.CASCADE)
+    id_producteur = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE)
     id_categorie = models.ForeignKey('Categorie', on_delete=models.CASCADE)
     nom = models.CharField(max_length=50)
     description = models.TextField()

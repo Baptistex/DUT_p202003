@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit
 from .forms import ProduitForm
+from espace_perso.models import Personne
 
 
 # Create your views here.
@@ -29,10 +30,17 @@ def produit(request, idProduit):
     #template = loader.get_template('produit/description_prod.html')
     # affichage de la description du produit
     produit = Produit.objects.get(id_produit = idProduit)
-    producteur = Personne.objects.get(id_personne = produit.id_producteur)
+    producteur = Personne.objects.get(id_personne = produit.id_producteur_id)
+    #Un champ lié par clé étrangère peut être accédé comme ceci aussi:
+    #La confusion vient du fait que le champ s'appelle id_producteur dans le modèle
+    #Mais django ajoute le suffixe _id (donc id_producteur_id) dans la BDD
+    #TODO (Baptiste sur master) : Renommer les champs FK pour retirer le id_
+    #producteur = produit.id_producteur
+
     context = {
         'leproduit': produit,
-        'id': produit.id_produit
+        'id': produit.id_produit,
+        'producteur' : producteur,
     }
     return render(request, 'produit/description_prod.html', context)
 
