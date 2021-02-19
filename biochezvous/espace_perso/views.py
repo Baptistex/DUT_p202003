@@ -18,7 +18,7 @@ def wip_userlist(request):
     #if  person_id == None:
     #person = Personne()
     #else:
-    #person = Personne.objects.get(id_personne = 10)
+    #person = Personne.objects.get(personne_id = 10)
     table_pers = Personne.objects.all()
     context = {
         'userlist': table_pers
