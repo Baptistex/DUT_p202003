@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit
-from .forms import ProduitForm
+from .forms import ProduitForm, ImageForm
 from espace_perso.models import Personne
 
 
@@ -29,8 +29,8 @@ def produit_django(request):
 def produit(request, idProduit):
     #template = loader.get_template('produit/description_prod.html')
     # affichage de la description du produit
-    produit = Produit.objects.get(id_produit = idProduit)
-    producteur = Personne.objects.get(id_personne = produit.id_producteur_id)
+    produit = Produit.objects.get(produit_id = idProduit)
+    producteur = Personne.objects.get(personne_id = produit.producteur_id)
     #Un champ lié par clé étrangère peut être accédé comme ceci aussi:
     #La confusion vient du fait que le champ s'appelle id_producteur dans le modèle
     #Mais django ajoute le suffixe _id (donc id_producteur_id) dans la BDD
@@ -39,7 +39,7 @@ def produit(request, idProduit):
 
     context = {
         'leproduit': produit,
-        'id': produit.id_produit,
+        'id': produit.produit_id,
         'producteur' : producteur,
     }
     return render(request, 'produit/description_prod.html', context)
@@ -65,6 +65,19 @@ def ajout_prod(request):
             return HttpResponseRedirect('/')
     else:
         form = ProduitForm()
+    return render(request, 'produit/ajout_produit.html', {'form': form})
+
+
+def ajout_prod_image(request):
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            #TODO: changer la redirection
+            return HttpResponseRedirect('/')
+    else:
+        form = ImageForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def ajout_quantite(request):

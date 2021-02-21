@@ -7,7 +7,9 @@ urlpatterns = [
     path('produit/<int:idProduit>', views.produit, name='produit'),
 
     path('nouveauprod',views.ajout_prod, name='ajout_prod'),    
-    path('produit',views.produit_django, name='produit_django'),
+    path('nouvelleimage',views.ajout_prod_image, name='ajout_prod_image'),    
+
+    path('produits',views.produit_django, name='produit_django'),
 
     path('ajoutquantite',views.ajout_quantite, name='ajout_quantite'),
 
