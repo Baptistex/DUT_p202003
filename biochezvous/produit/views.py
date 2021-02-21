@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import TypeProduit, Produit
+from .models import Image, TypeProduit, Produit
 from .forms import ProduitForm, ImageForm
 from espace_perso.models import Personne
 
@@ -17,9 +17,18 @@ def produit_django(request):
 
     #Recuperation de toute la table personne dans une variable table_pers
     #  et passage a la template via context
-    table_produits = Produit.objects.all()
+    #TODO: Simplifier ce code une fois que la gestion de priorité sera ajoutée
+    table_image = Image.objects.select_related('produit').order_by('produit_id')
+    produit_id_list = []
+    for i in table_image:
+        if not i.produit_id in produit_id_list:
+            produit_id_list.append(i.produit_id)
+        else:
+            table_image.delete(i)
+        
+    print(table_image)
     context = {
-        'lesproduits': table_produits
+        'lesproduits': table_image
     }
     return render(request, 'produit/produit.html', context)
 

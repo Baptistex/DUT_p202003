@@ -26,9 +26,8 @@ class Produit(models.Model):
 class Image(models.Model):
     produit =models.ForeignKey('Produit', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/')
-
-    def __str__(self):
-        return "Image : "+str(image)
+    #TODO: Champ priorite
+    
     
     class Meta:
         db_table = 'image'
