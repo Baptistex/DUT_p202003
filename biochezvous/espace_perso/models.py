@@ -3,8 +3,8 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import UserManager
 
 
-class Personne(AbstractBaseUser):
-    id_personne = models.AutoField(primary_key=True)
+class Personne(AbstractBaseUser, PermissionsMixin):
+    personne_id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     mail = models.EmailField(max_length=100, unique=True)
@@ -20,7 +20,7 @@ class Personne(AbstractBaseUser):
     objects = UserManager()
 
     def __str__(self):
-        return str(self.id_personne)+str(self.nom)
+        return str(self.personne_id)+str(self.nom)
     
     class Meta:
         db_table = 'personne'
