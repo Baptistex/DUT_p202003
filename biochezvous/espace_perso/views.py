@@ -5,7 +5,6 @@ from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
-from .forms import FormInscription, FormConnexion, FormInscriptionUser, TestForm #, Suppression
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
@@ -126,12 +125,12 @@ def modif_data(request):
 
 #def modifDataUtilisateur(request):
 #def espacePerso(request):
+@permission_required ('espace_perso.can_view_espace_perso')
 def espacePerso(request):
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
     #TODO Vérifier les champs
-
-    personne_id = request.user.personne_id
+    personne_id = request.user.id_personne
     u = Personne.objects.get(personne_id=personne_id)
     form = FormDataModification(instance=u)
     if request.method == 'POST' :
