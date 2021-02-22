@@ -9,7 +9,7 @@ urlpatterns = [
     path('espacePerso',views.espacePerso, name='espacePerso'),
     path('inscription',views.inscription_user, name='inscription_user'),
     path('inscription_prod',views.inscription_prod, name='inscription_prod'),
-    path('connexion', views.connexion_prod, name='connexion_prod'),
+    path('connexion', views.connexion, name='connexion'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
     path('connexion', auth_views.LoginView.as_view()),
 
