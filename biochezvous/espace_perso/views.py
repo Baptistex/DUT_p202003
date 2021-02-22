@@ -5,10 +5,10 @@ from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
-from .forms import FormInscription, FormConnexion, FormInscriptionUser, TestForm #, Suppression
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
 
 
 # Create your views here.
@@ -51,11 +51,7 @@ def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')
     return HttpResponse(template.render({},request))
 
-def espacePerso(request):
-    template = loader.get_template('espace_perso/espacePerso.html')
     
-    return HttpResponse(template.render({},request))
-
 def inscription_user(request):
     if request.method == 'POST':
         form = FormInscriptionUser(request.POST)
@@ -123,13 +119,27 @@ def modif_data(request):
     else:
         #form = FormInscription()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
+
 """
 
 
-def Test(request):
-    form = TestForm()
+#def modifDataUtilisateur(request):
+#def espacePerso(request):
+def espacePerso(request):
+    #TODO changer et unifier le bazar
+    #TODO voir les sessions pour récupérer l'id
+    #TODO Vérifier les champs
+
+    id_personne = request.user.id_personne
+    u = Personne.objects.get(id_personne=id_personne)
+    form = FormDataModification(instance=u)
+    if request.method == 'POST' :
+        form = FormDataModification(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+
     context = {'form':form}
-    return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
+    return render(request, 'espace_perso/espacePerso.html', context)
 
 #   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
 #def update_Permissions(request):
@@ -138,3 +148,4 @@ def Test(request):
 #    prod_group.permissions.add(
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
+    
