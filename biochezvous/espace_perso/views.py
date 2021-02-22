@@ -125,7 +125,7 @@ def modif_data(request):
 
 #def modifDataUtilisateur(request):
 #def espacePerso(request):
-@permission_required ('espace_perso.can_view_espace_perso')
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion_prod')
 def espacePerso(request):
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
