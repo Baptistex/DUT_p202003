@@ -59,7 +59,9 @@ class Commande(models.Model):
     commande_id = models.AutoField(primary_key=True)
     date =  models.DateTimeField()
     statut = models.IntegerField() #TODO: à aviser
-    montant = models.DecimalField()
+    montant = models.DecimalField(max_digits=8, decimal_places=3)
+    produits = models.ManyToManyField('produit.Produit', through='produit.ContenuCommande')
+
 
     class Meta:
         db_table = 'commande'
@@ -74,7 +76,7 @@ class ContenuCommande(models.Model):
         db_table = 'contenuCommande'
 
 class Panier(models.Model):
-    personne = models.ForeignKey('Personne', on_delete=models.CASCADE)
+    personne = models.ForeignKey('espace_perso.Personne', related_name='panier_personne', on_delete=models.CASCADE)
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
 
     panier_id = models.AutoField(primary_key=True)

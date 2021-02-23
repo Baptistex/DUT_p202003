@@ -13,7 +13,6 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     ville  = models.CharField(max_length=60, blank=True)
     adresse = models.CharField(max_length = 100,  blank=True)
     panier = models.ManyToManyField('produit.Produit', through='produit.Panier')
-    commande = models.ManyToManyField('produit.Commande', through='produit.ContenuCommande')
     #Pour plus tard :
     #coord_x = models.FloatField()
     #coord_y = models.FloatField()
