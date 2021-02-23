@@ -17,12 +17,17 @@ def produit_django(request):
     #TODO: Simplifier ce code une fois que la gestion de priorité sera ajoutée
     table_image = Image.objects.select_related('produit').order_by('produit_id')
     produit_id_list = []
+    image_id_list = []
     for i in table_image:
         if not i.produit_id in produit_id_list:
             produit_id_list.append(i.produit_id)
-        else:
-            table_image.delete(i)
-        
+            image_id_list.append(i.id)
+            
+    print(produit_id_list)
+    print(image_id_list)
+
+    table_image = table_image.filter(id__in=image_id_list)
+    
     print(table_image)
     context = {
         'lesproduits': table_image
