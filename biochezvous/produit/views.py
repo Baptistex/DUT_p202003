@@ -1,20 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Image, TypeProduit, Produit
-from .forms import ProduitForm, ImageForm
+from .models import TypeProduit, Produit, Image
 from espace_perso.models import Personne
+from .forms import ProduitForm, ImageForm
+
 
 
 # Create your views here.
 
 
 
-
-
 def produit_django(request):
-    # template = loader.get_template('produit/produit.html')
-
     #Recuperation de toute la table personne dans une variable table_pers
     #  et passage a la template via context
     #TODO: Simplifier ce code une fois que la gestion de priorité sera ajoutée
