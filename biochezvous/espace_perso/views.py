@@ -77,7 +77,7 @@ def inscription_prod(request):
         form = FormInscriptionProd()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
-def connexion_prod(request):
+def connexion(request):
     verif_connexion = "Vous n'êtes pas connecté."
     if request.user.is_authenticated:
         verif_connexion = "Vous êtes connecté."
@@ -125,7 +125,7 @@ def modif_data(request):
 
 #def modifDataUtilisateur(request):
 #def espacePerso(request):
-@permission_required ('espace_perso.can_view_espace_perso')
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
