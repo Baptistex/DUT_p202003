@@ -1,8 +1,7 @@
 from django.db import models
+from espace_perso.models import Personne
 
 # Create your models here.
-
-
 
 class Produit(models.Model):
     produit_id = models.AutoField(primary_key=True)
@@ -26,9 +25,6 @@ class Produit(models.Model):
 class Image(models.Model):
     produit =models.ForeignKey('Produit', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/')
-
-    def __str__(self):
-        return "Image : "+str(image)
     
     class Meta:
         db_table = 'image'
@@ -39,9 +35,6 @@ class TypeProduit(models.Model):
     type_id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
-
-    def __str__(self):
-        return "Produit : "+str(self.nom)+str(self.type_id)
     
     class Meta:
         db_table = 'typeproduit'
@@ -57,3 +50,35 @@ class Categorie(models.Model):
 
     class Meta:
         db_table = 'categorie'
+
+
+
+class Commande(models.Model):
+
+    personne = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE)
+    commande_id = models.AutoField(primary_key=True)
+    date =  models.DateTimeField()
+    statut = models.IntegerField() #TODO: à aviser
+    montant = models.DecimalField()
+
+    class Meta:
+        db_table = 'commande'
+
+class ContenuCommande(models.Model):
+
+    produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
+    commande = models.ForeignKey('Commande', on_delete=models.CASCADE)
+    quantite = models.IntegerField()
+
+    class Meta:
+        db_table = 'contenuCommande'
+
+class Panier(models.Model):
+    personne = models.ForeignKey('Personne', on_delete=models.CASCADE)
+    produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
+
+    panier_id = models.AutoField(primary_key=True)
+    quantite = models.IntegerField()
+
+    class Meta:
+        db_table = 'panier'

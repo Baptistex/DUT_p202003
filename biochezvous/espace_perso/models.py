@@ -12,6 +12,8 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     code_postal = models.CharField(max_length=10, blank=True)
     ville  = models.CharField(max_length=60, blank=True)
     adresse = models.CharField(max_length = 100,  blank=True)
+    panier = models.ManyToManyField('produit.Produit', through='produit.Panier')
+    commande = models.ManyToManyField('produit.Commande', through='produit.ContenuCommande')
     #Pour plus tard :
     #coord_x = models.FloatField()
     #coord_y = models.FloatField()
@@ -37,5 +39,7 @@ class Producteur(Group):
         
         proxy = True
         db_table = 'producteur'
+
+
             
         

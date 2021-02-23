@@ -90,9 +90,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pg_p202003',
-        'USER': 'p202003',
-        'PASSWORD': 'Ventes!?loc2021',
-        'HOST': 'pg.infolannion.com',
+        'USER': 'postgres',
+        'PASSWORD': 'azerty',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
