@@ -130,7 +130,7 @@ def espacePerso(request):
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
     #TODO Vérifier les champs
-    personne_id = request.user.id_personne
+    personne_id = request.user.personne_id
     u = Personne.objects.get(personne_id=personne_id)
     form = FormDataModification(instance=u)
     if request.method == 'POST' :
