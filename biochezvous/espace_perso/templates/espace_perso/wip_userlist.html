@@ -1,7 +1,7 @@
 {% extends "produit/base.html" %}
 {% load static %}
 
-{% block title %}Inscription d'un producteur{% endblock %}
+{% block title %}Liste des utilisateurs{% endblock %}
 {% block content %}
  <table id="table" class="table table-hover table-mc-light-blue">
     <thead>
@@ -19,27 +19,17 @@
         <tr>
             <td>{{user.nom }}</td>
             <td>{{user.prenom }}</td>
-            <td>{{user.id_personne }}</td>            
+            <td>{{user.personne_id }}</td>            
             <td>{{user.mail }}</td>
             <td>{{user.num_tel }}</td>
-            <td><button class="btn btn-primary" id="btnSuppr" type="submit">Supprimer l'utilisateur</button></td>
+            <td>
+                <form action="userlist" method="GET">
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit">Supprimer l'utilisateurs</button>
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>
-<script>
-$('#btnSuppr').click(function() {    
-    $.ajax({
-        url: your_url,
-        method: 'POST', // or another (GET), whatever you need
-        data: {
-            name: id_personne, // data you need to pass to your function
-            click: true
-        }
-        success: function (data) {        
-            // success callback
-            // you can process data returned by function from views.py
-        }
-    });
-});
-</script>
+
 {% endblock %}

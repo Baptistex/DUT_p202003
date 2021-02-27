@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import TypeProduit, Categorie, Produit
-from espace_perso.models import Producteur
+from espace_perso.models import Producteur, Personne
 
 
 
@@ -13,20 +13,20 @@ class TypeProduitForm(ModelForm):
         
 
 class CategorieForm(ModelForm):
-    id_type = forms.ModelChoiceField(queryset=TypeProduit.objects.all(),
+    type_id = forms.ModelChoiceField(queryset=TypeProduit.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Type de produit")
     class Meta:
         model = Categorie
-        fields = ['nom','id_type']
+        fields = ['nom','type_id']
 
 
 #A changer pour que le choix du producteur se fasse automatiquement
 class ProduitForm(ModelForm):
-    id_producteur = forms.ModelChoiceField(queryset=Producteur.objects.all(),
+    producteur = forms.ModelChoiceField(queryset=Personne.objects.filter(groups__name='producteur'),
                                     to_field_name = 'nom',
                                     empty_label="Nom du producteur")
-    id_categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
+    categorie_id = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom de la categorie")
 

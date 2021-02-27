@@ -10,9 +10,9 @@ def espace_admin(request):
 def util_inscris(request):
     
     #Tableau des producteurs
-    table_prod = Personne.objects.raw('SELECT * FROM personne NATURAL JOIN producteur WHERE id_personne = user_prod_id')
+    table_prod = Personne.objects.filter(groups__name='producteur')
 
     #Tableau des consommateurs
-    table_conso = Personne.objects.raw('SELECT * FROM personne NATURAL JOIN utilisateur WHERE id_personne = user_user_id') 
+    table_conso = Personne.objects.filter(groups__name='utilisateur')
 
     return render(request, 'espace_admin/util_inscris.html',{'listeProd':table_prod,'listeConso':table_conso})
