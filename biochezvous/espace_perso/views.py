@@ -15,16 +15,33 @@ from .forms import FormInscription, FormConnexion, FormDataModification, FormIns
 
 def wip_userlist(request):
     template = loader.get_template('espace_perso/wip_userlist.html')
-    #if  person_id == None:
-    #person = Personne()
-    #else:
-    #person = Personne.objects.get(personne_id = 10)
     table_pers = Personne.objects.all()
     context = {
         'userlist': table_pers
     }
-    #Suppression
-    #person.delete();
+
+    return HttpResponse(template.render(context,request))
+
+def delete_user(request):
+    if request.method == "GET":
+        dest = Personne.objects.all()
+        dest.delete()
+        template = loader.get_template('espace_perso/wip_userlist.html')
+        table_pers = Personne.objects.all()
+        context = {
+            'userlist': table_pers
+        }
+    return HttpResponse(template.render(context,request))
+    
+def deleteOneUser(request,id):
+    if request.method == "GET":
+        dest = Personne.objects.get(personne_id = id)
+        dest.delete()
+        template = loader.get_template('espace_perso/wip_userlist.html')
+        table_pers = Personne.objects.all()
+        context = {
+            'userlist': table_pers
+        }
     return HttpResponse(template.render(context,request))
 
 
