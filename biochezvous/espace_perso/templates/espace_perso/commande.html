@@ -1,0 +1,54 @@
+{% extends "produit/base.html"%}
+{% load static %}
+
+{% block title %}Mon espace{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+    <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Ma commande </h2>
+    </div>
+
+
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Produit</th>
+            <th scope="col">prix unitaire</th>
+            <th scope="col">prix total</th>
+            <th scope="col">quantite</th>
+          </tr>
+        </thead>
+        <tbody>
+         <!--  {% for ctn in contenu %}  
+          <tr>
+            <td>{{ ctn.id }}</td>
+            <td>{{ ctn.quantite }}</td>
+            <td>{{ ctn.commande_id }}</td>
+            <td>{{ ctn.produit_id }}</td>
+            
+          </tr>
+          {% endfor %}  --> 
+         {% for ctn in contenuCommande %}  
+         
+          <tr>
+            
+            <td> 
+                <p> {{ ctn.nom }}</p>
+                <p> {{ ctn.description }}</p>
+            </td>
+            <td>{{ ctn.prix }}</td>
+            <td>{{ ctn.quantite }}</td>
+
+            
+          </tr>
+          {% endfor %} 
+        </tbody>
+      </table>
+
+{% endblock %}

@@ -12,7 +12,9 @@ urlpatterns = [
     path('connexion', views.connexion, name='connexion'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
     path('connexion', auth_views.LoginView.as_view()),
-    path('test',views.test, name='test'),
+    path('listeCommande',views.listeCommande, name='listeCommande'),
+    path('commande/<int:id>',views.commande, name='commande'),
+
     
 
     

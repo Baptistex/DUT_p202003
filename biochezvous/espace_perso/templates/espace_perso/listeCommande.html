@@ -31,6 +31,9 @@
             <td>{{ cmd.statut }}</td>
             <td>{{ cmd.montant }}</td>
             <td>{{ cmd.personne_id }}</td>
+            <td>  
+                <a href="commande/{{ cmd.commande_id}}"><span class="glyphicon glyphicon-pencil" >Détails</span></a>  
+            </td>  
           </tr>
           {% endfor %}  
         </tbody>

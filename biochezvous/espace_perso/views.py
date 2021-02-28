@@ -9,7 +9,7 @@ from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
-from produit.models import Commande, ContenuCommande, Panier
+from produit.models import Commande, ContenuCommande, Panier, Produit
 
 
 # Create your views here.
@@ -154,11 +154,23 @@ def espacePerso(request):
 #    )
     
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
-def test(request):
+def listeCommande(request):
+    context = {}
     personne_id = request.user.personne_id
-    #commandes = Commande.objects.filter(personne_id=personne_id)
-    commandes = Commande.objects.all
+    context['commandes'] = Commande.objects.filter(personne_id=personne_id)
 
 
     
-    return render(request, 'espace_perso/test.html',{'commandes':commandes})
+    return render(request, 'espace_perso/listeCommande.html',context)
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def commande(request,id):
+    context = {}
+
+    #infoCommande = ContenuCommande.objects.filter(commande_id=id)
+    #produits = Produit.objects.filter(contenucommande__commande_id=id)
+
+
+    context['contenuCommande'] = Produit.objects.filter(contenucommande__commande_id=id)
+    
+    return render(request, 'espace_perso/commande.html',context)
