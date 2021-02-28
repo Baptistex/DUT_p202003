@@ -10,31 +10,39 @@
 <div class="container-fluid">
 
     <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
-        <h2> Espace personnel </h2>
+        <h2> MES COMMANDES </h2>
     </div>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Montant</th>
+            <th scope="col">PersonneID</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for cmd in commandes %}  
+          <tr>
+            <th scope="row">{{ cmd.commande_id }}</th>
+            <td>{{ cmd.date }}</td>
+            <td>{{ cmd.statut }}</td>
+            <td>{{ cmd.montant }}</td>
+            <td>{{ cmd.personne_id }}</td>
+          </tr>
+          {% endfor %}  
+        </tbody>
+      </table>
 
 
     
 
 
-    <!-- Bouton pour afficher le formulaire pour modifier les infos persos -->
-    <button class="btn btn-primary mb-2" type="button" data-target="#MonCollapse" data-toggle="collapse"
-        aria-expanded="false" aria-controls="MonCollapse">Modifier mes informations</button>
+   
 
-    <!-- le formulaire -->
-
-    <section id="MonCollapse" class="collapse">
-        <div class="well">
-            <h2> Mes informations </h2>
-            <div class="form-group col-md-10">
-                <form action="" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">Go</button>
-                </form>
-            </div>
-        </div>
-    </section>
+   
 
 
 </div>
