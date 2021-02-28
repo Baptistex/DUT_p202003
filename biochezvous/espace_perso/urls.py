@@ -10,6 +10,6 @@ urlpatterns = [
     path('inscription_prod',views.inscription_prod, name='inscription_prod'),
     path('connexion', views.connexion_prod, name='connexion_prod'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
-    
-    
+    path('personne/', views.delete_user, name='delete_user'),
+    path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser')
 ]
