@@ -24,13 +24,13 @@ class Produit(models.Model):
 
 
 class Image(models.Model):
-    produit =models.ForeignKey('Produit', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/')
-    #TODO: Champ priorite
-    
+    produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
+    image   = models.ImageField(upload_to='images/')
+    #TODO: Champ priorite    
     
     class Meta:
         db_table = 'image'
+    
 
 
 

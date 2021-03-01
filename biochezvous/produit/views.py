@@ -23,12 +23,8 @@ def produit_django(request):
             produit_id_list.append(i.produit_id)
             image_id_list.append(i.id)
             
-    print(produit_id_list)
-    print(image_id_list)
-
     table_image = table_image.filter(id__in=image_id_list)
     
-    print(table_image)
     context = {
         'lesproduits': table_image
     }
@@ -47,11 +43,15 @@ def produit(request, idProduit):
     #Mais django ajoute le suffixe _id (donc id_producteur_id) dans la BDD
     #TODO (Baptiste sur master) : Renommer les champs FK pour retirer le id_
     #producteur = produit.id_producteur
+    table_images = Image.objects.filter(produit = produit)
 
+    print("les images : ", table_images)
+   
     context = {
         'leproduit': produit,
         'id': produit.produit_id,
         'producteur' : producteur,
+        'lesImages' : table_images,
     }
     return render(request, 'produit/description_prod.html', context)
 
