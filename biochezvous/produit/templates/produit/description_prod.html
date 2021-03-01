@@ -1,4 +1,4 @@
-{% extends "produit/base.html" %}
+{% extends "produit/base_sans_header.html" %}
 
 {% load static %}
 
@@ -29,11 +29,11 @@
                             <div class="carousel-inner">
                                 {% for img in lesImages %}
                                     {% if forloop.counter0 == 0 %}
-                                        <div class="carousel-item active">
-                                            <img src="{{MEDIA_URL}}{{ img.image }}" class="d-block" alt="...">
+                                        <div class="carousel-item bloc_img active">
+                                            <img src="{{MEDIA_URL}}{{ img.image }}" class="d-block mr-auto" alt="...">
                                         </div>
                                     {% else %}
-                                        <div class="carousel-item">
+                                        <div class="carousel-item bloc_img">
                                             <img src="{{MEDIA_URL}}{{ img.image }}" class="d-block" alt="...">
                                         </div>
                                     {% endif %}

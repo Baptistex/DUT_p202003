@@ -109,9 +109,9 @@
   });
 */
   // Toggle .header-scrolled class to #header when page is scrolled
-  /*
+  
   $(window).scroll(function() {
-    if ($(this).scrollTop() > 0) { // valeur de scroll pour savoir quand afficher le fond de color #555555 de la barre de nav
+    if ($(this).scrollTop() > 100) { // valeur de scroll pour savoir quand afficher le fond de color #555555 de la barre de nav
       $('#header').addClass('header-scrolled');
     } else {
       $('#header').removeClass('header-scrolled');
@@ -119,7 +119,7 @@
   });
   if ($(window).scrollTop() > 100) {
     $('#header').addClass('header-scrolled');
-  }*/
+  }
 
   // Back to top button
   $(window).scroll(function() {

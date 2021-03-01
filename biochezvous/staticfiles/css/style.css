@@ -1319,13 +1319,24 @@ section {
 
 
 /* CARROUSSEL */
-
+/*
 #description img {
     width: 500px;
-}
+}*/
 
 #description .carousel-inner {
     margin-left: 80px;
+}
+
+#description img{
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+#description .bloc_img {
+    width: 60%; 
+    height: 60%;  
+    text-align: center;    
 }
 
 
