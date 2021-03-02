@@ -19,23 +19,28 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'mail'
     objects = UserManager()
 
-    def __str__(self):
-        return str(self.personne_id)+str(self.nom)
     
     class Meta:
         db_table = 'personne'
+        
 
+class Utilisateur(Personne):
 
-class Utilisateur(Group):
     class Meta:
-        proxy = True
         db_table = 'utilisateur'
+        permissions = [
+            ('can_view_espace_perso', 'Peux acceder a la page espace perso'),
+        ]
 
-
-class Producteur(Group):
+class Producteur(Personne):
+    description = models.TextField()
+    image   = models.ImageField(upload_to='images/')
     class Meta:
-        
-        proxy = True
         db_table = 'producteur'
-            
-        
+        default_permissions = ()
+        permissions = [
+            ('can_view_espace_perso', 'Peux acceder a la page espace perso'),
+            ('can_view_espace_producteur', 'Peux acceder a la page espace producteur'),
+        ]
+
+
