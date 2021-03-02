@@ -171,6 +171,7 @@ def commande(request,id):
     #produits = Produit.objects.filter(contenucommande__commande_id=id)
 
 
-    context['contenuCommande'] = Produit.objects.filter(contenucommande__commande_id=id)
+    #context['contenuCommande'] = Produit.objects.filter(contenucommande__commande_id=id)
+    context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
     
     return render(request, 'espace_perso/commande.html',context)

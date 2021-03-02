@@ -20,7 +20,7 @@
           <tr>
             <th scope="col">Produit</th>
             <th scope="col">prix unitaire</th>
-            <th scope="col">prix total</th>
+            <th scope="col">Quantite Produit</th>
             <th scope="col">quantite</th>
           </tr>
         </thead>
@@ -39,12 +39,12 @@
           <tr>
             
             <td> 
-                <p> {{ ctn.nom }}</p>
-                <p> {{ ctn.description }}</p>
+                <p> {{ ctn.produit.nom }}</p>
+                <p> {{ ctn.produit.description }}</p>
             </td>
-            <td>{{ ctn.prix }}</td>
+            <td>{{ ctn.produit.prix }}</td>
+            <td>{{ ctn.produit.quantite }}</td>
             <td>{{ ctn.quantite }}</td>
-
             
           </tr>
           {% endfor %} 
