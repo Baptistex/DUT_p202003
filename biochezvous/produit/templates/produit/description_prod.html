@@ -30,11 +30,11 @@
                                 {% for img in lesImages %}
                                     {% if forloop.counter0 == 0 %}
                                         <div class="carousel-item bloc_img active">
-                                            <img src="{{MEDIA_URL}}{{ img.image }}" class="d-block mr-auto" alt="...">
+                                            <img src="{{MEDIA_URL}}{{ img.image }}" class="d-block mr-auto" alt="{{ img.produit.nom }}" title="{{img.produit.nom}}">
                                         </div>
                                     {% else %}
                                         <div class="carousel-item bloc_img">
-                                            <img src="{{MEDIA_URL}}{{ img.image }}" class="d-block" alt="...">
+                                            <img src="{{MEDIA_URL}}{{ img.image }}" class="d-block" alt="{{ img.produit.nom }}" title="{{img.produit.nom}} ">
                                         </div>
                                     {% endif %}
                                     
@@ -72,11 +72,11 @@
 
                         <div class="row">
                             <div class="col-4">
-                                <input type="range" min="1" max="{{leproduit.quantite}}"  class="slider" id="myRange">
-                                <p>Quantite: <span id="demo"></span></p>                                            
+                                <input type="range" min="1" max="{{ leproduit.quantite }}" value="1" class="slider" id="myRange1">
+                                <p>Quantite: <span id="demo1"></span></p>                                            
                             </div>
                             <div class="col-8 text-center">
-                                <button type="button" class="btn btn-primary">Commander !</button>
+                                <button type="button" class="btn btn-primary">Ajouter à l'assiette !</button>
                             </div>
                         </div>
                     </div>
@@ -84,42 +84,7 @@
             </div>
         </section>
 
-        <!--
-        <section id="avis_client">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-                            <h2>Avis de nos clients</h2>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 mb-5">
-                        <div class="bloc-com">
-                            <h4>Michel Dupont</h4>
-                            <p>Super produit j'adore dans le soupe, le produits est frais</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-5">
-                        <div class="bloc-com">
-                            <h4>Michel Dupont</h4>
-                            <p>Super produit j'adore dans le soupe, le produits est frais</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-5">
-                        <div class="bloc-com">
-                            <h4>Michel Dupont</h4>
-                            <p>Super produit j'adore dans le soupe, le produits est frais</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section> -->
+        
 
         <!-- ======= Testimonials Section ======= -->
         <section id="avis_client" class="testimonials section-bg">
@@ -235,16 +200,16 @@
 
         </section>
 
-
         <script>
-            var slider = document.getElementById("myRange");
-            var output = document.getElementById("demo");
+            var slider = document.getElementById("myRange1");
+            var output = document.getElementById("demo1");
             output.innerHTML = slider.value;
             
             slider.oninput = function() {
                 output.innerHTML = this.value;
             }
         </script>
+        
 {% endblock %}
 
 

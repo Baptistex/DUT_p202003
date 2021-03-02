@@ -38,7 +38,7 @@ class Utilisateur(Group):
 
 
 class Producteur(Group):
-    user_prod = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
+    user_prod = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True, related_name='producteurs')
     name = "producteur"
     class Meta:
         db_table = 'producteur'
@@ -46,4 +46,4 @@ class Producteur(Group):
             ('can_view_espace_perso', 'Peux acceder a la page espace perso')
         ]
             
-        
+
