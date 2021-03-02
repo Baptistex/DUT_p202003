@@ -19,31 +19,26 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'mail'
     objects = UserManager()
 
-    def __str__(self):
-        return str(self.personne_id)+str(self.nom)
     
     class Meta:
         db_table = 'personne'
+        
 
-
-class Utilisateur(Group):
-    user_user = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True)
-    name = "utilisateur"
+class Utilisateur(Personne):
 
     class Meta:
         db_table = 'utilisateur'
         permissions = [
-            ('can_view_espace_perso', 'Peux acceder a la page espace perso')
+            ('can_view_espace_perso', 'Peux acceder a la page espace perso'),
         ]
 
-
-class Producteur(Group):
-    user_prod = models.OneToOneField(Personne, on_delete=models.CASCADE, primary_key=True, related_name='producteurs')
-    name = "producteur"
+class Producteur(Personne):
+    description = models.TextField()
+    image   = models.ImageField(upload_to='images/')
     class Meta:
         db_table = 'producteur'
+        default_permissions = ()
         permissions = [
-            ('can_view_espace_perso', 'Peux acceder a la page espace perso')
+            ('can_view_espace_perso', 'Peux acceder a la page espace perso'),
+            ('can_view_espace_producteur', 'Peux acceder a la page espace producteur'),
         ]
-            
-

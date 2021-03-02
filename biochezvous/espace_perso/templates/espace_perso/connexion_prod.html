@@ -5,11 +5,16 @@
 
 
 {% block content %}
+<br>
+<div class="text-center">
 {{ verif_connexion }}
-    <form method="post" enctype="multipart/form-data">
+</div>
+<br>
+    <form method="post" class="text-center" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Connexion</button>
+        <button class="btn btn-primary " type="submit">Connexion</button>
     </form>
+    <br>
 {% endblock %}
 

@@ -23,7 +23,7 @@ class CategorieForm(ModelForm):
 
 #A changer pour que le choix du producteur se fasse automatiquement
 class ProduitForm(ModelForm):
-    producteur = forms.ModelChoiceField(queryset=Personne.objects.filter(groups__name='producteur'),
+    producteur = forms.ModelChoiceField(queryset=Producteur.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom du producteur")
     categorie_id = forms.ModelChoiceField(queryset=Categorie.objects.all(),

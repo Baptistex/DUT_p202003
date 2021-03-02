@@ -12,7 +12,10 @@
                 <th>Identifiant</th>
                 <th>adresse mail</th>
                 <th>téléphone</th>
-
+                <th>
+                    {% url 'deleteUser' as the_url %}
+                    <button class="btn btn-primary" ><a href="{{ the_url }}">Supprime tous les utilisateurs</a></button>
+                </th>
          </tr>
     </thead>
     {% for user in userlist %}
@@ -23,13 +26,13 @@
             <td>{{user.mail }}</td>
             <td>{{user.num_tel }}</td>
             <td>
-                <form action="userlist" method="GET">
-                    {% csrf_token %}
-                    <button class="btn btn-primary" type="submit">Supprimer l'utilisateurs</button>
-                </form>
+                {% url 'deleteOneUser' user.personne_id as the_url %}
+                <button class="btn btn-primary"><a href="{{ the_url }}">Supprimer l'utilisateurs</a></button>
             </td>
         </tr>
     {% endfor %}
 </table>
 
 {% endblock %}
+
+<!--href="{% url 'delete_All'%}",href="{% url 'deleteOneUser'%}"-->
