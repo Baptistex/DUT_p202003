@@ -2,6 +2,7 @@ from django.db import models
 from espace_perso.models import Personne
 # Create your models here.
 
+'''
 class Producteur(models.Model):
     personne = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE, related_name='personnes')
     description = models.TextField()
@@ -10,4 +11,4 @@ class Producteur(models.Model):
     
     class Meta:
         db_table = 'producteur'
-
+'''

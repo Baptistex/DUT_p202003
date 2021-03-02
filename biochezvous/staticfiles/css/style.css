@@ -1324,6 +1324,29 @@ section {
     width: 500px;
 }*/
 
+
+.qty {
+    display: flex;
+}
+
+.qty span {
+    background: #ccc;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 5px 8px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    width: 15px;
+    text-align: center;
+}
+
+.qty input {
+    width: 50px;
+    padding: 0 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
 #description .carousel-inner {
     margin-left: 80px;
 }

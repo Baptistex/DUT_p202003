@@ -72,8 +72,11 @@
 
                         <div class="row">
                             <div class="col-4">
-                                <input type="range" min="1" max="{{ leproduit.quantite }}" value="1" class="slider" id="myRange1">
-                                <p>Quantite: <span id="demo1"></span></p>                                            
+                                <div class="qty">
+                                    <span id="dec" onclick="dec()">-</span>
+                                    <input type="text" id="demo1"   value="1" />
+                                    <span id="inc" onclick="inc()">+</span>                                    
+                                </div>                                 
                             </div>
                             <div class="col-8 text-center">
                                 <button type="button" class="btn btn-primary">Ajouter à l'assiette !</button>
@@ -200,14 +203,23 @@
 
         </section>
 
-        <script>
-            var slider = document.getElementById("myRange1");
-            var output = document.getElementById("demo1");
-            output.innerHTML = slider.value;
-            
-            slider.oninput = function() {
-                output.innerHTML = this.value;
+        <script type="text/javascript">
+            /*Increament*/
+            function inc() {
+                var qty = document.getElementById('demo1').value;
+                qty++;
+                document.getElementById('demo1').value = qty;
             }
+    
+            /*Decrement*/
+            function dec() {
+                var qty = document.getElementById('demo1').value;
+                qty--;
+                if (qty > 0) {
+                    document.getElementById('demo1').value = qty;
+                }
+            }
+    
         </script>
         
 {% endblock %}
