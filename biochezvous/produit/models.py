@@ -16,8 +16,6 @@ class Produit(models.Model):
     unite = models.IntegerField()
     date = models.DateTimeField()
 
-    def __str__(self):
-        return "Produit : "+str(self.nom)
     
     class Meta:
         db_table = 'produit'
@@ -27,9 +25,6 @@ class Image(models.Model):
     produit =models.ForeignKey('Produit', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/')
 
-    def __str__(self):
-        return "Image : "+str(image)
-    
     class Meta:
         db_table = 'image'
 
@@ -40,8 +35,6 @@ class TypeProduit(models.Model):
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
 
-    def __str__(self):
-        return "Produit : "+str(self.nom)+str(self.type_id)
     
     class Meta:
         db_table = 'typeproduit'
@@ -52,8 +45,6 @@ class Categorie(models.Model):
     typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
     nom = models.TextField()
         
-    def __str__(self):
-        return "Categorie : "+str(self.nom)+str(self.categorie_id)
 
     class Meta:
         db_table = 'categorie'
