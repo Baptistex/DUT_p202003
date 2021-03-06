@@ -43,6 +43,9 @@ class FormInscriptionUser(UserCreationForm):
         user.save()
         user.groups.add(user_group)
         user.save()
+        if created:
+            permissions_utilisateur = Permission.objects.filter(content_type=ContentType.objects.get(app_label='espace_perso', model='utilisateur').id)
+            user_group.permissions.set(permissions_utilisateur)
         return user
     class Meta:
         model = Personne
