@@ -9,6 +9,7 @@ from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
+from produit.models import Commande, ContenuCommande, Panier, Produit
 
 
 # Create your views here.
@@ -147,16 +148,19 @@ def espacePerso(request):
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
     #TODO Vérifier les champs
-    personne_id = request.user.id_personne
+    personne_id = request.user.personne_id
     u = Personne.objects.get(personne_id=personne_id)
     form = FormDataModification(instance=u)
     if request.method == 'POST' :
         form = FormDataModification(request.POST, instance=u)
         if form.is_valid():
             form.save()
-
     context = {'form':form}
+
+
     return render(request, 'espace_perso/espacePerso.html', context)
+
+
 
 #   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
 #def update_Permissions(request):
@@ -166,3 +170,25 @@ def espacePerso(request):
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
     
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def listeCommande(request):
+    context = {}
+    personne_id = request.user.personne_id
+    context['commandes'] = Commande.objects.filter(personne_id=personne_id)
+
+
+    
+    return render(request, 'espace_perso/listeCommande.html',context)
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def commande(request,id):
+    context = {}
+
+    #infoCommande = ContenuCommande.objects.filter(commande_id=id)
+    #produits = Produit.objects.filter(contenucommande__commande_id=id)
+
+
+    #context['contenuCommande'] = Produit.objects.filter(contenucommande__commande_id=id)
+    context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
+    
+    return render(request, 'espace_perso/commande.html',context)
