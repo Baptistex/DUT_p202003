@@ -4,6 +4,7 @@ from .models import Utilisateur, Personne, Producteur
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from .utils import getCoords
 
 
 class FormInscription(UserCreationForm):
@@ -62,10 +63,14 @@ class FormDataModification(ModelForm):
     ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
     code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3'}))
 
+    def save(self):
+        user = super().save(commit=False)
+        user.lat, user.lon = getCoords(user.adresse, user.ville, user.code_postal)
+        user.save()
     class Meta:
         model = Personne
         fields = ['nom','prenom','mail','num_tel','adresse','ville','code_postal',]
-
+        
        #widget = { 
             #'nom' : forms.TextInput(attrs={'class': 'form-control'}),
             #'prenom' : forms.TextInput(attrs={'class': 'form-control'}),

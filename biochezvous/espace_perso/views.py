@@ -79,7 +79,7 @@ def inscription_user(request):
             #TODO: changer la redirection
             return HttpResponseRedirect('/connexion')
     else:
-        form = FormInscriptionProd()
+        form = FormInscriptionUser()
     #TODO : un template propre à chaque type d'inscription
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
