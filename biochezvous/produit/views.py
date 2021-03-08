@@ -49,3 +49,4 @@ def ajout_prod(request):
 def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')
     return HttpResponse(template.render({},request))
+    

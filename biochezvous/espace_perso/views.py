@@ -166,3 +166,6 @@ def espacePerso(request):
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
     
+def espace_producteur(request):
+    template = loader.get_template('espace_perso/accueil_espaceProd.html')
+    return HttpResponse(template.render({},request))
