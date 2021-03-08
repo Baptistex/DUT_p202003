@@ -43,5 +43,3 @@ class Producteur(Personne):
             ('can_view_espace_perso', 'Peux acceder a la page espace perso'),
             ('can_view_espace_producteur', 'Peux acceder a la page espace producteur'),
         ]
-
-

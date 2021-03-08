@@ -13,5 +13,8 @@ urlpatterns = [
     path('deconnexion', views.deconnexion, name='deconnexion'),
     path('connexion', auth_views.LoginView.as_view()),
     path('personne/', views.delete_user, name='delete_user'),
-    path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser')
+    path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
+    
+    #espace producteur 
+    path('producteur/<int:idProducteur>', views.producteur, name='producteur'),
 ]
