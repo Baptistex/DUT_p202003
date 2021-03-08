@@ -4,7 +4,7 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
-from .models import Utilisateur,Personne
+from .models import Utilisateur,Personne, Producteur
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
@@ -78,7 +78,7 @@ def inscription_user(request):
             #TODO: changer la redirection
             return HttpResponseRedirect('/connexion')
     else:
-        form = FormInscriptionProd()
+        form = FormInscriptionUser()
     #TODO : un template propre à chaque type d'inscription
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
@@ -147,7 +147,7 @@ def espacePerso(request):
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
     #TODO Vérifier les champs
-    personne_id = request.user.id_personne
+    personne_id = request.user.personne_id
     u = Personne.objects.get(personne_id=personne_id)
     form = FormDataModification(instance=u)
     if request.method == 'POST' :
@@ -165,7 +165,23 @@ def espacePerso(request):
 #    prod_group.permissions.add(
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
+
+#
+# 
+# espace PRODUCTEUR
+#
+#
+#view pour afficher le detail sur le producteur
+def producteur(request, idProducteur):
+    
+    producteur = Producteur.objects.get(personne_id = idProducteur)
     
 def espace_producteur(request):
     template = loader.get_template('espace_perso/accueil_espaceProd.html')
     return HttpResponse(template.render({},request))
+    context = {
+        'leproducteur' : producteur,
+        'mesProduits': '',
+    }
+
+    return render(request, 'espace_perso/description_producteur.html', context)

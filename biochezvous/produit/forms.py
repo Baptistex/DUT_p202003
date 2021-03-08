@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import TypeProduit, Categorie, Produit
+from .models import Image, TypeProduit, Categorie, Produit
 from espace_perso.models import Producteur, Personne
 
 
@@ -23,7 +23,7 @@ class CategorieForm(ModelForm):
 
 #A changer pour que le choix du producteur se fasse automatiquement
 class ProduitForm(ModelForm):
-    producteur = forms.ModelChoiceField(queryset=Personne.objects.filter(groups__name='producteur'),
+    producteur = forms.ModelChoiceField(queryset=Producteur.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom du producteur")
     categorie_id = forms.ModelChoiceField(queryset=Categorie.objects.all(),
@@ -33,3 +33,12 @@ class ProduitForm(ModelForm):
     class Meta:
         model = Produit
         fields = ['nom', 'description', 'prix', 'unit', 'unit']
+
+#Formulaire pour ajouter des images a un produit
+class ImageForm(ModelForm):
+    produit = forms.ModelChoiceField(queryset=Produit.objects.all(),
+                                    to_field_name = 'nom',
+                                    empty_label="Produit à selectionner")
+    class Meta:
+        model = Image
+        fields = ['image','produit']
