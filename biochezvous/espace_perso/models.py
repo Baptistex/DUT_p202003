@@ -28,6 +28,7 @@ class Utilisateur(Personne):
 
     class Meta:
         db_table = 'utilisateur'
+        default_permissions = ()
         permissions = [
             ('can_view_espace_perso', 'Peux acceder a la page espace perso'),
         ]

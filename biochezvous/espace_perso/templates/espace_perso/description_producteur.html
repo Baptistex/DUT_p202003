@@ -38,7 +38,7 @@
             {% if not mesProduits %}
                 <div class="col text-center">
                     <i class="icofont-panda display-1"></i>
-                    <p style="font-family: 'Architects Daughter', cursive;"> Le producteur n'a pas encore ajouter de produits</p>
+                    <p style="font-family: 'Architects Daughter', cursive;"> {{leproducteur.nom}} n'a pas encore ajouter de produits</p>
                 </div>
             {% else %}
                 {% for produit in mesProduits %}

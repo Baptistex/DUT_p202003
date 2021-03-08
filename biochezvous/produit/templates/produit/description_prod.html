@@ -64,7 +64,7 @@
                                 </ul>
                             </div>
                             <div class="col-md-6" id="le_producteur">
-                                <a href="#">{{producteur.nom}} {{producteur.prenom}}<i class="icofont-farmer-alt ml-4"></i></a>
+                                <a href="{% url 'producteur' producteur.personne_id %}"">{{producteur.nom}} {{producteur.prenom}}<i class="icofont-farmer-alt ml-4"></i></a>
                             </div>
                         </div>
 
