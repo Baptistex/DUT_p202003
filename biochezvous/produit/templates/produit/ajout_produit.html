@@ -3,10 +3,17 @@
 {% block title %}Ajout d'un produit{% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
+<br>
+<div class="text-center">
+<h3>Ajout d'un nouveau produit</h3>
+</div>
+<br>
+<form class="text-center" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Upload</button>
+    <br>
+    <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
 </form>
+
 {% endblock %}
   

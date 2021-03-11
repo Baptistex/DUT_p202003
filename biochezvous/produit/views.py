@@ -75,7 +75,7 @@ def ajout_prod(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
         form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
@@ -91,7 +91,7 @@ def ajout_prod_image(request):
             return HttpResponseRedirect('/')
     else:
         form = ImageForm()
-    return render(request, 'produit/ajout_produit.html', {'form': form})
+    return render(request, 'accueilEspaceProducteur', {'form': form})
 
 def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')
