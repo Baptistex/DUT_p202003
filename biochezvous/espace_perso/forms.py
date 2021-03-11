@@ -19,7 +19,7 @@ class FormConnexion(AuthenticationForm):
         fields = ['username', 'password']
 
 class FormInscriptionProd(UserCreationForm):
-    
+     
     def save(self):
         user = super().save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
@@ -76,3 +76,15 @@ class FormDataModification(ModelForm):
            # 'code_postal' : forms.TextInput(attrs={'class': 'form-control'}),
        # }"""
 
+class FormDataModifProd(ModelForm):
+    
+    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
+    class Meta:
+        model = Personne
+        fields = ['nom','mail','num_tel','adresse','ville','code_postal',]

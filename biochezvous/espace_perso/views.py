@@ -8,7 +8,7 @@ from .models import Utilisateur,Personne, Producteur
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
-from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser,FormDataModifProd #, Suppression
 
 
 # Create your views here.
@@ -185,3 +185,15 @@ def espace_producteur(request):
     }
 
     return render(request, 'espace_perso/description_producteur.html', context)
+ 
+def espacePersoProd(request):
+    if request.method == 'POST':
+        form = FormDataModifProd(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            #TODO: changer la redirection
+            return HttpResponseRedirect('/accueilEspaceProducteur')
+    else:
+        form = FormDataModifProd()
+    return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
