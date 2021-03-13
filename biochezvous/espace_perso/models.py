@@ -12,9 +12,8 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     code_postal = models.CharField(max_length=10, blank=True)
     ville  = models.CharField(max_length=60, blank=True)
     adresse = models.CharField(max_length = 100,  blank=True)
-    #Pour plus tard :
-    #coord_x = models.FloatField()
-    #coord_y = models.FloatField()
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
 
     USERNAME_FIELD = 'mail'
     objects = UserManager()
