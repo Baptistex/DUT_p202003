@@ -1,5 +1,5 @@
 import requests
-
+import numpy as np
 
 def getCoords(adresse, ville, code_postal):
     """
@@ -30,3 +30,52 @@ def getCoords(adresse, ville, code_postal):
     lon = response[0]['lon']
 
     return lat, lon
+
+
+
+def great_circle_vec(lat1, lng1, lat2, lng2, earth_radius=6_371_009):
+    """
+
+    Fonction empruntée de https://github.com/gboeing/osmnx/blob/master/osmnx/distance.py
+
+    Calculate great-circle distances between points.
+
+    Vectorized function to calculate the great-circle distance between two
+    points' coordinates or between arrays of points' coordinates using the
+    haversine formula. Expects coordinates in decimal degrees.
+
+    Args :
+    
+        lat1 : float or np.array of float
+            first point's latitude coordinate
+        lng1 : float or np.array of float
+            first point's longitude coordinate
+        lat2 : float or np.array of float
+            second point's latitude coordinate
+        lng2 : float or np.array of float
+            second point's longitude coordinate
+        earth_radius : int or float
+            radius of earth in units in which distance will be returned
+            (default is meters)
+
+    Returns :
+        dist : float or np.array
+            distance or array of distances from (lat1, lng1) to (lat2, lng2) in
+            units of earth_radius
+    """
+    phi1 = np.deg2rad(lat1)
+    phi2 = np.deg2rad(lat2)
+    d_phi = phi2 - phi1
+
+    theta1 = np.deg2rad(lng1)
+    theta2 = np.deg2rad(lng2)
+    d_theta = theta2 - theta1
+
+    h = np.sin(d_phi / 2) ** 2 + np.cos(phi1) * np.cos(phi2) * np.sin(d_theta / 2) ** 2
+    h = np.minimum(1.0, h)  # protect against floating point errors
+
+    arc = 2 * np.arcsin(np.sqrt(h))
+
+    # return distance in units of earth_radius
+    dist = arc * earth_radius
+    return dist

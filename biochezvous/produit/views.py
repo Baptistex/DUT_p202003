@@ -4,7 +4,7 @@ from django.template import loader
 from .models import TypeProduit, Produit, Image
 from espace_perso.models import Personne
 from .forms import ProduitForm, ImageForm
-
+from espace_perso.utils import great_circle_vec
 
 
 # Create your views here.
@@ -15,13 +15,37 @@ def produit_django(request):
     #Recuperation de toute la table personne dans une variable table_pers
     #  et passage a la template via context
     #TODO: Simplifier ce code une fois que la gestion de priorité sera ajoutée
+    userCoordsSet = False
+    if request.user.is_authenticated:
+        user = request.user
+        ulat, ulon = user.lat, user.lon
+        if not ulat is None:
+            userCoordsSet = True
+
+
+    if request.method == 'POST':
+        pass
+
+    else: 
+        pass
     table_image = Image.objects.select_related('produit').order_by('produit_id')
     produit_id_list = []
     image_id_list = []
     for i in table_image:
-        if not i.produit_id in produit_id_list:
-            produit_id_list.append(i.produit_id)
-            image_id_list.append(i.id)
+        #Si l'utilisateur n'est pas authentifié ou vient d'arriver sur la page, afficher tous les producteurs
+        if not userCoordsSet or request.method == 'GET':
+            if not i.produit_id in produit_id_list:
+                produit_id_list.append(i.produit_id)
+                image_id_list.append(i.id)
+        #Si l'utilisateur appuie sur le bouton, affiche que les producteurs dans un rayon de moins de 10km
+        else:
+            plat, plon = i.produit.producteur.lat, i.produit.producteur.lon
+            if not plat is None and not plon is None:
+                distance = great_circle_vec(ulat, ulon, plat, plon)
+                if distance<10000:
+                    if not i.produit_id in produit_id_list:
+                        produit_id_list.append(i.produit_id)
+                        image_id_list.append(i.id)
             
     table_image = table_image.filter(id__in=image_id_list)
     
@@ -36,12 +60,24 @@ def produit_django(request):
 def produit(request, idProduit):
     #template = loader.get_template('produit/description_prod.html')
     # affichage de la description du produit
+    userCoordsSet = False
+    if request.user.is_authenticated:
+        user = request.user
+        ulat, ulon = user.lat, user.lon
+        if not ulat is None:
+            userCoordsSet = True
+
     produit = Produit.objects.get(produit_id = idProduit)
-    producteur = Personne.objects.get(personne_id = produit.producteur_id)
-    #Un champ lié par clé étrangère peut être accédé comme ceci aussi:
-    #La confusion vient du fait que le champ s'appelle id_producteur dans le modèle
-    #Mais django ajoute le suffixe _id (donc id_producteur_id) dans la BDD
-    #TODO (Baptiste sur master) : Renommer les champs FK pour retirer le id_
+    producteur = produit.producteur
+
+    notif10km = ""
+    plat, plon = producteur.lat, producteur.lon
+    if userCoordsSet and not plat is None and not plon is None:
+        distance = great_circle_vec(ulat, ulon, plat, plon)
+        if distance>10000:
+            notif10km = "Ce produit appartient a un producteur qui est trop loin de chez vous"
+            print("notif10km set")
+
     #producteur = produit.id_producteur
     table_images = Image.objects.filter(produit = produit)
 
@@ -54,6 +90,7 @@ def produit(request, idProduit):
         'lesImages' : table_images,
         'range' : range(produit.quantite),
         'qte' : produit.quantite,
+        'notif10km' : notif10km,
     }
     return render(request, 'produit/description_prod.html', context)
 
