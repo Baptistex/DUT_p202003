@@ -64,7 +64,7 @@
                                 </ul>
                             </div>
                             <div class="col-md-6" id="le_producteur">
-                                <a href="#">{{producteur.nom}} {{producteur.prenom}}<i class="icofont-farmer-alt ml-4"></i></a>
+                                <a href="{% url 'producteur' producteur.personne_id %}"">{{producteur.nom}} {{producteur.prenom}}<i class="icofont-farmer-alt ml-4"></i></a>
                             </div>
                         </div>
 
@@ -72,16 +72,63 @@
 
                         <div class="row">
                             <div class="col-4">
-                                <div class="qty">
-                                    <span id="dec" onclick="dec()">-</span>
-                                    <input type="text" id="demo1"   value="1" />
-                                    <span id="inc" onclick="inc()">+</span>                                    
-                                </div>                                 
+                                <div class="qty" style="display: inline-block;">
+                                    <span id="dec" style="cursor: pointer;" onclick="dec()">-</span>
+                                    <select type="select" id="demo1" oninput="myFunction()"  value="1">
+                                        {% for i in range %}
+                                            <option value="{{forloop.counter}} ">{{forloop.counter}}</option>
+                                        {%endfor%}
+                                    </select>
+                                    <span id="inc" style="cursor: pointer;" onclick="inc()">+</span>                                    
+                                </div>  
+                                <p id="demo"></p>                               
                             </div>
                             <div class="col-8 text-center">
-                                <button type="button" class="btn btn-primary">Ajouter à l'assiette !</button>
+                                <button type="button" id="btn_commander" class="btn btn-primary">Ajouter à l'assiette !</button>
                             </div>
                         </div>
+
+                        <script type="text/javascript">
+                                /*function myFunction() {
+                                    var x = document.getElementById("demo1").value;
+                                    var text = document.getElementById("demo1");
+                                    text.style.color = 'black';
+                                    if (x > {{qte}}) {
+                                        document.getElementById("demo").innerHTML = " /!\\ la quantite max";
+                                        text.style.color = 'red';
+                                        document.getElementById("demo1").value = {{qte}};
+                                    }
+                                    
+                                    if (x < 0) {
+                                        document.getElementById("demo").innerHTML = " /!\\ saissisez une valeur positive";
+                                        text.style.color = 'red';
+                                        document.getElementById("demo1").value = 0;
+                                    }
+                                }*/
+
+                                /*Increament*/
+                                function inc() {
+                                    var qty = document.getElementById('demo1').value;
+                                    var text = document.getElementById("demo1");
+                                    qty++;
+                                    if (qty <= {{qte}} ) {
+                                        document.getElementById('demo1').value = qty;
+                                    }
+                                }
+                                    
+                                                    
+                                /*Decrement*/
+                                function dec() {
+                                    var qty = document.getElementById('demo1').value;
+                                    var text = document.getElementById("demo1");
+                                    qty--;
+                                    text.style.color = 'black';
+                                    if (qty > 0) {
+                                        document.getElementById('demo1').value = qty;
+                                    }                                    
+                                }
+                    
+                        </script>
                     </div>
                 </div>
             </div>
@@ -203,23 +250,15 @@
 
         </section>
 
-        <script type="text/javascript">
-            /*Increament*/
-            function inc() {
-                var qty = document.getElementById('demo1').value;
-                qty++;
-                document.getElementById('demo1').value = qty;
-            }
-    
-            /*Decrement*/
-            function dec() {
-                var qty = document.getElementById('demo1').value;
-                qty--;
-                if (qty > 0) {
-                    document.getElementById('demo1').value = qty;
+        <script>
+            /* Verification saisie */
+            function Saisie() {
+                var qty = document.getElementById("demo1").value;
+                if( qty > 150){
+                    ('#btn_commander').addClass('erreur');
+                    document.getElementById("demo1").value = "Valeur incorrecte";
                 }
             }
-    
         </script>
         
 {% endblock %}

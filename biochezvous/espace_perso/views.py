@@ -4,7 +4,7 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
-from .models import Utilisateur,Personne
+from .models import Utilisateur,Personne, Producteur
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
@@ -169,6 +169,22 @@ def espacePerso(request):
 #    prod_group.permissions.add(
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
+
+#
+# 
+# espace PRODUCTEUR
+#
+#
+#view pour afficher le detail sur le producteur
+def producteur(request, idProducteur):
+    
+    producteur = Producteur.objects.get(personne_id = idProducteur)
+    context = {
+        'leproducteur' : producteur,
+        'mesProduits': '',
+    }
+
+    return render(request, 'espace_perso/description_producteur.html', context)
     
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def listeCommande(request):

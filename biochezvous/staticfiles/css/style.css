@@ -1330,22 +1330,17 @@ section {
 }
 
 .qty span {
-    background: #ccc;
-    font-size: 24px;
-    font-weight: 700;
-    padding: 5px 8px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    width: 15px;
-    text-align: center;
+    
 }
 
-.qty input {
+.qty select {
     width: 50px;
     padding: 0 5px;
     text-align: center;
     border: 1px solid #ccc;
 }
+
+
 
 #description .carousel-inner {
     margin-left: 80px;
@@ -1360,6 +1355,11 @@ section {
     width: 60%; 
     height: 60%;  
     text-align: center;    
+}
+
+
+#btn_commander .erreur {
+    background-color: red;
 }
 
 

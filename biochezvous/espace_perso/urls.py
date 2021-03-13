@@ -16,9 +16,6 @@ urlpatterns = [
     path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
     path('listeCommande',views.listeCommande, name='listeCommande'),
     path('commande/<int:id>',views.commande, name='commande'),
-
-    
-
-    
-    
+    #espace producteur 
+    path('producteur/<int:idProducteur>', views.producteur, name='producteur'),
 ]

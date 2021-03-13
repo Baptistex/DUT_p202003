@@ -15,8 +15,6 @@ class Produit(models.Model):
     unite = models.IntegerField()
     date = models.DateTimeField()
 
-    def __str__(self):
-        return "Produit : "+str(self.nom)
     
     class Meta:
         db_table = 'produit'
@@ -37,7 +35,7 @@ class TypeProduit(models.Model):
     type_id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
-    
+
     class Meta:
         db_table = 'typeproduit'
 
@@ -47,8 +45,6 @@ class Categorie(models.Model):
     typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
     nom = models.TextField()
         
-    def __str__(self):
-        return "Categorie : "+str(self.nom)+str(self.categorie_id)
 
     class Meta:
         db_table = 'categorie'

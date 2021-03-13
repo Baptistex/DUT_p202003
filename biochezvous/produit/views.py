@@ -52,6 +52,8 @@ def produit(request, idProduit):
         'id': produit.produit_id,
         'producteur' : producteur,
         'lesImages' : table_images,
+        'range' : range(produit.quantite),
+        'qte' : produit.quantite,
     }
     return render(request, 'produit/description_prod.html', context)
 
