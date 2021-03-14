@@ -1,0 +1,21 @@
+{% extends "produit/base.html" %}
+{% load static %}
+{% block title %}Espace Administrateur - Demandes d'aide{% endblock %}
+{% block content %}
+<div class="container admin">
+    <div class="row">
+        <div class="col">
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Espace Administrateur</h2><br>
+                <h3>Les demandes d'aide</h3>
+            </div>
+        </div>
+    </div>
+    {% for demande in dataDemandes %}
+        {{ demande.nom }}<br>
+        {{ demande.prenom }}<br>
+        {{ demande.email }}<br>
+        {{ demande.message }}<br>
+    {% endfor %}
+</div>
+{% endblock %}
