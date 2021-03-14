@@ -1,0 +1,19 @@
+{% extends "produit/base.html" %}
+{% load static %}
+
+{% block title %}Demande d'aide{% endblock %}
+
+
+{% block content %}
+<br>
+<div class="text-center">
+<h3>Vous rencontrez un problème sur BioChezVous ? Parlez-en via ce formulaire de contact ! Nous serons ravis de vous aider.</h3>
+</div>
+<br>
+    <form method="post" class="text-center post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary " type="submit">Envoyer ma demande</button>
+    </form>
+    <br>
+{% endblock %}
