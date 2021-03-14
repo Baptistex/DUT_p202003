@@ -1334,7 +1334,8 @@ section {
 }
 
 .qty select {
-    width: 50px;
+    width: 75px;
+    height: 45px;
     padding: 0 5px;
     text-align: center;
     border: 1px solid #ccc;
