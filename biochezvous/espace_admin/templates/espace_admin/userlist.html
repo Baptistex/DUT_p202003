@@ -1,0 +1,47 @@
+{% extends "produit/base.html" %}
+{% load static %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+{% block content %}
+<div class="container admin">
+    <div class="row">
+        <div class="col">
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Espace Administrateur</h2><br>
+                <h3>Liste d'utilisateurs inscrit</h3>
+            </div>
+        </div>
+    </div>
+ <table id="table" class="table table-hover table-mc-light-blue">
+    <thead>
+        <tr>
+            
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Identifiant</th>
+                <th>Adresse mail</th>
+                <th>Téléphone</th>
+                <th>
+                    {% url 'deleteUser' as the_url %}
+                    <button class="btn supp" id="btnSuppr" ><a href="{{ the_url }}">Supprimer tous les utilisateurs</a></button>
+                </th>
+         </tr>
+    </thead>
+    {% for user in userlist %}
+        <tr>
+            <td>{{user.nom }}</td>
+            <td>{{user.prenom }}</td>
+            <td>{{user.personne_id }}</td>            
+            <td>{{user.mail }}</td>
+            <td>{{user.num_tel }}</td>
+            <td>
+                {% url 'deleteOneUser' user.personne_id as the_url %}
+                <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Supprimer l'utilisateur</a></button>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock %}
+
+<!--href="{% url 'delete_All'%}",href="{% url 'deleteOneUser'%}"-->
