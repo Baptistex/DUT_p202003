@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Utilisateur, Personne, Producteur
+from espace_admin.models import Demandes
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -76,3 +77,8 @@ class FormDataModification(ModelForm):
            # 'code_postal' : forms.TextInput(attrs={'class': 'form-control'}),
        # }"""
 
+class FormAide(forms.Form):
+    nom = forms.CharField(max_length=100)
+    prenom = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    message = forms.CharField(max_length=1500)

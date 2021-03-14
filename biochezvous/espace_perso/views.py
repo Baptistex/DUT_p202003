@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from collections import namedtuple
@@ -8,7 +8,7 @@ from .models import Utilisateur,Personne
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
-from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormAide #, Suppression
 
 
 # Create your views here.
@@ -165,4 +165,12 @@ def espacePerso(request):
 #    prod_group.permissions.add(
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
+
+def aide(request):
+    if request.method == 'post':
+         form = FormAide(request.POST).save()
+         return redirect('/aide')
+    else:
+        form = FormAide()
+    return render(request,'espace_perso/demande_aide.html', {'form':form})
     
