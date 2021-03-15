@@ -5,10 +5,11 @@ from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from .models import Utilisateur,Personne
-from espace_perso.forms import FormInscriptionProd
+from espace_perso.forms import FormInscriptionProd, FormAide
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
-from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormAide #, Suppression
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser#, Suppression
+from espace_admin.models import Demandes
 
 
 # Create your views here.
@@ -167,9 +168,11 @@ def espacePerso(request):
 #    )
 
 def aide(request):
-    if request.method == 'post':
-         form = FormAide(request.POST).save()
-         return redirect('/aide')
+    if request.method == "POST":
+        form = FormAide(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/aide')
     else:
         form = FormAide()
     return render(request,'espace_perso/demande_aide.html', {'form':form})

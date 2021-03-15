@@ -89,11 +89,11 @@ WSGI_APPLICATION = 'biochezvous.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pg_p202003',
-        'USER': 'p202003',
-        'PASSWORD': 'Ventes!?loc2021',
-        'HOST': 'pg.infolannion.com',
-        'PORT': '5432',
+        'NAME': 'bcv',
+        'USER': 'postgres',
+        'PASSWORD': 'fzaXh87Xfn:)',
+        'HOST': 'localhost',
+        'PORT': '5433'
     }
 }
 

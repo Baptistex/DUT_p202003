@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from espace_perso.models import Personne
+from espace_perso.forms import FormAide
 from .models import Demandes #importer modèle de 'espace_perso' - pas nécessaire de recréer modèle personne
 
 #Accueil
@@ -44,5 +45,19 @@ def deleteOneUser(request,id):
 #SAV
 def util_aide(request):
     template = loader.get_template('espace_admin/aide.html')
-    return render(request,'espace_admin/aide.html', {'dataDemandes': Demandes.objects.all()})
+    table_demandes = Demandes.objects.all()
+    context = {
+        'listeAides' : table_demandes
+    }
+    return HttpResponse(template.render(context,request))
     
+def deleteDemande(request,n):
+    if request.method == "GET":
+        dest = Demandes.objects.get(nom = n)
+        dest.delete()
+        template = loader.get_template('espace_admin/aide.html')
+        table_demandes = Demandes.objects.all()
+        context = {
+            'listeAides' : table_demandes
+        }
+    return HttpResponse(template.render(context,request))
