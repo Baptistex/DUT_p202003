@@ -78,7 +78,6 @@ class ContenuCommande(models.Model):
 class Panier(models.Model):
     personne = models.ForeignKey('espace_perso.Personne', related_name='panier_personne', on_delete=models.CASCADE)
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
-
     panier_id = models.AutoField(primary_key=True)
     quantite = models.IntegerField()
 

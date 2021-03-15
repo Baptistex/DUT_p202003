@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from collections import namedtuple
@@ -106,24 +106,6 @@ def deconnexion(request):
         logout(request)
     return HttpResponse(template.render({},request))
 
-"""
-def modif_data(request):
-
-    if request.method == 'POST':
-        form = FormDataModification(request.POST)
-
-        #email = request.POST.get('email')
-        #name = request.POST.get('name')
-
-        instance = form.save()
-        instance.save() 
-    else:
-        #form = FormInscription()
-    return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
-
-"""
-
-
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
     """
@@ -204,9 +186,7 @@ def informationPerso(request):
     Authors:
         Justine Fouillé
     """
-    #TODO changer et unifier le bazar
-    #TODO voir les sessions pour récupérer l'id
-    #TODO Vérifier les champs
+    #TODO Vérifier la vérification automatique des champs du formulaire
     personne_id = request.user.personne_id
     u = Personne.objects.get(personne_id=personne_id)
     form = FormDataModification(instance=u)
@@ -216,8 +196,8 @@ def informationPerso(request):
             form.save()
     context = {'form':form}
 
-
     return render(request, 'espace_perso/informationPerso.html', context)
+
 
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
@@ -238,6 +218,25 @@ def panier(request):
     context['panier'] = Panier.objects.filter(personne_id=personne_id)    
     return render(request, 'espace_perso/panier.html',context)
 
-def suppressionPanier(request):
-    context = {}
-    return render(request, 'espace_perso/suppressionPanier.html',context)
+
+
+def suppressionPanier(request, id):
+    """
+    Supprimer un élement du panier
+
+    Args:
+        id : c'est l'id du produit à terminer
+
+    Returns:
+        redirige vers la vue panier
+
+    Authors:
+        Justine Fouillé
+    """
+    #TODO : gérer le fait que ce soit les articles pour l'utilisateur donné 
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)  
+    produit = panier.get(produit_id=id)
+    
+    produit.delete()
+    return redirect('panier')

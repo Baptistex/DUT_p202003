@@ -18,10 +18,6 @@ urlpatterns = [
     path('panier',views.panier, name='panier'),
     path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
 
-
-
-    
-
     
     
 ]
