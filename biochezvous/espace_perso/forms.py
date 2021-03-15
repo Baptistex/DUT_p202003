@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Utilisateur, Personne, Producteur
+from produit.models import Image
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -89,4 +90,10 @@ class FormDataModifProd(ModelForm):
 
     class Meta:
         model = Personne
-        fields = ['nom','mail','num_tel','adresse','ville','code_postal',]
+        fields = ['nom','mail','num_tel','adresse','ville','code_postal']
+
+class ImageForm(ModelForm):
+    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
+    class Meta:
+        model = Image
+        fields = ['image']
