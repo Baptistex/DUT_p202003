@@ -23,7 +23,8 @@ class CategorieForm(ModelForm):
 
 #A changer pour que le choix du producteur se fasse automatiquement
 class ProduitForm(ModelForm):
-    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    nom=forms.CharField(initial='indiquer l\'unité (ex:Kg)',widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    unit=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'categorie_id',
                                     empty_label="Nom de la categorie") 
@@ -34,7 +35,7 @@ class ProduitForm(ModelForm):
     date=forms.CharField(initial='aaaa-mm-jj')
     class Meta:
         model = Produit
-        fields = ['nom','quantite', 'prix', 'unit', 'description','producteur','categorie','unite','date']
+        fields = ['nom','quantite', 'prix', 'unit', 'description','producteur','categorie','date']
         
 
 #Formulaire pour ajouter des images a un produit
