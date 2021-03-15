@@ -46,9 +46,9 @@ class Migration(migrations.Migration):
             model_name='personne',
             name='ville',
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='personne',
             name='adresse',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='espace_perso.adresse'),
         ),
+        
     ]
