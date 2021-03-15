@@ -14,6 +14,8 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     adresse = models.CharField(max_length = 100,  blank=True)
     lat = models.FloatField(blank=True, null=True)
     lon = models.FloatField(blank=True, null=True)
+    newsletter = models.BooleanField()
+    confirmation = models.BooleanField()
 
     USERNAME_FIELD = 'mail'
     objects = UserManager()
@@ -35,6 +37,7 @@ class Utilisateur(Personne):
 class Producteur(Personne):
     description = models.TextField()
     image   = models.ImageField(upload_to='images/')
+    iban = models.CharField(max_length=100)
     class Meta:
         db_table = 'producteur'
         default_permissions = ()

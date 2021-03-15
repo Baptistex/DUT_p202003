@@ -11,7 +11,7 @@ class Produit(models.Model):
     nom = models.CharField(max_length=50)
     description = models.TextField()
     prix = models.FloatField()
-    unit = models.BooleanField()
+    unit = models.CharField(max_length=10)
     quantite = models.FloatField()
     unite = models.IntegerField()
     date = models.DateTimeField()
@@ -24,7 +24,7 @@ class Produit(models.Model):
 class Image(models.Model):
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
     image   = models.ImageField(upload_to='images/')
-    #TODO: Champ priorite    
+    priorite = models.IntegerField()  
     
     class Meta:
         db_table = 'image'
