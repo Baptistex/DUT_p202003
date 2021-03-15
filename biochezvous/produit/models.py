@@ -1,8 +1,7 @@
 from django.db import models
+from espace_perso.models import Personne
 
 # Create your models here.
-
-
 
 class Produit(models.Model):
     produit_id = models.AutoField(primary_key=True)
@@ -36,7 +35,6 @@ class TypeProduit(models.Model):
     type_id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
-
     
     class Meta:
         db_table = 'typeproduit'
@@ -50,3 +48,36 @@ class Categorie(models.Model):
 
     class Meta:
         db_table = 'categorie'
+
+
+
+class Commande(models.Model):
+
+    personne = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE)
+    commande_id = models.AutoField(primary_key=True)
+    date =  models.DateTimeField()
+    statut = models.IntegerField() #TODO: à aviser
+    montant = models.DecimalField(max_digits=8, decimal_places=3)
+    produits = models.ManyToManyField('produit.Produit', through='produit.ContenuCommande')
+
+
+    class Meta:
+        db_table = 'commande'
+
+class ContenuCommande(models.Model):
+
+    produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
+    commande = models.ForeignKey('Commande', on_delete=models.CASCADE)
+    quantite = models.IntegerField()
+
+    class Meta:
+        db_table = 'contenuCommande'
+
+class Panier(models.Model):
+    personne = models.ForeignKey('espace_perso.Personne', related_name='panier_personne', on_delete=models.CASCADE)
+    produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
+    panier_id = models.AutoField(primary_key=True)
+    quantite = models.IntegerField()
+
+    class Meta:
+        db_table = 'panier'

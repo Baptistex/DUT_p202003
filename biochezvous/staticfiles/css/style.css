@@ -1688,3 +1688,13 @@ input[type=range].quantite {
     background-color: red;
     color: white;
 }
+
+
+
+.boxEspacePerso {  
+    margin: 20px !important;
+    height: 10em !important;
+    width: 20em !important;
+    background-color: #00ffc6;
+    justify-content: center;
+}

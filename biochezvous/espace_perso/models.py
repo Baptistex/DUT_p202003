@@ -16,6 +16,7 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     lon = models.FloatField(blank=True, null=True)
     newsletter = models.BooleanField()
     confirmation = models.BooleanField()
+    panier = models.ManyToManyField('produit.Produit', through='produit.Panier')
 
     USERNAME_FIELD = 'mail'
     objects = UserManager()
