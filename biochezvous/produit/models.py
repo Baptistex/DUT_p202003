@@ -18,7 +18,7 @@ class Produit(models.Model):
     
     class Meta:
         db_table = 'produit'
-
+        default_permissions = ()
 
 class Image(models.Model):
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
@@ -27,7 +27,7 @@ class Image(models.Model):
     
     class Meta:
         db_table = 'image'
-    
+        default_permissions = ()
 
 
 
@@ -38,7 +38,7 @@ class TypeProduit(models.Model):
     
     class Meta:
         db_table = 'typeproduit'
-
+        default_permissions = ()
 
 class Categorie(models.Model):
     categorie_id = models.AutoField(primary_key=True)
@@ -48,7 +48,7 @@ class Categorie(models.Model):
 
     class Meta:
         db_table = 'categorie'
-
+        default_permissions = ()
 
 
 class Commande(models.Model):
@@ -63,6 +63,7 @@ class Commande(models.Model):
 
     class Meta:
         db_table = 'commande'
+        default_permissions = ()
 
 class ContenuCommande(models.Model):
 
@@ -72,12 +73,13 @@ class ContenuCommande(models.Model):
 
     class Meta:
         db_table = 'contenuCommande'
+        default_permissions = ()
 
 class Panier(models.Model):
     personne = models.ForeignKey('espace_perso.Personne', related_name='panier_personne', on_delete=models.CASCADE)
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
-    panier_id = models.AutoField(primary_key=True)
     quantite = models.IntegerField()
 
     class Meta:
         db_table = 'panier'
+        default_permissions = ()
