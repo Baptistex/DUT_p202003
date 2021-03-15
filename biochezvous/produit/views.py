@@ -68,6 +68,7 @@ def liste_produit(request):
     return HttpResponse(template.render({},request))
 
 
+
 def ajout_prod(request):
     if request.method == 'POST':
         form = ProduitForm(request.POST, request.FILES)
@@ -75,7 +76,7 @@ def ajout_prod(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/accueilEspaceProducteur')
+            return HttpResponseRedirect('/nouvelleimage')
     else:
         form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
@@ -88,10 +89,10 @@ def ajout_prod_image(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
         form = ImageForm()
-    return render(request, 'accueilEspaceProducteur', {'form': form})
+    return render(request, 'produit/ajout_image.html', {'form': form})
 
 def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')

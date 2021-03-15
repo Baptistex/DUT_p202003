@@ -15,6 +15,6 @@ urlpatterns = [
 
     #Partie test lien entre pages django
     path('description',views.produit, name='produit_description'),
-
+ 
 
 ]
