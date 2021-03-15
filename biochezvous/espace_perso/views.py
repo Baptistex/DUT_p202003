@@ -124,23 +124,21 @@ def modif_data(request):
 """
 
 
-#def modifDataUtilisateur(request):
-#def espacePerso(request):
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
-    #TODO changer et unifier le bazar
-    #TODO voir les sessions pour récupérer l'id
-    #TODO Vérifier les champs
-    personne_id = request.user.personne_id
-    u = Personne.objects.get(personne_id=personne_id)
-    form = FormDataModification(instance=u)
-    if request.method == 'POST' :
-        form = FormDataModification(request.POST, instance=u)
-        if form.is_valid():
-            form.save()
-    context = {'form':form}
+    """
+    Vue qui permet d'accéder aux fonctionnalités concernant l'espace perso
 
+    Args:
 
+    Returns:
+        contenuCommande : liste des produits contenu dans la commande
+        Commande : les infos concernant la commande
+
+    Authors:
+        Justine Fouillé
+    """
+    context = {}
     return render(request, 'espace_perso/espacePerso.html', context)
 
 
@@ -155,6 +153,17 @@ def espacePerso(request):
     
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def listeCommande(request):
+    """
+    Afficher les différentes commandes d'un utilisateur
+
+    Args:
+
+    Returns:
+        commandes : listes des commandes de l'utilisateur
+
+    Authors:
+        Justine Fouillé
+    """
     context = {}
     personne_id = request.user.personne_id
     context['commandes'] = Commande.objects.filter(personne_id=personne_id)    
@@ -162,11 +171,20 @@ def listeCommande(request):
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def commande(request,id):
-    context = {}
+    """
+    Afficher les produits d'une commande donnée
 
-    #infoCommande = ContenuCommande.objects.filter(commande_id=id)
-    #produits = Produit.objects.filter(contenucommande__commande_id=id)
-    #context['contenuCommande'] = Produit.objects.filter(contenucommande__commande_id=id)
+    Args:
+        id : numéro de la commande dont on veut le détail
+
+    Returns:
+        contenuCommande : liste des produits contenu dans la commande
+        Commande : les infos concernant la commande
+
+    Authors:
+        Justine Fouillé
+    """
+    context = {}
     context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
     context['Commande'] = Commande.objects.get(commande_id=id)
     
@@ -175,6 +193,17 @@ def commande(request,id):
 
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def informationPerso(request):
+    """
+    Afficher les infos persos de l'utilisateur afin qu'il puisse les modifier
+
+    Args:
+
+    Returns:
+        form : formulaire avec les informations prérentrer dedans
+
+    Authors:
+        Justine Fouillé
+    """
     #TODO changer et unifier le bazar
     #TODO voir les sessions pour récupérer l'id
     #TODO Vérifier les champs
@@ -193,6 +222,17 @@ def informationPerso(request):
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def panier(request):
+    """
+    Afficher le panier : les articles que l'utilisateur souhaite acheter mais qui ne sont pas encore commandes
+
+    Args:
+
+    Returns:
+        panier : le panier de l'utilisateur
+
+    Authors:
+        Justine Fouillé
+    """
     context = {}
     personne_id = request.user.personne_id
     context['panier'] = Panier.objects.filter(personne_id=personne_id)    
