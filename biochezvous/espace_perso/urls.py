@@ -14,6 +14,11 @@ urlpatterns = [
     path('connexion', auth_views.LoginView.as_view()),
     path('listeCommande',views.listeCommande, name='listeCommande'),
     path('commande/<int:id>',views.commande, name='commande'),
+    path('informationPerso',views.informationPerso, name='informationsPerso'),
+    path('panier',views.panier, name='panier'),
+    path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
+
+
 
     
 

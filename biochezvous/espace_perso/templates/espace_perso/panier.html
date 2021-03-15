@@ -1,0 +1,73 @@
+{% extends "produit/base.html"%}
+{% load static %}
+{% load math_filters %}
+
+
+{% block title %} Panier {% endblock %}
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+  <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+    <h2> Mon panier </h2>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Nom du produit</th>
+        <th scope="col">Prix unitaire</th>
+        <th scope="col">Quantité</th>
+        <th scope="col">Total</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for elem in panier %}
+      <tr>
+        <th scope="row"> Image ?</th>
+        <td>
+          <p> {{ elem.produit.nom }}</p>
+          <p> ref : {{ elem.produit.produit_id }}</p>
+        </td>
+        <td>{{ elem.produit.prix }}</td>
+        <td>{{ elem.quantite }}</td>
+        <td>{{ elem.produit.prix|mul:elem.quantite }}</td>
+        <td>
+          <a href="suppressionPanier/{{ elem.produit.produit_id }}"><span class="glyphicon glyphicon-pencil"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+          </svg></span></a></td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td> Total produits </td>
+        <td> Test</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td> TOTAL </td>
+        <td> Test</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row justify-content-end text-center">
+
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary btn-lg"> Commander </button>
+    </div>
+</div>
+
+</div>
+{% endblock %}

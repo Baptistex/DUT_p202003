@@ -2,7 +2,7 @@
 {% load static %}
 {% load math_filters %}
 
-{% block title %}Mon espace{% endblock %}
+{% block title %}Détails commande{% endblock %}
 
 {% block content %}
 
@@ -10,48 +10,44 @@
 
 <div class="container-fluid">
 
-    <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
-        <h2> Ma commande </h2>
-    </div>
+  <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+    <h2> Commande  n° {{ Commande.commande_id }} </h2>
+  </div>
 
 
 
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Produit</th>
-            <th scope="col">Prix unitaire</th>
-            <th scope="col">Quantite Produit</th>
-            <th scope="col">Quantite</th>
-            <th scope="col">Sous-Total</th>
-          </tr>
-        </thead>
-        <tbody>
-         <!--  {% for ctn in contenu %}  
-          <tr>
-            <td>{{ ctn.id }}</td>
-            <td>{{ ctn.quantite }}</td>
-            <td>{{ ctn.commande_id }}</td>
-            <td>{{ ctn.produit_id }}</td>
-            
-          </tr>
-          {% endfor %}  --> 
-         {% for ctn in contenuCommande %}  
-         
-          <tr>
-            
-            <td> 
-                <p> {{ ctn.produit.nom }}</p>
-                <p> {{ ctn.produit.description }}</p>
-            </td>
-            <td>{{ ctn.produit.prix }}</td>
-            <td>{{ ctn.produit.quantite }}</td>
-            <td>{{ ctn.quantite }}</td>
-            <td>{{ ctn.produit.prix|mul:ctn.quantite }}</td>
+  <table class="table cmd">
+    <thead>
+      <tr>
+        <th scope="col">Produit</th>
+        <th scope="col">Prix unitaire</th>
+        <th scope="col">Quantite</th>
+        <th scope="col">Sous-Total</th>
+      </tr>
+    </thead>
+    <tbody>
 
-          </tr>
-          {% endfor %} 
-        </tbody>
-      </table>
+      {% for ctn in contenuCommande %}
 
-{% endblock %}
+      <tr>
+
+        <td>
+          <p> {{ ctn.produit.nom }}</p>
+          <p> {{ ctn.produit.description }}</p>
+        </td>
+        <td>{{ ctn.produit.prix }}</td>
+        <td>{{ ctn.quantite }}</td>
+        <td>{{ ctn.produit.prix|mul:ctn.quantite }}</td>
+
+      </tr>
+      {% endfor %}
+      <tr>
+        <td></td>
+        <td></td>
+        <td> Total commande </td>
+        <td> {{ Commande.montant }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% endblock %}

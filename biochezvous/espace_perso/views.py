@@ -157,10 +157,7 @@ def espacePerso(request):
 def listeCommande(request):
     context = {}
     personne_id = request.user.personne_id
-    context['commandes'] = Commande.objects.filter(personne_id=personne_id)
-
-
-    
+    context['commandes'] = Commande.objects.filter(personne_id=personne_id)    
     return render(request, 'espace_perso/listeCommande.html',context)
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
@@ -169,9 +166,38 @@ def commande(request,id):
 
     #infoCommande = ContenuCommande.objects.filter(commande_id=id)
     #produits = Produit.objects.filter(contenucommande__commande_id=id)
-
-
     #context['contenuCommande'] = Produit.objects.filter(contenucommande__commande_id=id)
     context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
+    context['Commande'] = Commande.objects.get(commande_id=id)
     
     return render(request, 'espace_perso/commande.html',context)
+
+
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def informationPerso(request):
+    #TODO changer et unifier le bazar
+    #TODO voir les sessions pour récupérer l'id
+    #TODO Vérifier les champs
+    personne_id = request.user.personne_id
+    u = Personne.objects.get(personne_id=personne_id)
+    form = FormDataModification(instance=u)
+    if request.method == 'POST' :
+        form = FormDataModification(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+    context = {'form':form}
+
+
+    return render(request, 'espace_perso/informationPerso.html', context)
+
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def panier(request):
+    context = {}
+    personne_id = request.user.personne_id
+    context['panier'] = Panier.objects.filter(personne_id=personne_id)    
+    return render(request, 'espace_perso/panier.html',context)
+
+def suppressionPanier(request):
+    context = {}
+    return render(request, 'espace_perso/suppressionPanier.html',context)
