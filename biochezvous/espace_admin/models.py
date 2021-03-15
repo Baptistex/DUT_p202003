@@ -3,8 +3,12 @@ from django.db import models
 class Demandes(models.Model):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100, unique=True)
+    mail = models.EmailField(max_length=100, unique=True)
     message = models.CharField(max_length=1500)
+    message_id = models.AutoField(primary_key=True)
+    
+    class Meta:
+        db_table = 'demande'
 
 
 

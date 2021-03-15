@@ -14,22 +14,26 @@
     <table id="table" class="table table-hover table-mc-light-blue">
         <thead>
             <tr>
-                
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Email</th>
-                    <th>Message</th>
-             </tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Répondre</th>
+                <th>Supprimer</th>
+            </tr>
         </thead>
         {% for demande in listeAides %}
             <tr>
                 <td>{{demande.nom }}</td>
                 <td>{{demande.prenom }}</td>         
-                <td>{{demande.email }}</td>
+                <td>{{demande.mail }}</td>
                 <td>{{demande.message }}</td>
+                <td>  
+                    <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Répondre</a></button>
+                </td>
                 <td>
-                    {% url 'deleteDemande' demande.nom as the_url %}
-                    <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Supprimer l'utilisateur</a></button>
+                    {% url 'deleteDemande' demande.message_id as the_url %}
+                    <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Supprimer le message</a></button>
                 </td>
             </tr>
         {% endfor %}

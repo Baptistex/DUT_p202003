@@ -78,11 +78,11 @@ class FormDataModification(ModelForm):
        # }"""
 
 class FormAide(forms.ModelForm):
-    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    message = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
+    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    message = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
 
     class Meta:
         model = Demandes
-        fields = ['nom', 'prenom', 'email', 'message']
+        fields = ['nom', 'prenom', 'mail', 'message']

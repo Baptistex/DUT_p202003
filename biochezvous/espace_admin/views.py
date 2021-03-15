@@ -51,10 +51,10 @@ def util_aide(request):
     }
     return HttpResponse(template.render(context,request))
     
-def deleteDemande(request,n):
+def deleteDemande(request,msg_id):
     if request.method == "GET":
-        dest = Demandes.objects.get(nom = n)
-        dest.delete()
+        delDemande = Demandes.objects.get(message_id = msg_id)
+        delDemande.delete()
         template = loader.get_template('espace_admin/aide.html')
         table_demandes = Demandes.objects.all()
         context = {

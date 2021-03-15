@@ -14,10 +14,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Demandes',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('message_id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nom', models.CharField(max_length=100)),
                 ('prenom', models.CharField(max_length=100)),
-                ('email', models.EmailField(max_length=100, unique=True)),
+                ('mail', models.EmailField(max_length=100, unique=True)),
                 ('message', models.CharField(max_length=1500)),
             ],
              options={
