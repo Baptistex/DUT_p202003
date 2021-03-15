@@ -34,7 +34,7 @@ class ProduitForm(ModelForm):
     date=forms.CharField(initial='aaaa-mm-jj')
     class Meta:
         model = Produit
-        fields = ['nom','quantite', 'prix', 'unit', 'description','producteur','categorie','unite','date']
+        fields = ['nom','quantite', 'prix', 'unit', 'description','producteur','categorie','quantite','date']
         
 
 #Formulaire pour ajouter des images a un produit

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from collections import namedtuple
@@ -8,7 +8,8 @@ from .models import Utilisateur,Personne, Producteur
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
-from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser,FormDataModifProd #, Suppression
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser,FormDataModifProd 
+from produit.models import Commande, ContenuCommande, Panier, Produit
 
 
 # Create your views here.
@@ -122,31 +123,87 @@ def deconnexion(request):
         logout(request)
     return HttpResponse(template.render({},request))
 
-"""
-def modif_data(request):
-
-    if request.method == 'POST':
-        form = FormDataModification(request.POST)
-
-        #email = request.POST.get('email')
-        #name = request.POST.get('name')
-
-        instance = form.save()
-        instance.save() 
-    else:
-        #form = FormInscription()
-    return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
-
-"""
-
-
-#def modifDataUtilisateur(request):
-#def espacePerso(request):
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
-    #TODO changer et unifier le bazar
-    #TODO voir les sessions pour récupérer l'id
-    #TODO Vérifier les champs
+    """
+    Vue qui permet d'accéder aux fonctionnalités concernant l'espace perso
+
+    Args:
+
+    Returns:
+        contenuCommande : liste des produits contenu dans la commande
+        Commande : les infos concernant la commande
+
+    Authors:
+        Justine Fouillé
+    """
+    context = {}
+    return render(request, 'espace_perso/espacePerso.html', context)
+
+
+
+#   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
+#def update_Permissions(request):
+#    prod_group, created = Group.objects.get_or_create(name='producteur')
+#    print(prod_group.permissions)
+#    prod_group.permissions.add(
+#        Permission.objects.get(codename='can_view_espace_perso')
+#    )
+    
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def listeCommande(request):
+    """
+    Afficher les différentes commandes d'un utilisateur
+
+    Args:
+
+    Returns:
+        commandes : listes des commandes de l'utilisateur
+
+    Authors:
+        Justine Fouillé
+    """
+    context = {}
+    personne_id = request.user.personne_id
+    context['commandes'] = Commande.objects.filter(personne_id=personne_id)    
+    return render(request, 'espace_perso/listeCommande.html',context)
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def commande(request,id):
+    """
+    Afficher les produits d'une commande donnée
+
+    Args:
+        id : numéro de la commande dont on veut le détail
+
+    Returns:
+        contenuCommande : liste des produits contenu dans la commande
+        Commande : les infos concernant la commande
+
+    Authors:
+        Justine Fouillé
+    """
+    context = {}
+    context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
+    context['Commande'] = Commande.objects.get(commande_id=id)
+    
+    return render(request, 'espace_perso/commande.html',context)
+
+
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def informationPerso(request):
+    """
+    Afficher les infos persos de l'utilisateur afin qu'il puisse les modifier
+
+    Args:
+
+    Returns:
+        form : formulaire avec les informations prérentrer dedans
+
+    Authors:
+        Justine Fouillé
+    """
+    #TODO Vérifier la vérification automatique des champs du formulaire
     personne_id = request.user.personne_id
     u = Personne.objects.get(personne_id=personne_id)
     form = FormDataModification(instance=u)
@@ -154,9 +211,8 @@ def espacePerso(request):
         form = FormDataModification(request.POST, instance=u)
         if form.is_valid():
             form.save()
-
     context = {'form':form}
-    return render(request, 'espace_perso/espacePerso.html', context)
+    return render(request, 'espace_perso/informationPerso.html', context)
 
 #   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
 #def update_Permissions(request):
@@ -197,3 +253,46 @@ def espacePersoProd(request):
     else:
         form = FormDataModifProd()
     return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
+
+
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def panier(request):
+    """
+    Afficher le panier : les articles que l'utilisateur souhaite acheter mais qui ne sont pas encore commandes
+
+    Args:
+
+    Returns:
+        panier : le panier de l'utilisateur
+
+    Authors:
+        Justine Fouillé
+    """
+    context = {}
+    personne_id = request.user.personne_id
+    context['panier'] = Panier.objects.filter(personne_id=personne_id)    
+    return render(request, 'espace_perso/panier.html',context)
+
+
+
+def suppressionPanier(request, id):
+    """
+    Supprimer un élement du panier
+
+    Args:
+        id : c'est l'id du produit à terminer
+
+    Returns:
+        redirige vers la vue panier
+
+    Authors:
+        Justine Fouillé
+    """
+    #TODO : gérer le fait que ce soit les articles pour l'utilisateur donné 
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)  
+    produit = panier.get(produit_id=id)
+    
+    produit.delete()
+    return redirect('panier')
