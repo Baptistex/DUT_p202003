@@ -9,7 +9,8 @@ from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
-from .utils import send_mail_inscription
+from .utils import send_mail_ins
+from .utils import send_mail_pay
 
 
 # Create your views here.
@@ -53,7 +54,11 @@ def paiement(request):
     return HttpResponse(template.render({},request))
 
 def send_mail_paiement(request):
-    send_mail_inscription()
+    send_mail_pay(request)
+    return HttpResponseRedirect('/')
+
+def send_mail_inscription(request):
+    send_mail_ins(request)
     return HttpResponseRedirect('/')
     
 def inscription_user(request):
