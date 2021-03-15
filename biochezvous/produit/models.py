@@ -12,7 +12,6 @@ class Produit(models.Model):
     prix = models.FloatField()
     unit = models.CharField(max_length=10)
     quantite = models.FloatField()
-    unite = models.IntegerField()
     date = models.DateTimeField()
 
     
