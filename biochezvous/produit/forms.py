@@ -31,6 +31,7 @@ class ProduitForm(ModelForm):
     producteur = forms.ModelChoiceField(queryset=Producteur.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom du producteur")
+    date=forms.CharField(initial='aaaa-mm-jj')
     class Meta:
         model = Produit
         fields = ['nom','quantite', 'prix', 'unit', 'description','producteur','categorie','unite','date']
