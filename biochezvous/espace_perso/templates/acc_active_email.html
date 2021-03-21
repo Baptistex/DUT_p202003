@@ -1,0 +1,5 @@
+{% autoescape off%} 
+Bonjour {{Personne.nom}}, 
+Veuillez cliquer sur le lien pour confirmer votre inscription,
+http: // {{domaine}} {% url 'activate' uidb64 = uid token = token%} 
+{% endautoescape%}

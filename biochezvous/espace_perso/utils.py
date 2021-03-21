@@ -18,13 +18,15 @@ def send_mail_ins(request):
 def send_mail_mass():
     list_mail = Personne.objects.filter(groups__name='producteur').values_list('mail', flat=True)
     for mail in list_mail: 
-        send_mail(
-        'Bienvenue sur BioChezVous',
-        'Bienvenue',
-        'biochezvous.iut@gmail.com',
-        [mail],
-        fail_silently=False,
+        if Personne.newsletter == True :
+            send_mail(
+            'Bienvenue sur BioChezVous',
+            'Bienvenue',
+            'biochezvous.iut@gmail.com',
+            [mail],
+            fail_silently=False,
     )
+        
 
 
 def send_mail_pay(request):

@@ -13,7 +13,9 @@ urlpatterns = [
     path('connexion', views.connexion, name='connexion'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
     path('connexion', auth_views.LoginView.as_view()),
-    path('send_mail_paiement', views.send_mail_paiement, name='send_mail_paiement')
+    path('send_mail_paiement', views.send_mail_paiement, name='send_mail_paiement'),
+    path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
 
     
     
