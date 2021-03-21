@@ -2,7 +2,8 @@ from django import forms
 from django.forms import ModelForm
 from .models import Utilisateur, Personne, Producteur
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 
 class FormInscription(UserCreationForm):
@@ -11,6 +12,8 @@ class FormInscription(UserCreationForm):
         fields = ['nom','prenom','mail','num_tel']
 
 class FormConnexion(AuthenticationForm):
+    username=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    password=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
     class Meta:
         model = Personne
         fields = ['username', 'password']
@@ -23,10 +26,14 @@ class FormInscriptionProd(UserCreationForm):
         user.save()
         user.groups.add(prod_group)
         user.save()
+
+        if created:
+            permissions_producteur = Permission.objects.filter(content_type=ContentType.objects.get(app_label='espace_perso', model='producteur').id)
+            prod_group.permissions.set(permissions_producteur)
         return user
     class Meta:
-        model = Personne
-        fields = ['nom','prenom','mail','num_tel']
+        model = Producteur
+        fields = ['nom','prenom','mail','num_tel','description']
 
 class FormInscriptionUser(UserCreationForm):
     
@@ -36,6 +43,9 @@ class FormInscriptionUser(UserCreationForm):
         user.save()
         user.groups.add(user_group)
         user.save()
+        if created:
+            permissions_utilisateur = Permission.objects.filter(content_type=ContentType.objects.get(app_label='espace_perso', model='utilisateur').id)
+            user_group.permissions.set(permissions_utilisateur)
         return user
     class Meta:
         model = Personne
@@ -44,18 +54,20 @@ class FormInscriptionUser(UserCreationForm):
 
 class FormDataModification(ModelForm):
     
-    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3'}))
+    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    #TODO Justine : Créer un nouveau formulaire pour l'adresse
+    #adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    #ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    #code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
 
     class Meta:
         model = Personne
-        fields = ['nom','prenom','mail','num_tel','adresse','ville','code_postal',]
-
+        fields = ['nom','prenom','mail','num_tel',]
+        #'adresse','ville','code_postal',
+        
        #widget = { 
             #'nom' : forms.TextInput(attrs={'class': 'form-control'}),
             #'prenom' : forms.TextInput(attrs={'class': 'form-control'}),
