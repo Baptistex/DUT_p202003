@@ -64,10 +64,18 @@ class FormDataModification(ModelForm):
     #ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
     #code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
 
-    def save(self):
-        user = super().save(commit=False)
-        user.lat, user.lon = getCoords(user.adresse, user.ville, user.code_postal)
-        user.save()
+    #def save(self):
+        #TODO Justine : Ces lignes la seront à mettre dans la vue pour ajouter une adresse
+        #user = super().save(commit=False)
+        #user.lat, user.lon = getCoords(user.adresse, user.ville, user.code_postal)
+        #user.save()
+        #Exemple test :
+        # user1 = request.user
+        # adresse1 = Adresse(code_postal="22300", ville="Lannion", adresse="untestoulapinevarientrouver")
+        # adresse1.lat, adresse1.lon = getCoords(adresse1.adresse, adresse1.ville, adresse1.code_postal)
+        # adresse1.save()
+        # user1.adresse = adresse1
+        # user1.save()
     class Meta:
         model = Personne
         fields = ['nom','prenom','mail','num_tel',]

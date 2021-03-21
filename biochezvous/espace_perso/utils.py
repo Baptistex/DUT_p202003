@@ -26,8 +26,11 @@ def getCoords(adresse, ville, code_postal):
         +'&format=json&addressdetails=0&limit=1')
 
     response = requests.get(url).json()
-    lat = response[0]['lat']
-    lon = response[0]['lon']
+    try:
+        lat = response[0]['lat']
+        lon = response[0]['lon']
+    except:
+        pass
 
     return lat, lon
 
