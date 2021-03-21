@@ -55,13 +55,14 @@ class FormInscriptionUser(UserCreationForm):
 
 class FormDataModification(ModelForm):
     
-    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3'}))
+    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    #TODO Justine : Créer un nouveau formulaire pour l'adresse
+    #adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    #ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
+    #code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
 
     def save(self):
         user = super().save(commit=False)
@@ -69,7 +70,8 @@ class FormDataModification(ModelForm):
         user.save()
     class Meta:
         model = Personne
-        fields = ['nom','prenom','mail','num_tel','adresse','ville','code_postal',]
+        fields = ['nom','prenom','mail','num_tel',]
+        #'adresse','ville','code_postal',
         
        #widget = { 
             #'nom' : forms.TextInput(attrs={'class': 'form-control'}),
