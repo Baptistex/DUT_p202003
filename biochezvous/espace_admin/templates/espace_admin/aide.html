@@ -11,7 +11,19 @@
             </div>
         </div>
     </div>
+
+    <!--Menu à revoir-->
+    <nav class="navigation">
+        <ul>
+            <li><a href="listeUtilisateurs"><i class="icofont-ui-user"></i></a></li>
+            <li><a href="transactions"><i class="icofont-envelope"></i></a></li>
+            <li><a href="transactions"><i class="icofont-exchange"></i></a></li>
+            <li><a href="transactions"><i class="icofont-help-robot"></i></a></li>
+        </ul>
+    </nav>
+
     <table id="table" class="table table-hover table-mc-light-blue">
+
         <thead>
             <tr>
                 <th>Nom</th>
@@ -22,21 +34,39 @@
                 <th>Supprimer</th>
             </tr>
         </thead>
+
         {% for demande in listeAides %}
             <tr>
                 <td>{{demande.nom }}</td>
                 <td>{{demande.prenom }}</td>         
                 <td>{{demande.mail }}</td>
                 <td>{{demande.message }}</td>
+
+                <!--Répondre à la demande-->
                 <td>  
-                    <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Répondre</a></button>
+                    <a href="{{ the_url }}">
+                        <span class="glyphicon glyphicon-home">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
+                            <path d="M5.921 11.9L1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+                            </svg>
+                        </span>
+                    </a>
                 </td>
+
+                <!--Supprimer la demande-->
                 <td>
                     {% url 'deleteDemande' demande.message_id as the_url %}
-                    <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Supprimer le message</a></button>
+                    <a href="{{ the_url }}">
+                        <span class="glyphicon glyphicon-pencil"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                            </svg>
+                        </span>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
+
     </table>
 </div>
 {% endblock %}
