@@ -233,7 +233,7 @@ def producteur(request, idProducteur):
     
     producteur = Producteur.objects.get(personne_id = idProducteur)
     
-    images_produit = Image.objects.filter(produit_id__in=Produit.objects.filter(producteur=producteur))
+    images_produit = Image.objects.filter(produit_id__in=Produit.objects.filter(producteur=producteur)).filter(priorite=1)
     context = {
         'leproducteur' : producteur,
         'mesProduits': images_produit,

@@ -16,17 +16,10 @@ def produit_django(request):
     #  et passage a la template via context
     #TODO: Simplifier ce code une fois que la gestion de priorité sera ajoutée
     table_image = Image.objects.select_related('produit').order_by('produit_id')
-    produit_id_list = []
-    image_id_list = []
-    for i in table_image:
-        if not i.produit_id in produit_id_list:
-            produit_id_list.append(i.produit_id)
-            image_id_list.append(i.id)
-            
-    table_image = table_image.filter(id__in=image_id_list)
-    
+    images_produit = Image.objects.filter(priorite=1)
+
     context = {
-        'lesproduits': table_image
+        'lesproduits': images_produit
     }
     return render(request, 'produit/produit.html', context)
 
