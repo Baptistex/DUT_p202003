@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image
-from espace_perso.models import Personne
+from espace_perso.models import Personne, Producteur
 from .forms import ProduitForm, ImageForm
 
 
@@ -68,8 +68,11 @@ def liste_produit(request):
     return HttpResponse(template.render({},request))
 
 
-
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def ajout_prod(request):
+    #personne_id = request.user.personne_id
+    #personne_ptr_id = request.user.personne_ptr_id
+    #u = Producteur.objects.get(personne_ptr_id=personne_id)
     if request.method == 'POST':
         form = ProduitForm(request.POST, request.FILES)
         if form.is_valid():

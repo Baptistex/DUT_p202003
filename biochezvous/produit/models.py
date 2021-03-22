@@ -41,8 +41,9 @@ class TypeProduit(models.Model):
 
 class Categorie(models.Model):
     categorie_id = models.AutoField(primary_key=True)
-    typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
     nom = models.TextField()
+    typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
+    
         
 
     class Meta:

@@ -245,7 +245,8 @@ def espace_producteur(request):
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePersoProd(request):
     personne_id = request.user.personne_id
-    u = Personne.objects.get(personne_id=personne_id)
+    personne_ptr_id = request.user.personne_ptr_id
+    u = Producteur.objects.get(personne_ptr_id=personne_id)
     form = FormDataModifProd(instance=u)
     if request.method == 'POST':
         form = FormDataModifProd(request.POST, instance=u)

@@ -87,13 +87,17 @@ class FormDataModifProd(ModelForm):
     adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+    iban = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
 
     class Meta:
-        model = Personne
-        fields = ['nom','mail','num_tel','adresse','ville','code_postal']
+        model = Producteur
+        fields = ['nom','mail','num_tel','ville','code_postal','iban','description']
+
+        
 
 class ImageForm(ModelForm):
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
+    priorite=forms.CharField(initial='1')
     class Meta:
         model = Image
-        fields = ['image']
+        fields = ['image','priorite']

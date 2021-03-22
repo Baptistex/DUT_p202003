@@ -23,16 +23,19 @@ class CategorieForm(ModelForm):
 
 #A changer pour que le choix du producteur se fasse automatiquement
 class ProduitForm(ModelForm):
-    nom=forms.CharField(initial='indiquer l\'unité (ex:Kg)',widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
-    unit=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
-    categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
-                                    to_field_name = 'categorie_id',
-                                    empty_label="Nom de la categorie") 
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    unit=forms.CharField(initial='(ex:Kg)',widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
     description=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+    date=forms.CharField(initial='aaaa-mm-jj')
+
     producteur = forms.ModelChoiceField(queryset=Producteur.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom du producteur")
-    date=forms.CharField(initial='aaaa-mm-jj')
+
+    categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
+                                    to_field_name = 'nom',
+                                    empty_label="Nom de la categorie")                                
+    
     class Meta:
         model = Produit
         fields = ['nom','quantite', 'prix', 'unit', 'description','producteur','categorie','quantite','date']
@@ -41,9 +44,10 @@ class ProduitForm(ModelForm):
 #Formulaire pour ajouter des images a un produit
 class ImageForm(ModelForm):
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
+    priorite=forms.CharField(initial='1')
     produit = forms.ModelChoiceField(queryset=Produit.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Produit à selectionner")
     class Meta:
         model = Image
-        fields = ['image','produit']
+        fields = ['image','produit','priorite']
