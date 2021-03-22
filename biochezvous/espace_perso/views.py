@@ -259,7 +259,7 @@ def ajout_prod_adresse(request):
         form = AdresseModifForm(request.POST)
         if form.is_valid():
             form.save()
-            #TODO: changer la redirection
+            #appeler la fonction pour la longitude et latitude
             return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
         form = AdresseModifForm()
