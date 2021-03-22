@@ -5,6 +5,8 @@ from produit.models import Image
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from .models import Adresse
+
 
 
 class FormInscription(UserCreationForm):
@@ -21,6 +23,10 @@ class FormConnexion(AuthenticationForm):
 
 class FormInscriptionProd(UserCreationForm):
      
+    
+    confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+    newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+
     def save(self):
         user = super().save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
@@ -34,10 +40,13 @@ class FormInscriptionProd(UserCreationForm):
         return user
     class Meta:
         model = Producteur
-        fields = ['nom','prenom','mail','num_tel','description']
+        fields = ['nom','prenom','mail','num_tel','description','confirmation','newsletter']
 
 class FormInscriptionUser(UserCreationForm):
     
+    confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+    newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+
     def save(self):
         user = super().save(commit=False)
         user_group, created = Group.objects.get_or_create(name='utilisateur')
@@ -48,9 +57,13 @@ class FormInscriptionUser(UserCreationForm):
             permissions_utilisateur = Permission.objects.filter(content_type=ContentType.objects.get(app_label='espace_perso', model='utilisateur').id)
             user_group.permissions.set(permissions_utilisateur)
         return user
+    def __init__(self, *args, **kwargs):
+        super(FormInscriptionUser, self).__init__(*args, **kwargs)
+        self.initial['confirmation'] = 1
+
     class Meta:
         model = Personne
-        fields = ['nom','prenom','mail','num_tel']
+        fields = ['nom','prenom','mail','num_tel','confirmation','newsletter']
 
 
 class FormDataModification(ModelForm):
