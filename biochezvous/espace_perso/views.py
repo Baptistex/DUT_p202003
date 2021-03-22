@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
 from produit.models import Commande, ContenuCommande, Panier, Produit
+from produit.models import Image
 
 
 # Create your views here.
@@ -232,9 +233,10 @@ def producteur(request, idProducteur):
     
     producteur = Producteur.objects.get(personne_id = idProducteur)
     
+    images_produit = Image.objects.filter(produit_id__in=Produit.objects.filter(producteur=producteur))
     context = {
         'leproducteur' : producteur,
-        'mesProduits': '',
+        'mesProduits': images_produit,
     }
 
     return render(request, 'espace_perso/description_producteur.html', context)
