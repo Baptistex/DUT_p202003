@@ -27,11 +27,10 @@ class ProduitForm(ModelForm):
     unit=forms.CharField(initial='(ex:Kg)',widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
     description=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
     date=forms.CharField(initial='aaaa-mm-jj')
-
-    producteur = forms.ModelChoiceField(queryset=Producteur.objects.all(),
-                                    to_field_name = 'nom',
-                                    empty_label="Nom du producteur")
-
+ 
+    #personne_id = request.user.personne_id
+    #personne_ptr_id = request.user.personne_ptr_id
+    #producteur = Producteur.objects.get(personne_ptr_id=personne_id)
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom de la categorie")                                

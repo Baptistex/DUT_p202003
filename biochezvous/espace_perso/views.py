@@ -8,7 +8,7 @@ from .models import Utilisateur,Personne, Producteur
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
-from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, ImageForm
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, AdresseModifForm
 from produit.models import Commande, ContenuCommande, Panier, Produit
 
 
@@ -245,27 +245,25 @@ def espace_producteur(request):
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePersoProd(request):
     personne_id = request.user.personne_id
-    personne_ptr_id = request.user.personne_ptr_id
     u = Producteur.objects.get(personne_ptr_id=personne_id)
     form = FormDataModifProd(instance=u)
     if request.method == 'POST':
         form = FormDataModifProd(request.POST, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/nouvelleimage')
+            return HttpResponseRedirect('/nouvelleAdresse')
     return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
 
-def ajout_prod_image(request):
+def ajout_prod_adresse(request):
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
+        form = AdresseModifForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = form.save()
-            instance.save()
+            form.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
-        form = ImageForm()
-    return render(request, 'produit/ajout_image.html', {'form': form})
+        form = AdresseModifForm()
+    return render(request, 'espace_perso/ajout_adresse.html', {'form': form})
 
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')

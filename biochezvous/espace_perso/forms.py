@@ -97,20 +97,20 @@ class FormDataModifProd(ModelForm):
     nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
-    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
-    ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
-    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
     iban = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
 
     class Meta:
         model = Producteur
-        fields = ['nom','mail','num_tel','ville','code_postal','iban','description']
+        fields = ['nom','mail','num_tel','description','image','iban']
 
         
 
-class ImageForm(ModelForm):
-    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
-    priorite=forms.CharField(initial='1')
+class AdresseModifForm(ModelForm):
+    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
     class Meta:
-        model = Image
-        fields = ['image','priorite']
+        model = Adresse
+        fields = ['code_postal','ville','adresse']
