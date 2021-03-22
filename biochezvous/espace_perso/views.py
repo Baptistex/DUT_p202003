@@ -91,16 +91,16 @@ def inscription_user(request):
     if request.method == 'POST':
         form = FormInscriptionUser(request.POST)
         if form.is_valid():
-            instance = form.save()
-            instance.confirmation = False
-            instance.save()
-            current_site = get_current_site (request)
-            mail_subject = 'Activez votre compte.'
+            user = form.save()
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your blog account.'
             message = render_to_string('acc_active_email.html', {
-                'user': instance,
+                'user': user,
                 'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(instance.pk)).decode(),
-                'token':account_activation_token.make_token(instance),
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
@@ -122,7 +122,7 @@ def activate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
-        user.confirmation = True
+        Personne.confirmation = True
         user.save()
         login(request, user)
         # return redirect('home')
