@@ -248,7 +248,7 @@ def espacePersoProd(request):
     u = Producteur.objects.get(personne_ptr_id=personne_id)
     form = FormDataModifProd(instance=u)
     if request.method == 'POST':
-        form = FormDataModifProd(request.POST, instance=u)
+        form = FormDataModifProd(request.POST, request.FILES, instance=u)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/nouvelleAdresse')
@@ -256,7 +256,7 @@ def espacePersoProd(request):
 
 def ajout_prod_adresse(request):
     if request.method == 'POST':
-        form = AdresseModifForm(request.POST, request.FILES)
+        form = AdresseModifForm(request.POST)
         if form.is_valid():
             form.save()
             #TODO: changer la redirection

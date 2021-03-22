@@ -97,7 +97,7 @@ class FormDataModifProd(ModelForm):
     nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
-    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
+    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png", required=False)
     iban = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
 
     class Meta:
