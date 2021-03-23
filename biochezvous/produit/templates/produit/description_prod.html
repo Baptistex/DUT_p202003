@@ -73,11 +73,15 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="qty" style="display: inline-block;">
-                                    <select type="select" id="demo1" oninput="myFunction()"  value="1">
-                                        {% for i in range %}
-                                            <option value="{{forloop.counter}} ">{{forloop.counter}}</option>
-                                        {%endfor%}
-                                    </select>
+                                    <form method="POST">
+                                        <select type="select" id="demo1" oninput="myFunction()"  value="1">
+                                            {% for i in range %}
+                                                <option value="{{forloop.counter}} ">{{forloop.counter}}</option>
+                                                <button type="submit" id="btn_commander" class="btn btn-primary">Ajouter à l'assiette !</button>
+                                            {%endfor%}
+                                        </select>
+                                    </form>
+                                    
                                 </div>  
                                 <p id="demo"></p>                               
                             </div>

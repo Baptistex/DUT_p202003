@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image
 from espace_perso.models import Personne
+from espace_perso.forms import FormSelectionQuantite
 from .forms import ProduitForm, ImageForm
 
 
@@ -46,7 +47,9 @@ def produit(request, idProduit):
     table_images = Image.objects.filter(produit = produit)
 
     print("les images : ", table_images)
-   
+    
+    forms = FormSelectionQuantite()
+
     context = {
         'leproduit': produit,
         'id': produit.produit_id,

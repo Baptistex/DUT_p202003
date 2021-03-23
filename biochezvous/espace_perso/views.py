@@ -231,6 +231,7 @@ def informationPerso(request):
 def producteur(request, idProducteur):
     
     producteur = Producteur.objects.get(personne_id = idProducteur)
+    listeProduits = Produit.objects.filter(producteur = producteur)
     
     context = {
         'leproducteur' : producteur,
@@ -258,6 +259,19 @@ def panier(request):
     personne_id = request.user.personne_id
     context['panier'] = Panier.objects.filter(personne_id=personne_id)    
     return render(request, 'espace_perso/panier.html',context)
+
+
+def ajouterPanier(request):
+    if request.method == 'POST':
+        form = ProduitForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            #TODO: changer la redirection
+            return HttpResponseRedirect('/')
+    else:
+        form = ProduitForm()
+    return render(request, 'produit/ajout_produit.html', {'form': form})
 
 
 

@@ -5,6 +5,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from .models import Adresse
+from produit.models import Produit
+
 
 
 
@@ -89,4 +91,13 @@ class FormDataModification(ModelForm):
            # 'ville' : forms.TextInput(attrs={'class': 'form-control'}),
            # 'code_postal' : forms.TextInput(attrs={'class': 'form-control'}),
        # }"""
+
+
+class FormSelectionQuantite(ModelForm):
+    quantite = forms.IntegerField()
+
+    class Meta:
+        model = Produit 
+        fields = ['quantite']
+
 
