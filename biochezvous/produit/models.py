@@ -18,6 +18,8 @@ class Produit(models.Model):
     class Meta:
         db_table = 'produit'
         default_permissions = ()
+    def __str__(self):
+        return self.nom
 
 class Image(models.Model):
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
@@ -44,12 +46,11 @@ class Categorie(models.Model):
     nom = models.TextField()
     typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
     
-        
-
     class Meta:
         db_table = 'categorie'
         default_permissions = ()
-
+    def __str__(self):
+        return self.nom
 
 class Commande(models.Model):
 
