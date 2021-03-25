@@ -82,6 +82,16 @@ def ajout_prod(request):
         form = ProduitForm(initial ={'producteur': u})
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
+def aff_prod(request):
+    #u = request.user
+    personne_id = request.user.personne_id
+    template = loader.get_template('produit/suppr_produit.html')
+    table_prod = Produit.objects.filter(producteur_id=personne_id)
+    context = { 
+        'prodlist': table_prod
+    }
+    return HttpResponse(template.render(context,request))
+
 
 def ajout_prod_image(request):
     if request.method == 'POST':
@@ -99,3 +109,15 @@ def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')
     return HttpResponse(template.render({},request))
     
+
+def deleteOneProd(request,id):
+    if request.method == "GET":
+        personne_id = request.user.personne_id
+        dest = Produit.objects.get(produit_id = id)
+        dest.delete()
+        template = loader.get_template('espace_perso/wip_userlist.html')
+        table_prod = Produit.objects.filter(producteur_id=personne_id)
+        context = { 
+            'prodlist': table_prod
+        }
+    return HttpResponse(template.render(context,request))

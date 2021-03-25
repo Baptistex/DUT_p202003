@@ -6,7 +6,8 @@ urlpatterns = [
     
     path('produit/<int:idProduit>', views.produit, name='produit'),
 
-    path('nouveauprod',views.ajout_prod, name='ajout_prod'),    
+    path('nouveauprod',views.ajout_prod, name='ajout_prod'),
+    path('afficherproduit',views.aff_prod, name='aff_prod'),    
     path('nouvelleimage',views.ajout_prod_image, name='ajout_prod_image'),    
 
     path('produits',views.produit_django, name='produit_django'),
@@ -17,4 +18,5 @@ urlpatterns = [
     path('description',views.produit, name='produit_description'),
  
 
+    path('produit/<int:id>/', views.deleteOneProd, name='deleteOneProd'),
 ]
