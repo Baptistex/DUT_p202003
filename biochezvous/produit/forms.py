@@ -29,9 +29,7 @@ class ProduitForm(ModelForm):
     date=forms.CharField(initial='aaaa-mm-jj')
 
     #TODO : modifier la foreignkey du modele produit 
-    producteur = forms.ModelChoiceField(label="",
-                                  queryset=Personne.objects.all(),
-                                  widget=forms.HiddenInput())
+    producteur = forms.ModelChoiceField(queryset=Personne.objects.all(), widget=forms.HiddenInput())
 
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'nom',
