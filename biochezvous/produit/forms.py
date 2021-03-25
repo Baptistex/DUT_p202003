@@ -27,10 +27,12 @@ class ProduitForm(ModelForm):
     unit=forms.CharField(initial='(ex:Kg)',widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
     description=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
     date=forms.CharField(initial='aaaa-mm-jj')
- 
-    #personne_id = request.user.personne_id
-    #personne_ptr_id = request.user.personne_ptr_id
-    #producteur = Producteur.objects.get(personne_ptr_id=personne_id)
+
+    #TODO : modifier la foreignkey du modele produit 
+    producteur = forms.ModelChoiceField(label="",
+                                  queryset=Personne.objects.all(),
+                                  widget=forms.HiddenInput())
+
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom de la categorie")                                
@@ -43,7 +45,7 @@ class ProduitForm(ModelForm):
 #Formulaire pour ajouter des images a un produit
 class ImageForm(ModelForm):
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
-    priorite=forms.CharField(initial='1')
+    priorite=forms.CharField(initial='1',widget=forms.HiddenInput())
     produit = forms.ModelChoiceField(queryset=Produit.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Produit à selectionner")

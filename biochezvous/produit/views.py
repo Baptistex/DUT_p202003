@@ -68,13 +68,11 @@ def liste_produit(request):
     return HttpResponse(template.render({},request))
 
 
-#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def ajout_prod(request):
-    #personne_id = request.user.personne_id
-    #personne_ptr_id = request.user.personne_ptr_id
+    u = request.user
     #u = Producteur.objects.get(personne_ptr_id=personne_id)
     if request.method == 'POST':
-        form = ProduitForm(request.POST, request.FILES)
+        form = ProduitForm(request.POST, request.FILES, initial ={'producteur': u})
         if form.is_valid():
             instance = form.save()
             instance.save()

@@ -232,6 +232,7 @@ def producteur(request, idProducteur):
     
     producteur = Producteur.objects.get(personne_id = idProducteur)
     
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espace_producteur(request):
     template = loader.get_template('espace_perso/accueil_espaceProd.html')
     return HttpResponse(template.render({},request))
@@ -242,7 +243,6 @@ def espace_producteur(request):
 
     return render(request, 'espace_perso/description_producteur.html', context)
 
-@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePersoProd(request):
     personne_id = request.user.personne_id
     u = Producteur.objects.get(personne_ptr_id=personne_id)
