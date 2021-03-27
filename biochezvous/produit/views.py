@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import TypeProduit, Produit, Image
+from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.models import Personne
+from espace_perso.forms import FormSelectionQuantite
 from .forms import ProduitForm, ImageForm
 
 
@@ -38,8 +39,25 @@ def produit(request, idProduit):
     #producteur = produit.id_producteur
     table_images = Image.objects.filter(produit = produit)
 
-    print("les images : ", table_images)
-   
+    
+
+    if request.method == 'POST':
+        form = FormSelectionQuantite(request.POST)
+            
+        if form.is_valid():
+            if request.user.is_authenticated:
+                p = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
+                p.save()
+                return HttpResponseRedirect('/panier')
+            #TODO: changer la redirection
+            else: 
+                return HttpResponseRedirect('/connexion')
+    else:
+        form = FormSelectionQuantite()
+    
+
+    
+
     context = {
         'leproduit': produit,
         'id': produit.produit_id,
@@ -47,6 +65,7 @@ def produit(request, idProduit):
         'lesImages' : table_images,
         'range' : range(produit.quantite),
         'qte' : produit.quantite,
+        'form' : form,
     }
     return render(request, 'produit/description_prod.html', context)
 
