@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from espace_perso.models import Personne
-from espace_perso.forms import FormAide
-from .models import Demandes #importer modèle de 'espace_perso' - pas nécessaire de recréer modèle personne
+from django.core.mail import send_mail
+from .models import Demandes
+from .forms import FormAideReponse
 
 #Accueil
 def espace_admin(request):
@@ -54,23 +55,41 @@ def deleteOneUser(request,id):
 
     return HttpResponse(template.render(context,request))
 
+
 #Afficher la liste des demandes d'aide
 def util_aide(request):
     template = loader.get_template('espace_admin/aide.html')
     table_demandes = Demandes.objects.all()
+
+    if request.method == "POST":
+        form = FormAideReponse(request.POST)
+        if form.is_valid():
+
+            objet = form.cleaned_data['objet']
+            message = form.cleaned_data['message']
+            destinataire = form.cleaned_data['destinataire']
+
+            send_mail(objet,message,'sav.biochezvous@gmail.com',(destinataire,),fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
+
+        return redirect('/listeAides')
+    else:
+        form = FormAideReponse()
+
     context = {
-        'listeAides' : table_demandes
+        'listeAides' : table_demandes,
+        'form' : form
     }
     return HttpResponse(template.render(context,request))
+
 
 #Supprimer un message de demande  
 def deleteDemande(request,msg_id):
 
     if request.method == "GET":
-        delDemande = Demandes.objects.get(message_id = msg_id) #On récupère l'id attribué au message
+        delDemande = Demandes.objects.get(message_id = msg_id) # On récupère l'id attribué au message
         delDemande.delete()
 
-        template = loader.get_template('espace_admin/aide.html') #Retour à la liste une fois la suppression faite
+        template = loader.get_template('espace_admin/aide.html') # Retour à la liste une fois la suppression faite
         table_demandes = Demandes.objects.all()
 
         context = {
