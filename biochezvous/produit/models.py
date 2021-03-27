@@ -5,7 +5,7 @@ from espace_perso.models import Personne
 
 class Produit(models.Model):
     produit_id = models.AutoField(primary_key=True)
-    producteur = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE)
+    producteur = models.ForeignKey('espace_perso.Producteur', on_delete=models.CASCADE)
     categorie = models.ForeignKey('Categorie', on_delete=models.CASCADE)
     nom = models.CharField(max_length=50)
     description = models.TextField()
