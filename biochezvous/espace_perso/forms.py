@@ -94,8 +94,7 @@ class FormDataModification(ModelForm):
 
 
 class FormSelectionQuantite(ModelForm):
-    quantite = forms.IntegerField()
-
+    quantite = forms.CharField(initial='1')
     class Meta:
         model = Produit 
         fields = ['quantite']

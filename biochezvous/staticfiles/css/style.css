@@ -1329,9 +1329,7 @@ section {
     display: flex;
 }
 
-.qty span {
-    
-}
+
 
 .qty select {
     width: 75px;
@@ -1344,7 +1342,7 @@ section {
 
 
 #description .carousel-inner {
-    margin-left: 80px;
+    margin-left: 18%;
 }
 
 #description img{

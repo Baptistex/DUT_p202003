@@ -71,23 +71,17 @@
                         <p> {{leproduit.description}} </p>
 
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col">
                                 <div class="qty" style="display: inline-block;">
-                                    <form method="POST">
-                                        <select type="select" id="demo1" oninput="myFunction()"  value="1">
-                                            {% for i in range %}
-                                                <option value="{{forloop.counter}} ">{{forloop.counter}}</option>
-                                                <button type="submit" id="btn_commander" class="btn btn-primary">Ajouter à l'assiette !</button>
-                                            {%endfor%}
-                                        </select>
-                                    </form>
-                                    
-                                </div>  
-                                <p id="demo"></p>                               
+                                    <form method="POST" oninput="Saisie()">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        
+                                        <button type="submit" id="btn_commander" class="btn btn-primary">Ajouter à l'assiette !</button> <span id="val"></span>
+                                    </form>                                    
+                                </div>                             
                             </div>
-                            <div class="col-8 text-center">
-                                <button type="button" id="btn_commander" class="btn btn-primary">Ajouter à l'assiette !</button>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -213,10 +207,11 @@
         <script>
             /* Verification saisie */
             function Saisie() {
-                var qty = document.getElementById("demo1").value;
-                if( qty > 150){
-                    ('#btn_commander').addClass('erreur');
-                    document.getElementById("demo1").value = "Valeur incorrecte";
+                var qty = document.getElementById("id_quantite").value;
+                if( qty > {{leproduit.quantite}}){
+                    document.getElementById("val").innerHTML = "Valeur incorrecte";
+                } else {
+                    document.getElementById("val").innerHTML = " ";
                 }
             }
         </script>
