@@ -9,7 +9,6 @@ from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
-from .utils import send_mail_ins
 from .utils import send_mail_pay
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
@@ -83,9 +82,6 @@ def send_mail_paiement(request):
     send_mail_pay(request)
     return HttpResponseRedirect('/')
 
-def send_mail_inscription(request):
-    send_mail_ins(request)
-    return HttpResponseRedirect('/')
     
 def inscription_user(request):
     if request.method == 'POST':
@@ -95,19 +91,19 @@ def inscription_user(request):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Bienvenue'
             message = render_to_string('acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':account_activation_token.make_token(user),
             })
-            to_email = form.cleaned_data.get('email')
+            to_email = form.cleaned_data.get('mail')
             email = EmailMessage(
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return HttpResponse('Veuillez confirmer votre adresse mail pour finaliser votre inscription')
             #TODO: changer la redirection
             return HttpResponseRedirect('/connexion')
     else:
@@ -118,16 +114,17 @@ def inscription_user(request):
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
+        user = Personne.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
-        Personne.confirmation = True
+        user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
+        redirect('/connexion')
         return HttpResponse('Merci pour votre confirmation par e-mail. Maintenant vous pouvez vous connecter à votre compte.')
     else:
+        print(token)
         return HttpResponse("Le lien d'activation n'est pas valide!")
 
 def inscription_prod(request):

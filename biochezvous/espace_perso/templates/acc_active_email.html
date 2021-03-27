@@ -1,5 +1,12 @@
 {% autoescape off%} 
-Bonjour {{Personne.nom}}, 
-Veuillez cliquer sur le lien pour confirmer votre inscription,
-http: // {{domaine}} {% url 'activate' uidb64 = uid token = token%} 
+Bonjour {{user.prenom}}, 
+
+Aller ! Encore un dernier effort 💪 ! Il vous reste à confirmer votre mail pour finaliser votre inscription. 
+
+Cliquez ici !
+
+http://localhost:8000{% url 'activate' uidb64=uid token=token %} 
+
+À bientôt chez BioChezVous
+
 {% endautoescape%}

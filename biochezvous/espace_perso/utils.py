@@ -1,17 +1,9 @@
 from django.core.mail import send_mail
 from .models import Utilisateur,Personne,Producteur
 from django.core.mail import EmailMessage
-
-def send_mail_ins(request):
-
-    mail = request.user.mail
-    send_mail(
-    'Bienvenue sur BioChezVous',
-    'Bienvenue',
-    'biochezvous.iut@gmail.com',
-    [mail],
-    fail_silently=False,
-    )
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.models import User
 
 
 
@@ -30,12 +22,13 @@ def send_mail_mass():
 
 
 def send_mail_pay(request):
-
     mail = request.user.mail
-    send_mail(
-    'Votre commande à été validé',
-    'Bienvenue',
-    'biochezvous.iut@gmail.com',
-    [mail],
-    fail_silently=False,
+    user = request.user
+    mail_subject = 'Votre commande a bien été prise en compte'
+    message = render_to_string('pay_email.html', {
+            'user': user,
+            })
+    email = EmailMessage(
+            mail_subject, message, to=[mail]
     )
+    email.send()
