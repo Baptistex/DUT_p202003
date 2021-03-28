@@ -1,0 +1,29 @@
+{% extends "produit/base.html"%}
+{% load static %}
+
+{% block title %}Mon espace{% endblock %}
+
+{% block content %}
+
+
+ <!-- Bouton pour afficher le formulaire pour modifier les infos persos -->
+<div class="container-fluid">
+
+    <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Espace personnel du producteur</h2>
+    </div>
+
+    <form class="text-center" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button class="btn btn-primary" type="submit">Enregistrer mes infos</button>
+    </form>
+
+   
+
+</div>
+{% endblock %}
+
+
+

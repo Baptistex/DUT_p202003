@@ -8,7 +8,7 @@ from .models import Utilisateur,Personne, Producteur
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
-from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, AdresseModifForm
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from produit.models import Image
 
@@ -234,14 +234,45 @@ def producteur(request, idProducteur):
     producteur = Producteur.objects.get(personne_id = idProducteur)
     listeProduits = Produit.objects.filter(producteur = producteur)
     
-    images_produit = Image.objects.filter(produit_id__in=Produit.objects.filter(producteur=producteur)).filter(priorite=1)
+    #images_produit = Image.objects.filter(produit_id__in=Produit.objects.filter(producteur=producteur)).filter(priorite=1)
+
     context = {
         'leproducteur' : producteur,
-        'mesProduits': images_produit,
+        'mesProduits': '',
     }
-
     return render(request, 'espace_perso/description_producteur.html', context)
 
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def espace_producteur(request):
+    template = loader.get_template('espace_perso/accueil_espaceProd.html')
+    return HttpResponse(template.render({},request))
+    
+
+    
+
+def espacePersoProd(request):
+    personne_id = request.user.personne_id
+    u = Producteur.objects.get(personne_ptr_id=personne_id)
+    form = FormDataModifProd(instance=u)
+    if request.method == 'POST':
+        form = FormDataModifProd(request.POST, request.FILES, instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/nouvelleAdresse')
+    return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
+
+def ajout_prod_adresse(request):
+    if request.method == 'POST':
+        form = AdresseModifForm(request.POST)
+        if form.is_valid():
+            adresse = form.save(commit=False)
+            adresse.personne = request.user 
+            adresse.save()
+            #appeler la fonction pour la longitude et latitude
+            return HttpResponseRedirect('/accueilEspaceProducteur')
+    else:
+        form = AdresseModifForm()
+    return render(request, 'espace_perso/ajout_adresse.html', {'form': form})
 
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')

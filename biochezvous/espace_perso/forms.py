@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Utilisateur, Personne, Producteur
+from produit.models import Image
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -23,6 +24,7 @@ class FormConnexion(AuthenticationForm):
         fields = ['username', 'password']
 
 class FormInscriptionProd(UserCreationForm):
+     
     
     confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
     newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
@@ -100,3 +102,26 @@ class FormSelectionQuantite(ModelForm):
         fields = ['quantite']
 
 
+class FormDataModifProd(ModelForm):
+    
+    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png", required=False)
+    iban = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
+    class Meta:
+        model = Producteur
+        fields = ['nom','mail','num_tel','description','image','iban']
+
+        
+
+class AdresseModifForm(ModelForm):
+    #personne = forms.ModelChoiceField(queryset=Personne.objects.all(), widget=forms.HiddenInput())
+    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
+    class Meta:
+        model = Adresse
+        fields = ['code_postal','ville','adresse',]

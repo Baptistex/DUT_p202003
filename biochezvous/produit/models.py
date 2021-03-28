@@ -18,6 +18,8 @@ class Produit(models.Model):
     class Meta:
         db_table = 'produit'
         default_permissions = ()
+    def __str__(self):
+        return self.nom
 
     def main_image(self):
         return self.images.all().filter(priorite=1).first()
@@ -44,14 +46,14 @@ class TypeProduit(models.Model):
 
 class Categorie(models.Model):
     categorie_id = models.AutoField(primary_key=True)
-    typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
     nom = models.TextField()
-        
-
+    typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
+    
     class Meta:
         db_table = 'categorie'
         default_permissions = ()
-
+    def __str__(self):
+        return self.nom
 
 class Commande(models.Model):
 

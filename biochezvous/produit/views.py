@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
-from espace_perso.models import Personne
+from espace_perso.models import Personne, Producteur
 from espace_perso.forms import FormSelectionQuantite
 from .forms import ProduitForm, ImageForm
 
@@ -81,16 +81,29 @@ def liste_produit(request):
 
 
 def ajout_prod(request):
+    personne_id = request.user.pk
+    u = Producteur.objects.get(personne_ptr_id=personne_id)
     if request.method == 'POST':
         form = ProduitForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
+            instance.producteur = u
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/nouvelleimage')
     else:
-        form = ProduitForm()
+        form = ProduitForm(initial ={'producteur': u})
     return render(request, 'produit/ajout_produit.html', {'form': form})
+
+def aff_prod(request):
+    #u = request.user
+    personne_id = request.user.personne_id
+    template = loader.get_template('produit/suppr_produit.html')
+    table_prod = Produit.objects.filter(producteur_id=personne_id)
+    context = { 
+        'prodlist': table_prod
+    }
+    return HttpResponse(template.render(context,request))
 
 
 def ajout_prod_image(request):
@@ -100,11 +113,24 @@ def ajout_prod_image(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
         form = ImageForm()
-    return render(request, 'produit/ajout_produit.html', {'form': form})
+    return render(request, 'produit/ajout_image.html', {'form': form})
 
 def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')
     return HttpResponse(template.render({},request))
+    
+
+def deleteOneProd(request,id):
+    if request.method == "GET":
+        personne_id = request.user.personne_id
+        dest = Produit.objects.get(produit_id = id)
+        dest.delete()
+        template = loader.get_template('espace_perso/wip_userlist.html')
+        table_prod = Produit.objects.filter(producteur_id=personne_id)
+        context = { 
+            'prodlist': table_prod
+        }
+    return HttpResponse(template.render(context,request))
