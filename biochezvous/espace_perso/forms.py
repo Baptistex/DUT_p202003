@@ -5,6 +5,7 @@ from produit.models import Image
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from .utils import getCoords
 from .models import Adresse
 
 
@@ -77,20 +78,22 @@ class FormDataModification(ModelForm):
     #ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
     #code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
 
+    #def save(self):
+        #TODO Justine : Ces lignes la seront à mettre dans la vue pour ajouter une adresse
+        #user = super().save(commit=False)
+        #user.lat, user.lon = getCoords(user.adresse, user.ville, user.code_postal)
+        #user.save()
+        #Exemple test :
+        # user1 = request.user
+        # adresse1 = Adresse(code_postal="22300", ville="Lannion", adresse="untestoulapinevarientrouver")
+        # adresse1.lat, adresse1.lon = getCoords(adresse1.adresse, adresse1.ville, adresse1.code_postal)
+        # adresse1.save()
+        # user1.adresse = adresse1
+        # user1.save()
     class Meta:
         model = Personne
         fields = ['nom','prenom','mail','num_tel',]
-        #'adresse','ville','code_postal',
-        
-       #widget = { 
-            #'nom' : forms.TextInput(attrs={'class': 'form-control'}),
-            #'prenom' : forms.TextInput(attrs={'class': 'form-control'}),
-            #'mail' : forms.TextInput(attrs={'class': 'form-control'}),
-            #'num_tel' : forms.TextInput(attrs={'class': 'form-control'}),
-           # 'adresse' : forms.TextInput(attrs={'class': 'form-control'}),
-           # 'ville' : forms.TextInput(attrs={'class': 'form-control'}),
-           # 'code_postal' : forms.TextInput(attrs={'class': 'form-control'}),
-       # }"""
+
 
 class FormDataModifProd(ModelForm):
     
@@ -107,10 +110,15 @@ class FormDataModifProd(ModelForm):
         
 
 class AdresseModifForm(ModelForm):
-    #personne = forms.ModelChoiceField(queryset=Personne.objects.all(), widget=forms.HiddenInput())
     adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
+    def save(self, commit=True):
+        instance = super().save(commit)
+        instance.lat, instance.lon = getCoords(instance.adresse, instance.ville, instance.code_postal)
+        instance.save(commit)
+        return instance
 
     class Meta:
         model = Adresse

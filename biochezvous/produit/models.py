@@ -36,6 +36,7 @@ class TypeProduit(models.Model):
     type_id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
+
     
     class Meta:
         db_table = 'typeproduit'

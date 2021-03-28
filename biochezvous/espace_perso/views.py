@@ -204,9 +204,7 @@ def informationPerso(request):
     Authors:
         Justine Fouillé
     """
-    #TODO Vérifier la vérification automatique des champs du formulaire
-    personne_id = request.user.personne_id
-    u = Personne.objects.get(personne_id=personne_id)
+    u = request.user
     form = FormDataModification(instance=u)
     if request.method == 'POST' :
         form = FormDataModification(request.POST, instance=u)
@@ -239,6 +237,7 @@ def producteur(request, idProducteur):
         'mesProduits': images_produit,
     }
     return render(request, 'espace_perso/description_producteur.html', context)
+    
 
 @permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espace_producteur(request):
@@ -261,15 +260,14 @@ def espacePersoProd(request):
 
 def ajout_prod_adresse(request):
     if request.method == 'POST':
-        form = AdresseModifForm(request.POST)
+        form = AdresseModifForm(request.POST, instance=request.user.adresse)
         if form.is_valid():
             adresse = form.save(commit=False)
             adresse.personne = request.user 
             adresse.save()
-            #appeler la fonction pour la longitude et latitude
             return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
-        form = AdresseModifForm()
+        form = AdresseModifForm(instance = request.user.adresse)
     return render(request, 'espace_perso/ajout_adresse.html', {'form': form})
 
 
