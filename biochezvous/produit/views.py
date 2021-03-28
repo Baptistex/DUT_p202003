@@ -18,38 +18,23 @@ def produit_django(request):
     userCoordsSet = False
     if request.user.is_authenticated:
         user = request.user
-        ulat, ulon = user.lat, user.lon
-        if not ulat is None:
+        ulat, ulon = user.adresse.lat, user.adresse.lon
+        if not (ulat is None or ulon is None) :
             userCoordsSet = True
 
-
-    if request.method == 'POST':
-        pass
-
-    else: 
-        pass
-    table_image = Image.objects.select_related('produit').order_by('produit_id')
-    produit_id_list = []
-    image_id_list = []
-    for i in table_image:
-        #Si l'utilisateur n'est pas authentifié ou vient d'arriver sur la page, afficher tous les producteurs
-        if not userCoordsSet or request.method == 'GET':
-            if not i.produit_id in produit_id_list:
-                produit_id_list.append(i.produit_id)
-                image_id_list.append(i.id)
-        #Si l'utilisateur appuie sur le bouton, affiche que les producteurs dans un rayon de moins de 10km
-        else:
-            plat, plon = i.produit.producteur.lat, i.produit.producteur.lon
-            if not plat is None and not plon is None:
-                distance = great_circle_vec(ulat, ulon, plat, plon)
-                if distance<10000:
-                    if not i.produit_id in produit_id_list:
-                        produit_id_list.append(i.produit_id)
-                        image_id_list.append(i.id)
-            
-    table_image = table_image.filter(id__in=image_id_list)
-    
     images_produit = Image.objects.filter(priorite=1)
+
+    #Si l'utilisateur appuie sur le bouton, affiche que les producteurs dans un rayon de moins de 10km
+    #TODO : Détecter un bouton en particulier, plutot que n'importe quel bouton/form
+    if userCoordsSet and request.method == 'POST':
+        for image in images_produit:        
+            padresse = image.produit.producteur.adresse
+            plat, plon = padresse.lat, padresse.lon
+            distance = great_circle_vec(ulat, ulon, plat, plon)
+            print(padresse, distance)
+            if distance > 10000 :
+                print(image.id)
+                images_produit = images_produit.exclude(id=image.id)
 
     context = {
         'lesproduits': images_produit
@@ -60,31 +45,29 @@ def produit_django(request):
 
 
 def produit(request, idProduit):
-    #template = loader.get_template('produit/description_prod.html')
     # affichage de la description du produit
     userCoordsSet = False
     if request.user.is_authenticated:
         user = request.user
-        ulat, ulon = user.lat, user.lon
-        if not ulat is None:
+        ulat, ulon = user.adresse.lat, user.adresse.lon
+        if not (ulat is None or ulon is None) :
             userCoordsSet = True
 
     produit = Produit.objects.get(produit_id = idProduit)
     producteur = produit.producteur
 
     notif10km = ""
-    plat, plon = producteur.lat, producteur.lon
+    plat, plon = producteur.adresse.lat, producteur.adresse.lon
     if userCoordsSet and not plat is None and not plon is None:
         distance = great_circle_vec(ulat, ulon, plat, plon)
         if distance>10000:
             notif10km = "Ce produit appartient a un producteur qui est trop loin de chez vous"
             print("notif10km set")
 
-    #producteur = produit.id_producteur
     table_images = Image.objects.filter(produit = produit)
 
     print("les images : ", table_images)
-   
+
     context = {
         'leproduit': produit,
         'id': produit.produit_id,

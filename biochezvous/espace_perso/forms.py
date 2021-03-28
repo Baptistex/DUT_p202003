@@ -93,17 +93,7 @@ class FormDataModification(ModelForm):
     class Meta:
         model = Personne
         fields = ['nom','prenom','mail','num_tel',]
-        #'adresse','ville','code_postal',
-        
-       #widget = { 
-            #'nom' : forms.TextInput(attrs={'class': 'form-control'}),
-            #'prenom' : forms.TextInput(attrs={'class': 'form-control'}),
-            #'mail' : forms.TextInput(attrs={'class': 'form-control'}),
-            #'num_tel' : forms.TextInput(attrs={'class': 'form-control'}),
-           # 'adresse' : forms.TextInput(attrs={'class': 'form-control'}),
-           # 'ville' : forms.TextInput(attrs={'class': 'form-control'}),
-           # 'code_postal' : forms.TextInput(attrs={'class': 'form-control'}),
-       # }"""
+
 
 class FormDataModifProd(ModelForm):
     
@@ -120,10 +110,15 @@ class FormDataModifProd(ModelForm):
         
 
 class AdresseModifForm(ModelForm):
-    #personne = forms.ModelChoiceField(queryset=Personne.objects.all(), widget=forms.HiddenInput())
     adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
+    def save(self, commit=True):
+        instance = super().save(commit)
+        instance.lat, instance.lon = getCoords(instance.adresse, instance.ville, instance.code_postal)
+        instance.save(commit)
+        return instance
 
     class Meta:
         model = Adresse
