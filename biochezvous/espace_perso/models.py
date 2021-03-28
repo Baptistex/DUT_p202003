@@ -12,7 +12,6 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     newsletter = models.BooleanField()
     confirmation = models.BooleanField()
     panier = models.ManyToManyField('produit.Produit', through='produit.Panier')
-    adresse = models.ForeignKey('Adresse', on_delete=models.CASCADE)
 
     USERNAME_FIELD = 'mail'
     objects = UserManager()
@@ -45,6 +44,7 @@ class Producteur(Personne):
 
 
 class Adresse(models.Model):
+    personne = models.ForeignKey('Personne', on_delete=models.CASCADE, related_name='adresses')
     code_postal = models.CharField(max_length=10, blank=True)
     ville  = models.CharField(max_length=60, blank=True)
     adresse = models.CharField(max_length = 100,  blank=True)

@@ -1,10 +1,13 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Utilisateur, Personne, Producteur
+from produit.models import Image
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from .utils import getCoords
+from .models import Adresse
+
 
 
 class FormInscription(UserCreationForm):
@@ -20,7 +23,11 @@ class FormConnexion(AuthenticationForm):
         fields = ['username', 'password']
 
 class FormInscriptionProd(UserCreationForm):
+     
     
+    confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+    newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+
     def save(self):
         user = super().save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
@@ -34,10 +41,13 @@ class FormInscriptionProd(UserCreationForm):
         return user
     class Meta:
         model = Producteur
-        fields = ['nom','prenom','mail','num_tel','description']
+        fields = ['nom','prenom','mail','num_tel','description','confirmation','newsletter']
 
 class FormInscriptionUser(UserCreationForm):
     
+    confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+    newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
+
     def save(self):
         user = super().save(commit=False)
         user_group, created = Group.objects.get_or_create(name='utilisateur')
@@ -48,9 +58,13 @@ class FormInscriptionUser(UserCreationForm):
             permissions_utilisateur = Permission.objects.filter(content_type=ContentType.objects.get(app_label='espace_perso', model='utilisateur').id)
             user_group.permissions.set(permissions_utilisateur)
         return user
+    def __init__(self, *args, **kwargs):
+        super(FormInscriptionUser, self).__init__(*args, **kwargs)
+        self.initial['confirmation'] = 1
+
     class Meta:
         model = Personne
-        fields = ['nom','prenom','mail','num_tel']
+        fields = ['nom','prenom','mail','num_tel','confirmation','newsletter']
 
 
 class FormDataModification(ModelForm):
@@ -91,3 +105,26 @@ class FormDataModification(ModelForm):
            # 'code_postal' : forms.TextInput(attrs={'class': 'form-control'}),
        # }"""
 
+class FormDataModifProd(ModelForm):
+    
+    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png", required=False)
+    iban = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
+    class Meta:
+        model = Producteur
+        fields = ['nom','mail','num_tel','description','image','iban']
+
+        
+
+class AdresseModifForm(ModelForm):
+    #personne = forms.ModelChoiceField(queryset=Personne.objects.all(), widget=forms.HiddenInput())
+    adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
+
+    class Meta:
+        model = Adresse
+        fields = ['code_postal','ville','adresse',]
