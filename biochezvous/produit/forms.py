@@ -29,7 +29,7 @@ class ProduitForm(ModelForm):
     date=forms.CharField(initial='aaaa-mm-jj')
 
     #TODO : modifier la foreignkey du modele produit 
-    producteur = forms.ModelChoiceField(queryset=Personne.objects.all(), widget=forms.HiddenInput())
+
 
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'nom',
@@ -37,7 +37,7 @@ class ProduitForm(ModelForm):
     
     class Meta:
         model = Produit
-        fields = ['nom','quantite', 'prix', 'unit', 'description','producteur','categorie','quantite','date']
+        fields = ['nom','quantite', 'prix', 'unit', 'description','categorie','quantite','date']
         
 
 #Formulaire pour ajouter des images a un produit

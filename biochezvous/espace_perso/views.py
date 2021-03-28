@@ -263,7 +263,9 @@ def ajout_prod_adresse(request):
     if request.method == 'POST':
         form = AdresseModifForm(request.POST)
         if form.is_valid():
-            form.save()
+            adresse = form.save(commit=False)
+            adresse.personne = request.user 
+            adresse.save()
             #appeler la fonction pour la longitude et latitude
             return HttpResponseRedirect('/accueilEspaceProducteur')
     else:

@@ -62,12 +62,13 @@ def liste_produit(request):
 
 
 def ajout_prod(request):
-    u = request.user
-    #u = Producteur.objects.get(personne_ptr_id=personne_id)
+    personne_id = request.user.pk
+    u = Producteur.objects.get(personne_ptr_id=personne_id)
     if request.method == 'POST':
         form = ProduitForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
+            instance.producteur = u
             instance.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/nouvelleimage')

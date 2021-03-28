@@ -107,10 +107,11 @@ class FormDataModifProd(ModelForm):
         
 
 class AdresseModifForm(ModelForm):
+    #personne = forms.ModelChoiceField(queryset=Personne.objects.all(), widget=forms.HiddenInput())
     adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
 
     class Meta:
         model = Adresse
-        fields = ['code_postal','ville','adresse']
+        fields = ['code_postal','ville','adresse',]
