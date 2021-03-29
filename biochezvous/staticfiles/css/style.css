@@ -1319,19 +1319,18 @@ section {
 
 
 /* CARROUSSEL */
+
+
 /*
 #description img {
     width: 500px;
 }*/
 
-
 .qty {
     display: flex;
 }
 
-.qty span {
-    
-}
+.qty span {}
 
 .qty select {
     width: 75px;
@@ -1341,23 +1340,20 @@ section {
     border: 1px solid #ccc;
 }
 
-
-
 #description .carousel-inner {
     margin-left: 80px;
 }
 
-#description img{
+#description img {
     max-width: 100%;
     max-height: 100%;
-  }
-
-#description .bloc_img {
-    width: 60%; 
-    height: 60%;  
-    text-align: center;    
 }
 
+#description .bloc_img {
+    width: 60%;
+    height: 60%;
+    text-align: center;
+}
 
 #btn_commander .erreur {
     background-color: red;
@@ -1483,6 +1479,7 @@ input[type=range].quantite {
     height: 50px;
     border: solid black;
     border-radius: 15px;
+    border-width: 1px;
 }
 
 .info {
@@ -1589,80 +1586,82 @@ input[type=range].quantite {
     }
 }
 
+
 /*--------------------------------------------------------------
 # ESPACE ADMIN
 --------------------------------------------------------------*/
-@media screen and (max-width: 768px)
-{
-    .admin img{
+
+@media screen and (max-width: 768px) {
+    .admin img {
         position: absolute;
         top: -175px;
         left: 175px;
     }
-    .marge{
-        margin-bottom:50px;
+    .marge {
+        margin-bottom: 50px;
     }
 }
 
-.admin .row{
+.admin .row {
     margin: 50px 24px;
 }
 
-.admin img{
+.admin img {
     margin: 0 auto;
 }
-.espaceadmin{
+
+.espaceadmin {
     background-color: none;
     border: 1px solid #00ffc6;
     padding: 10px 24px;
     color: #555555;
 }
 
-.espaceadmin:hover{
-    background-color:#00ffc6;
+.espaceadmin:hover {
+    background-color: #00ffc6;
     color: #555555;
 }
 
-.navigation{
+.navigation {
     color: #00ffc6;
     width: 52px;
-	height: 40%;
-    left:0;   
+    height: 40%;
+    left: 0;
     position: sticky;
-    top: 5.5em; /*endroit où la sidebar devient sticky*/
+    top: 5.5em;
+    /*endroit où la sidebar devient sticky*/
     margin-left: -100px;
 }
 
-.navigation ul{
+.navigation ul {
     list-style: none;
-    background-color :#555555;
+    background-color: #555555;
     position: absolute;
     border-radius: 5px;
     padding: 0;
     display: inline;
 }
 
-.navigation ul li{
+.navigation ul li {
     display: inline;
     position: -webkit-sticky;
 }
 
-.navigation a{
-    color:#00ffc6;
+.navigation a {
+    color: #00ffc6;
     font-size: 50px;
     margin: 0 auto;
 }
 
-@media screen and (max-width: 768px){
-    .navigation ul li a{
+@media screen and (max-width: 768px) {
+    .navigation ul li a {
         display: inline;
-        zoom:1;
+        zoom: 1;
         padding-right: 10px;
         text-align: center;
         position: relative;
     }
-
-    .navigation ul{
+    .navigation ul {
         position: relative;
         padding-top: 30px;
         padding-bottom: 15px;
@@ -1670,28 +1669,26 @@ input[type=range].quantite {
         border-radius: 5px;
         margin-left: 110px;
     }
-
-    .navigation{
+    .navigation {
         display: inline;
-        position:unset; /*Enlève le sticky*/
+        position: unset;
+        /*Enlève le sticky*/
     }
 }
 
-.supp{
+.supp {
     background-color: none;
     border: 1px solid red;
     color: red;
 }
 
-.supp:hover{
+.supp:hover {
     border: 1px solid red;
     background-color: red;
     color: white;
 }
 
-
-
-.boxEspacePerso {  
+.boxEspacePerso {
     margin: 20px !important;
     height: 10em !important;
     width: 20em !important;
