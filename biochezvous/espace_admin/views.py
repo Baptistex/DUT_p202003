@@ -56,8 +56,9 @@ def deleteOneUser(request,id):
     return HttpResponse(template.render(context,request))
 
 
-#Afficher la liste des demandes d'aide
+#Afficher la liste des demandes d'aide et envoie d'un mail de réponse via le formulaire
 def util_aide(request):
+
     template = loader.get_template('espace_admin/aide.html')
     table_demandes = Demandes.objects.all()
 

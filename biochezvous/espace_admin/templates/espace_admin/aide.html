@@ -60,15 +60,19 @@
                     <div class="modal-dialog modal-lg">
                       <div class="modal-content">
                         <div class="modal-body">
-                            <h4 class="text-center">Message de {{demande.nom}} {{demande.prenom}}</h4>
+                            <h4 class="text-center">Récapitulatif</h4>
                             <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Contact :</h5> {{ demande.mail }}
+                                </div>
                                 <div class="col-md-6">
                                     <h5>Objet :</h5> {{ demande.objet }}
                                 </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <h5>Message :</h5> {{demande.message}}
                                 </div>
-
                             </div>
                             <hr>
                             <h4>Répondre au message de {{demande.nom}} {{demande.prenom}}</h4>
