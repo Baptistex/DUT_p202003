@@ -217,9 +217,6 @@ def informationPerso(request):
             formG.save()
     context = {'formG':formG}
 
-    #formA = FormAdresseModification(instance=a)
-    #a = u.adresse
-    
     return render(request, 'espace_perso/informationPerso.html', context)
 
 #   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
