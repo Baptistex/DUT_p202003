@@ -46,8 +46,10 @@ def produit(request, idProduit):
             
         if form.is_valid():
             if request.user.is_authenticated:
-                p = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
-                p.save()
+                mon_panier = Panier.objects.all.filter(personne = request.user, produit=produit)
+                #if mon_panier
+                new_panier = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
+                new_panier.save()
                 return HttpResponseRedirect('/panier')
             #TODO: changer la redirection
             else: 
