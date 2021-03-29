@@ -234,7 +234,7 @@ def producteur(request, idProducteur):
 
     context = {
         'leproducteur' : producteur,
-        'mesProduits': images_produit,
+        'mesProduits': '',
     }
     return render(request, 'espace_perso/description_producteur.html', context)
     

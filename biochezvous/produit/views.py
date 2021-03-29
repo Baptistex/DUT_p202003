@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
-from espace_perso.models import Personne
+from espace_perso.models import Personne 
 from espace_perso.forms import FormSelectionQuantite
 from .forms import ProduitForm, ImageForm
 from espace_perso.utils import great_circle_vec
