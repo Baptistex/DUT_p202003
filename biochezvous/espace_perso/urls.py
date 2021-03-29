@@ -14,6 +14,8 @@ urlpatterns = [
     path('connexion', auth_views.LoginView.as_view()),
     path('personne/', views.delete_user, name='delete_user'),
     path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
+    path('accueilEspaceProducteur', views.espace_producteur, name='espace_producteur'),
+    path('espaceProducteur',views.espacePersoProd, name='espacePerso'),
     path('listeCommande',views.listeCommande, name='listeCommande'),
     path('commande/<int:id>',views.commande, name='commande'),
     path('informationPerso',views.informationPerso, name='informationsPerso'),
@@ -21,7 +23,7 @@ urlpatterns = [
     path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
     path('decrementerArticlePanier/<int:id>',views.decrementerArticlePanier, name='decrementerArticlePanier'),
     path('incrementerArticlePanier/<int:id>',views.incrementerArticlePanier, name='incrementerArticlePanier'),
-
+    path('nouvelleAdresse',views.ajout_prod_adresse, name='ajout_prod_adresse'),
     
     
     #espace producteur 
