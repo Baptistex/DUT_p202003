@@ -3,10 +3,12 @@
 
 {% block title %}Inscription d'un producteur{% endblock %}
 {% block content %}
-    <form method="post"  enctype="multipart/form-data">
+    <form method="post"  class="text-center" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-primary" type="submit">créer utilisateur</button>
+        
     </form>
+    <br>
 {% endblock %}
 

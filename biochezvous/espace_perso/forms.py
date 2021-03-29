@@ -10,6 +10,7 @@ from .models import Adresse
 
 
 class FormInscription(UserCreationForm):
+    
     class Meta:
         model = Personne
         fields = ['nom','prenom','mail','num_tel']
@@ -22,11 +23,12 @@ class FormConnexion(AuthenticationForm):
         fields = ['username', 'password']
 
 class FormInscriptionProd(UserCreationForm):
-     
-    
     confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
     newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
-
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    prenom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    mail=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    num_tel=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
     def save(self):
         user = super().save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
@@ -46,7 +48,10 @@ class FormInscriptionUser(UserCreationForm):
     
     confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
     newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
-
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    prenom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    mail=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
+    num_tel=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
     def save(self):
         user = super().save(commit=False)
         user_group, created = Group.objects.get_or_create(name='utilisateur')
