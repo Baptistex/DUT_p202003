@@ -38,7 +38,7 @@
                 {% for produit in mesProduits %}
                     <div class="col col-lg-4 col-md-6 portfolio-item {{produit.produit.categorie.typeProduit.nom}}">
                         <div class="prod-wrap">
-                            <img src="{{MEDIA_URL}}{{producteur.image}}" class="w-100" alt="">
+                            <img src="{{MEDIA_URL}}{{produit.image}}" class="w-100" alt="">
                             <div class="prod-links">
                                 <a href="#" title="App 1"><i class="icofont-heart"></i></a>
                                 <a href="{% url 'produit' produit.produit_id %}" title="More Details"><i class="icofont-plus"></i></a>
