@@ -18,12 +18,14 @@ urlpatterns = [
         views.activate, name='activate'),
     path('personne/', views.delete_user, name='delete_user'),
     path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
+    path('accueilEspaceProducteur', views.espace_producteur, name='espace_producteur'),
+    path('espaceProducteur',views.espacePersoProd, name='espacePerso'),
     path('listeCommande',views.listeCommande, name='listeCommande'),
     path('commande/<int:id>',views.commande, name='commande'),
     path('informationPerso',views.informationPerso, name='informationsPerso'),
     path('panier',views.panier, name='panier'),
     path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
-
+    path('nouvelleAdresse',views.ajout_prod_adresse, name='ajout_prod_adresse'),
     
     
     #espace producteur 

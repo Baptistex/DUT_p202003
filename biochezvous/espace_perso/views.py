@@ -18,7 +18,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, AdresseModifForm
 from produit.models import Commande, ContenuCommande, Panier, Produit
+from produit.models import Image
+from .models import Adresse
 
 
 # Create your views here.
@@ -247,9 +250,7 @@ def informationPerso(request):
     Authors:
         Justine Fouillé
     """
-    #TODO Vérifier la vérification automatique des champs du formulaire
-    personne_id = request.user.personne_id
-    u = Personne.objects.get(personne_id=personne_id)
+    u = request.user
     form = FormDataModification(instance=u)
     if request.method == 'POST' :
         form = FormDataModification(request.POST, instance=u)
@@ -275,14 +276,48 @@ def informationPerso(request):
 def producteur(request, idProducteur):
     
     producteur = Producteur.objects.get(personne_id = idProducteur)
-    
+    images_produit = Image.objects.filter(produit_id__in=Produit.objects.filter(producteur=producteur)).filter(priorite=1)
+
     context = {
         'leproducteur' : producteur,
-        'mesProduits': '',
+        'mesProduits': images_produit,
     }
-
     return render(request, 'espace_perso/description_producteur.html', context)
+    
 
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def espace_producteur(request):
+    template = loader.get_template('espace_perso/accueil_espaceProd.html')
+    return HttpResponse(template.render({},request))
+    
+
+    
+
+def espacePersoProd(request):
+    personne_id = request.user.personne_id
+    u = Producteur.objects.get(personne_ptr_id=personne_id)
+    form = FormDataModifProd(instance=u)
+    if request.method == 'POST':
+        form = FormDataModifProd(request.POST, request.FILES, instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/nouvelleAdresse')
+    return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
+
+def ajout_prod_adresse(request):
+    if request.method == 'POST':
+        form = AdresseModifForm(request.POST, instance=request.user.adresse)
+        if form.is_valid():
+            adresse = form.save(commit=False)
+            adresse.personne = request.user 
+            adresse.save()
+            return HttpResponseRedirect('/accueilEspaceProducteur')
+    else:
+        try : 
+            form = AdresseModifForm(instance = request.user.adresse)
+        except Adresse.DoesNotExist: 
+            form = AdresseModifForm()
+    return render(request, 'espace_perso/ajout_adresse.html', {'form': form})
 
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
