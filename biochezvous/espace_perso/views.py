@@ -8,7 +8,7 @@ from .models import Utilisateur,Personne, Producteur
 from espace_perso.forms import FormInscriptionProd
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
-from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormQuantitePanier
 from produit.models import Commande, ContenuCommande, Panier, Produit
 
 
@@ -123,7 +123,7 @@ def deconnexion(request):
         logout(request)
     return HttpResponse(template.render({},request))
 
-@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
     """
     Vue qui permet d'accéder aux fonctionnalités concernant l'espace perso
@@ -206,12 +206,16 @@ def informationPerso(request):
     #TODO Vérifier la vérification automatique des champs du formulaire
     personne_id = request.user.personne_id
     u = Personne.objects.get(personne_id=personne_id)
-    form = FormDataModification(instance=u)
+    formG = FormDataModification(instance=u)
     if request.method == 'POST' :
-        form = FormDataModification(request.POST, instance=u)
-        if form.is_valid():
-            form.save()
-    context = {'form':form}
+        formG = FormDataModification(request.POST, instance=u)
+        if formG.is_valid():
+            formG.save()
+    context = {'formG':formG}
+
+    #formA = FormAdresseModification(instance=a)
+    #a = u.adresse
+    
     return render(request, 'espace_perso/informationPerso.html', context)
 
 #   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
@@ -256,11 +260,19 @@ def panier(request):
     """
     context = {}
     personne_id = request.user.personne_id
-    context['panier'] = Panier.objects.filter(personne_id=personne_id)    
+    context['panier'] = Panier.objects.filter(personne_id=personne_id)  
+
+    """formQ =  FormQuantitePanier()
+    if request.method == 'POST' :
+        formQ = FormQuantitePanier()
+        if formQ.is_valid():
+            formQ.save()
+    context = {'formQ':formQ}"""
+
     return render(request, 'espace_perso/panier.html',context)
 
 
-
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def suppressionPanier(request, id):
     """
     Supprimer un élement du panier
@@ -274,10 +286,48 @@ def suppressionPanier(request, id):
     Authors:
         Justine Fouillé
     """
-    #TODO : gérer le fait que ce soit les articles pour l'utilisateur donné 
+    #gérer le fait que ce soit les articles pour l'utilisateur donné 
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
     produit = panier.get(produit_id=id)
     
     produit.delete()
     return redirect('panier')
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def decrementerArticlePanier(request, id):
+
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)  
+    produit = panier.get(produit_id=id)
+
+    if (produit.quantite == 1):
+        return redirect('suppressionPanier', id=id)
+    else:
+        produit.quantite -= 1
+        produit.save()
+
+    return redirect('panier')
+
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def incrementerArticlePanier(request, id):
+
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)  
+    produitDuPanier = panier.get(produit_id=id)
+    stockArticle = Produit.objects.get(produit_id=id)
+
+    if (produitDuPanier.quantite >= stockArticle.quantite):
+        #TODO : comment gérer le cas où la personne veut commander + que en stock ???
+        print("trop")  
+    else:
+        produitDuPanier.quantite += 1
+        produitDuPanier.save()
+        return redirect('panier')
+
+
+
+
+
+

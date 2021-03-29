@@ -19,6 +19,8 @@ urlpatterns = [
     path('informationPerso',views.informationPerso, name='informationsPerso'),
     path('panier',views.panier, name='panier'),
     path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
+    path('decrementerArticlePanier/<int:id>',views.decrementerArticlePanier, name='decrementerArticlePanier'),
+    path('incrementerArticlePanier/<int:id>',views.incrementerArticlePanier, name='incrementerArticlePanier'),
 
     
     
