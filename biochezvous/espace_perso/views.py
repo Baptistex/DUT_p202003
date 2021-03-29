@@ -112,8 +112,11 @@ def connexion(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-
-            return HttpResponseRedirect('/')
+            next_url = request.GET.get('next')
+            if next_url:
+                return HttpResponseRedirect(next_url)
+            else:
+                return render(request, '/')
 
     else:
         form = FormConnexion()
