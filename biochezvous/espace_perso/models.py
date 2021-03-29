@@ -44,7 +44,7 @@ class Producteur(Personne):
 
 
 class Adresse(models.Model):
-    personne = models.ForeignKey('Personne', on_delete=models.CASCADE, related_name='adresses')
+    personne = models.OneToOneField('Personne', on_delete=models.CASCADE, related_name='adresse')
     code_postal = models.CharField(max_length=10, blank=True)
     ville  = models.CharField(max_length=60, blank=True)
     adresse = models.CharField(max_length = 100,  blank=True)
