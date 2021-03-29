@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
@@ -74,18 +74,22 @@ def produit(request, idProduit):
             
         if form.is_valid():
             if request.user.is_authenticated:
-                p = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
-                p.save()
-                return HttpResponseRedirect('/panier')
-            #TODO: changer la redirection
+                mon_panier_prod = Panier.objects.all().filter(produit=produit, personne=request.user).values('quantite')
+                
+                if mon_panier_prod.exists():
+                    qte = int(request.POST['quantite']) + mon_panier_prod[0]['quantite']
+                    Panier.objects.filter(produit=produit, personne=request.user).update(quantite = qte)
+                else:
+                    p = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
+                    p.save()
+                reste = int(produit.quantite) - int(mon_panier_prod[0]['quantite'])
+                Produit.objects.filter(produit_id = idProduit).update(quantite = reste)
+                return redirect('/panier')
             else: 
-                return HttpResponseRedirect('/connexion')
+                return redirect('/connexion')
     else:
         form = FormSelectionQuantite()
     
-
-    
-
     context = {
         'leproduit': produit,
         'id': produit.produit_id,
