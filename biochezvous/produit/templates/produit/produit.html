@@ -51,6 +51,10 @@
             </div>
         </section><!-- End Services Section -->
 
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" name="distance" value="Ne garder que les produits de producteurs éloignés de moins de 10km" />
+        </form>
 
 
         <!-- ======= Portfolio Section ======= -->
