@@ -9,12 +9,9 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     prenom = models.CharField(max_length=100)
     mail = models.EmailField(max_length=100, unique=True)
     num_tel = models.CharField(max_length=100)
-    code_postal = models.CharField(max_length=10, blank=True)
-    ville  = models.CharField(max_length=60, blank=True)
-    adresse = models.CharField(max_length = 100,  blank=True)
-    #Pour plus tard :
-    #coord_x = models.FloatField()
-    #coord_y = models.FloatField()
+    newsletter = models.BooleanField()
+    confirmation = models.BooleanField()
+    panier = models.ManyToManyField('produit.Produit', through='produit.Panier')
 
     USERNAME_FIELD = 'mail'
     objects = UserManager()
@@ -22,7 +19,7 @@ class Personne(AbstractBaseUser, PermissionsMixin):
     
     class Meta:
         db_table = 'personne'
-        
+        default_permissions = ()
 
 class Utilisateur(Personne):
 
@@ -36,6 +33,7 @@ class Utilisateur(Personne):
 class Producteur(Personne):
     description = models.TextField()
     image   = models.ImageField(upload_to='images/')
+    iban = models.CharField(max_length=100)
     class Meta:
         db_table = 'producteur'
         default_permissions = ()
@@ -45,3 +43,13 @@ class Producteur(Personne):
         ]
 
 
+class Adresse(models.Model):
+    personne = models.OneToOneField('Personne', on_delete=models.CASCADE, related_name='adresse')
+    code_postal = models.CharField(max_length=10, blank=True)
+    ville  = models.CharField(max_length=60, blank=True)
+    adresse = models.CharField(max_length = 100,  blank=True)
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
+    class Meta:
+        db_table = 'adresse'
+        default_permissions = ()

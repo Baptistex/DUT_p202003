@@ -1,0 +1,41 @@
+{% extends "produit/base.html" %}
+{% load static %}
+{% block title %}Espace Producteur{% endblock %}
+{% block content %}
+<div class="container admin">
+    <div class="row">
+        <div class="col">
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Espace producteur</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="text-center">
+                <a href="nouveauprod" class="espaceadmin">Ajouter un produits</a>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <img src="{% static 'img/icon/default-avatar.png' %}" class="d-block" alt="..." title="..." width=50
+                height="50">
+        </div>
+        <div class="marge"></div>
+        <div class="col-md-4 col-sm-12">
+            <div class="text-center">
+                <a href="espaceProducteur" class="espaceadmin">Modifier mes infos personnelles</a>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="text-center">
+                <a href="supprimerproduit" class="espaceadmin">Supprimer un produit</a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

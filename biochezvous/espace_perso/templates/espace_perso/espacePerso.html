@@ -14,31 +14,46 @@
     </div>
 
 
-    
-
-
-    <!-- Bouton pour afficher le formulaire pour modifier les infos persos -->
-    <button class="btn btn-primary mb-2" type="button" data-target="#MonCollapse" data-toggle="collapse"
-        aria-expanded="false" aria-controls="MonCollapse">Modifier mes informations</button>
-
-    <!-- le formulaire -->
-
-    <section id="MonCollapse" class="collapse">
-        <div class="well">
-            <h2> Mes informations </h2>
-            <div class="form-group col-md-10">
-                <form action="" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">Go</button>
-                </form>
+    <div class="row justify-content-around text-center">
+        <div class="col-md-3 boxEspacePerso">
+            <div class=" ">
+                <a href="listeCommande">
+                    <p> Historique des commandes </p>
+                </a>
             </div>
         </div>
-    </section>
+        <div class="col-md-3 boxEspacePerso">
+            <a href="informationPerso">
+                <p> Mes informations </p>
+            </a>
+        </div>
+
+        <div class="col-md-3 boxEspacePerso">
+            <a href="">
+                <p> Mes adresses </p>
+            </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-around text-center">
+        <div class="col-md-3 boxEspacePerso">
+            <div class=" ">
+                <a href="">
+                    <p> RGPD </p>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3 boxEspacePerso">
+            <a href="">
+                <p> Mes alertes </p>
+            </a>
+        </div>
+
+    </div>
+
+
+
 
 
 </div>
 {% endblock %}
-
-
-

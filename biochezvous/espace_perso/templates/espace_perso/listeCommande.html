@@ -1,0 +1,48 @@
+{% extends "produit/base.html"%}
+{% load static %}
+
+{% block title %}Liste des commandes {% endblock %}
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+  <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+    <h2> MES COMMANDES </h2>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Référence de la commande</th>
+        <th scope="col">Date</th>
+
+        <th scope="col">Montant total</th>
+        <th scope="col">Statut</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cmd in commandes %}
+      <tr>
+        <th scope="row">{{ cmd.commande_id }}</th>
+        <td>{{ cmd.date }}</td>
+        <td>{{ cmd.statut }}</td>
+        <td>{{ cmd.montant }}</td>
+        <td>
+          <a href="commande/{{ cmd.commande_id}}"><span class="glyphicon glyphicon-pencil">Détails</span></a>
+        </td>
+        <td>
+          <a href="commande/{{ cmd.commande_id}}"><span class="glyphicon glyphicon-pencil">Facture</span></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+</div>
+{% endblock %}
