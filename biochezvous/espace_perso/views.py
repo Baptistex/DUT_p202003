@@ -11,6 +11,7 @@ from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, AdresseModifForm
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from produit.models import Image
+from .models import Adresse
 
 
 # Create your views here.
@@ -267,7 +268,10 @@ def ajout_prod_adresse(request):
             adresse.save()
             return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
-        form = AdresseModifForm(instance = request.user.adresse)
+        try : 
+            form = AdresseModifForm(instance = request.user.adresse)
+        except Adresse.DoesNotExist: 
+            form = AdresseModifForm()
     return render(request, 'espace_perso/ajout_adresse.html', {'form': form})
 
 
