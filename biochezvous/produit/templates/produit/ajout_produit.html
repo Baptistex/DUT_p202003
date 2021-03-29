@@ -4,16 +4,23 @@
 
 {% block content %}
 <br>
-<div class="text-center">
-<h3>Ajout d'un nouveau produit</h3>
-</div>
-<br>
-<form class="text-center" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <br>
-    <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
-</form>
+<div class="container-fluid">
 
+    <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h3>Ajout d'un nouveau produit</h3>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
+            <div class="form-group">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+                    <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
-  
+   
