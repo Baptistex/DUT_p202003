@@ -50,3 +50,10 @@ class ImageForm(ModelForm):
     class Meta:
         model = Image
         fields = ['image','produit','priorite']
+
+class CategorieForm(ModelForm):
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    typeProduit_id = forms.CharField(initial='',widget=forms.HiddenInput())
+    class Meta:
+        model=Categorie
+        fields = ['nom','typeProduit_id']

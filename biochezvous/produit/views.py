@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image
 from espace_perso.models import Personne, Producteur, Adresse
-from .forms import ProduitForm, ImageForm
+from .forms import ProduitForm, ImageForm, CategorieForm
 from espace_perso.utils import great_circle_vec
 
 
@@ -177,3 +177,15 @@ def deleteOneProd(request,id):
             'prodlist': table_prod
         }
     return HttpResponse(template.render(context,request))
+
+def ajout_categorie(request):
+    if request.method == 'POST':
+        form = CategorieForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            return HttpResponseRedirect('/accueilEspaceProducteur')
+    else:
+        form = CategorieForm()
+    return render(request, 'produit/categorie.html', {'form': form})
+ 

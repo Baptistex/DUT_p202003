@@ -316,3 +316,5 @@ def suppressionPanier(request, id):
     
     produit.delete()
     return redirect('panier')
+
+
