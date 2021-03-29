@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from .models import TypeProduit, Produit, Image
 from espace_perso.models import Personne, Producteur, Adresse
 from .forms import ProduitForm, ImageForm
 from espace_perso.utils import great_circle_vec
+from django.template.loader import render_to_string
 
 
 # Create your views here.
@@ -24,6 +25,21 @@ def produit_django(request):
     Authors:
         Baptiste Alix, Paul Breton
     """
+    if request.is_ajax():
+        print("hello")
+        searchtext = request.POST.get("searchtext", None)
+        print(searchtext)
+        images_produit = Image.objects.filter(priorite=1).filter(produit__nom__icontains=searchtext)
+        html = render_to_string(
+            template_name="produit/produitsearch.html", 
+            context={"lesproduits": images_produit, "MEDIA_URL" : "/media/"}
+        )
+        print(images_produit)
+        data_dict = {"html_from_view": html}
+
+        return JsonResponse(data=data_dict, safe=False)
+
+
     userCoordsSet = False
     ulat, ulon = 0, 0
     if request.user.is_authenticated:
@@ -35,7 +51,7 @@ def produit_django(request):
         except Adresse.DoesNotExist:
             pass
     images_produit = Image.objects.filter(priorite=1)
-
+    print(images_produit)
     #Si l'utilisateur appuie sur le bouton, affiche que les producteurs dans un rayon de moins de 10km
     #TODO : Détecter un bouton en particulier, plutot que n'importe quel bouton/form
     if userCoordsSet and request.method == 'POST':
