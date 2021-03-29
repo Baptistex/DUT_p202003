@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Utilisateur, Personne, Producteur
+from espace_admin.models import Demandes
 from produit.models import Image
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group, Permission
@@ -114,7 +115,18 @@ class FormDataModifProd(ModelForm):
         model = Producteur
         fields = ['nom','mail','num_tel','description','image','iban']
 
-        
+class FormAide(forms.ModelForm):
+    nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    objet = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    message = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+
+    class Meta:
+        model = Demandes
+        fields = ['nom', 'prenom', 'mail', 'objet','message']
+    
+
 
 class AdresseModifForm(ModelForm):
     adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))

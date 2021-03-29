@@ -1677,6 +1677,9 @@ input[type=range].quantite {
     }
 }
 
+.supp a{
+    color:black;
+}
 .supp{
     background-color: none;
     border: 1px solid red;
