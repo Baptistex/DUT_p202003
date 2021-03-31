@@ -12,6 +12,8 @@ from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, AdresseModifForm
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from produit.models import Image
+from datetime import datetime
+
 
 
 # Create your views here.
@@ -292,14 +294,15 @@ def panier(request):
     """
     context = {}
     personne_id = request.user.personne_id
-    context['panier'] = Panier.objects.filter(personne_id=personne_id)  
 
-    """formQ =  FormQuantitePanier()
-    if request.method == 'POST' :
-        formQ = FormQuantitePanier()
-        if formQ.is_valid():
-            formQ.save()
-    context = {'formQ':formQ}"""
+    panier = Panier.objects.filter(personne_id=personne_id)
+    montantP = 0 
+    #calcul du montant
+    for prod in panier:
+        montantP = montantP + (prod.produit.prix * prod.quantite)
+
+    context['panier'] = panier
+    context['montant'] = montantP
 
     return render(request, 'espace_perso/panier.html',context)
 
@@ -322,7 +325,7 @@ def suppressionPanier(request, id):
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
     produit = panier.get(produit_id=id)
-    
+
     produit.delete()
     return redirect('panier')
 
@@ -357,6 +360,48 @@ def incrementerArticlePanier(request, id):
         produitDuPanier.quantite += 1
         produitDuPanier.save()
         return redirect('panier')
+
+def commander(request):
+    
+    context = {}
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)
+    montantP = 0 
+    #calcul du montant
+    for prod in panier:
+        montantP = montantP + (prod.produit.prix * prod.quantite)
+    
+    #Créer une commande dans Commande
+    c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
+    c.save()
+
+    #Mettre le contenu de panier dans ContenuCommande
+    
+    for prod in panier:
+        produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
+        produit.save()
+        #Vider le contenu de panier
+        prod.delete()
+
+    #NE PAS OUBLIER LES VÉRIFICATION
+    
+    #send_mail_pay(request)
+    return redirect('listeCommande')
+    #u = Personne.objects.get(personne_id=personne_id)
+    #print(u.Commande_set(related_name))
+
+    #contenuCommande = ContenuCommande.objects.filter(commande_id=id)
+    #context['Commande'] = Commande.objects.get(commande_id=id)
+    #Commande.objects.create()
+    #context = {}
+    #personne_id = request.user.personne_id
+    
+    #panier = Panier.objects.filter(personne_id=personne_id)
+    #for prod in panier:
+        #ContenuCommande.objects.create(prod)  
+    #return render(request, 'espace_perso/listeCommande.html',context)
+
+
 
 
 

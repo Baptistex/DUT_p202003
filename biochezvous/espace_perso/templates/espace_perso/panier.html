@@ -68,14 +68,18 @@
         <td></td>
         <td></td>
         <td> TOTAL </td>
-        <td> Test</td>
+        <td> {{ montant }}</td>
       </tr>
     </tbody>
   </table>
   <div class="row justify-content-end text-center">
 
     <div class="col-md-3">
-      <button type="button" class="btn btn-primary btn-lg"> Commander </button>
+
+      <a href="paiement">
+        <button type="button" class="btn btn-primary btn-lg"> Payer </button>
+    </a>
+      
     </div>
   </div>
   {% else %}
