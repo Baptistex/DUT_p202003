@@ -32,7 +32,8 @@ def produit_django(request):
         images_produit = Image.objects.filter(priorite=1).filter(produit__nom__icontains=searchtext)
         html = render_to_string(
             template_name="produit/produitsearch.html", 
-            context={"lesproduits": images_produit, "MEDIA_URL" : "/media/"}
+            context={"lesproduits": images_produit, "MEDIA_URL" : "/media/"},
+            request=request
         )
         print(images_produit)
         data_dict = {"html_from_view": html}
