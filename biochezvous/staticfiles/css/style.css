@@ -1642,6 +1642,26 @@ input[type=range].quantite {
     margin: 0 auto;
 }
 
+@media screen and (max-width: 768px){
+    .navigation ul li a{
+        display: inline;
+        text-align: center;
+    }
+
+    .navigation ul{
+        padding-top: 30px;
+        padding-bottom: 15px;
+        padding-right: 15px;
+        border-radius: 5px;
+        margin-left: 110px;
+    }
+
+    .navigation{
+        display: inline;
+        position:unset; /*EnlÃ¨ve le sticky*/
+    }
+}
+
 .supp a{
     color:black;
 }
