@@ -50,3 +50,13 @@ class ImageForm(ModelForm):
     class Meta:
         model = Image
         fields = ['image','produit','priorite']
+
+class CategorieForm(ModelForm):
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    typeProduit = forms.ModelChoiceField(queryset=TypeProduit.objects.all(),
+                                    to_field_name = 'nom',
+                                    label="Type de produit",
+                                    empty_label="Categorie à selectionner")
+    class Meta:
+        model=Categorie
+        fields = ['nom','typeProduit']

@@ -16,7 +16,8 @@ urlpatterns = [
 
     #Partie test lien entre pages django
     path('description',views.produit, name='produit_description'),
- 
+    path('nouvellecategorie',views.ajout_categorie, name='ajout_categorie'),
+    
 
     path('produit/<int:id>/', views.deleteOneProd, name='deleteOneProd'),
 ] 
