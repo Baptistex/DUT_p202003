@@ -324,9 +324,11 @@ def suppressionPanier(request, id):
     #gérer le fait que ce soit les articles pour l'utilisateur donné 
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
-    produit = panier.get(produit_id=id)
-
-    produit.delete()
+    produitDuPanier = panier.get(produit_id=id)
+    produit = Produit.objects.get(produit_id=id)
+    produit.quantite = produit.quantite + produitDuPanier.quantite
+    produit.save()
+    produitDuPanier.delete()
     return redirect('panier')
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
