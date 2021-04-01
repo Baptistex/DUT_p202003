@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
 from .utils import send_mail_pay
+from .utils import send_mail_cmd
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
@@ -83,6 +84,10 @@ def paiement(request):
 
 def send_mail_paiement(request):
     send_mail_pay(request)
+    return HttpResponseRedirect('/')
+
+def send_mail_commande(request):
+    send_mail_cmd(request)
     return HttpResponseRedirect('/')
 
     

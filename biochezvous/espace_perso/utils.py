@@ -4,6 +4,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
+from produit.models import Commande, ContenuCommande, Panier, Produit
 
 
 
@@ -22,16 +23,32 @@ def send_mail_mass():
 
 
 def send_mail_pay(request):
-    mail = request.user.mail
     user = request.user
+    mail = request.user.mail
+    command = Commande.objects.filter(personne=user)
+
     mail_subject = 'Votre commande a bien été prise en compte'
     message = render_to_string('pay_email.html', {
+            'user': user,
+            'command': command,
+            })
+    email = EmailMessage(
+            mail_subject, message, to=[mail]
+    )
+    email.send()
+
+def send_mail_cmd(request):
+    mail = request.user.mail
+    user = request.user
+    mail_subject = 'Votre commande est prête'
+    message = render_to_string('command_email.html', {
             'user': user,
             })
     email = EmailMessage(
             mail_subject, message, to=[mail]
     )
     email.send()
+
 import requests
 import numpy as np
 
