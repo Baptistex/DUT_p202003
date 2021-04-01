@@ -219,7 +219,7 @@
             /* Verification saisie */
             function Saisie() {
                 var qty = document.getElementById("id_quantite").value;
-                if( qty > {{leproduit.quantite}}){
+                if( qty > {{leproduit.quantite}} || qty <= 0){
                     document.getElementById("val").innerHTML = " * Valeur incorrecte";
                     document.getElementById("btn_commander").disabled = true;
                 } else {

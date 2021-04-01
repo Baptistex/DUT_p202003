@@ -61,7 +61,6 @@ def produit(request, idProduit):
     """
     Vue qui permet d'afficher un produit et ses informations
     
-
     Args:
 
     Returns:
