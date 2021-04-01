@@ -1329,9 +1329,7 @@ section {
     display: flex;
 }
 
-.qty span {
-    
-}
+
 
 .qty select {
     width: 75px;
@@ -1344,7 +1342,7 @@ section {
 
 
 #description .carousel-inner {
-    margin-left: 80px;
+    margin-left: 18%;
 }
 
 #description img{
@@ -1677,6 +1675,9 @@ input[type=range].quantite {
     }
 }
 
+.supp a{
+    color:black;
+}
 .supp{
     background-color: none;
     border: 1px solid red;
@@ -1692,9 +1693,30 @@ input[type=range].quantite {
 
 
 .boxEspacePerso {  
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 20px !important;
     height: 10em !important;
     width: 20em !important;
     background-color: #00ffc6;
-    justify-content: center;
+    box-shadow: 8px 5px 5px #00ffc863;
+    transition: transform 0.2s, box-shadow 0.1s, color 0.1s;
+    color: #555555;
+    
 }
+
+.boxEspacePerso:hover {
+    transform: scale(1.2);  
+    box-shadow: none;  
+    color: yellow;
+}
+
+.boxEspacePerso i {
+    font-size: 300%;
+}
+
+
+/*--------------------------------------------------------------
+# PANIER
+--------------------------------------------------------------*/

@@ -73,19 +73,26 @@
                         <p> {{leproduit.description}} </p>
 
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col">
                                 <div class="qty" style="display: inline-block;">
-                                    <select type="select" id="demo1" oninput="myFunction()"  value="1">
-                                        {% for i in range %}
-                                            <option value="{{forloop.counter}} ">{{forloop.counter}}</option>
-                                        {%endfor%}
-                                    </select>
-                                </div>  
-                                <p id="demo"></p>                               
+                                    {% if leproduit.quantite > 0 %}
+                                        <form method="POST" oninput="Saisie()">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            
+                                            <button type="submit" id="btn_commander" class="btn btn-primary">Ajouter à l'assiette !</button> <span id="val"></span>
+                                        </form>
+                                    {% else %}
+                                        <div class="row mt-5">
+                                            <div class="col text-center">
+                                                <i class="icofont-panda display-1"></i>
+                                                <p style="font-family: 'Architects Daughter', cursive;">Le produit est actuellement en rupture de stock</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>                             
                             </div>
-                            <div class="col-8 text-center">
-                                <button type="button" id="btn_commander" class="btn btn-primary">Ajouter à l'assiette !</button>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -211,10 +218,13 @@
         <script>
             /* Verification saisie */
             function Saisie() {
-                var qty = document.getElementById("demo1").value;
-                if( qty > 150){
-                    ('#btn_commander').addClass('erreur');
-                    document.getElementById("demo1").value = "Valeur incorrecte";
+                var qty = document.getElementById("id_quantite").value;
+                if( qty > {{leproduit.quantite}} || qty <= 0){
+                    document.getElementById("val").innerHTML = " * Valeur incorrecte";
+                    document.getElementById("btn_commander").disabled = true;
+                } else {
+                    document.getElementById("val").innerHTML = " ";
+                    document.getElementById("btn_commander").disabled = false;
                 }
             }
         </script>

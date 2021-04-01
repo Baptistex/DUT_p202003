@@ -51,6 +51,22 @@
             </div>
         </section><!-- End Services Section -->
 
+        <section id="moteur_recherche" class="prod">
+            <div class="container">
+                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                    <h2>Une idée en tête ?</h2>
+                    <p>Vous avez une envie particulière ? N'hésitez plus tapez votre demande juste en dessous dans la barre de recherche.</p>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Patate douce ?" aria-label="Patate douce" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn" type="button">Button</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <form action="" method="post">
             {% csrf_token %}
             <input type="submit" name="distance" value="Ne garder que les produits de producteurs éloignés de moins de 10km" />
@@ -126,95 +142,7 @@
                         </div>
                     </div>                        
                     {% endfor %}
-<!--
-                    <div class="col-lg-4 col-md-6 portfolio-item VIANDES">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item FRUITS">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item LEGUMES">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item LEGUMES">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item VIANDES">
-                        <div class="prod-wrap">
-                            <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                            <div class="prod-links">
-                                <a href="{% url 'produit_description' %}" title="App 1"><i class="icofont-heart"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-plus"></i></a>
-                                <a href="{% url 'produit_description' %}" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
-                        </div>
-                    </div>
--->
                 </div>
 
             </div>
@@ -222,21 +150,6 @@
         </section><!-- End Portfolio Section -->
 
 
-        <section id="moteur_recherche" class="prod">
-            <div class="container">
-                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-                    <h2>Une idée en tête ?</h2>
-                    <p>Vous avez une envie particulière ? N'hésitez plus tapez votre demande juste en dessous dans la barre de recherche.</p>
-                </div>
-
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Patate douce ?" aria-label="Patate douce" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn" type="button">Button</button>
-                    </div>
-                </div>
-            </div>
-        </section>
 
 {% endblock %}
 

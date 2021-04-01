@@ -4,8 +4,9 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
-from .models import Utilisateur,Personne, Producteur
-from espace_perso.forms import FormInscriptionProd
+from espace_admin.models import Demandes
+from .models import Utilisateur,Personne, Producteur, Adresse
+from espace_perso.forms import FormInscriptionProd, FormAide
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 #from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormQuantitePanier
@@ -13,7 +14,6 @@ from .forms import FormInscription, FormConnexion, FormDataModification, FormIns
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from produit.models import Image
 from datetime import datetime
-
 
 
 # Create your views here.
@@ -113,8 +113,11 @@ def connexion(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-
-            return HttpResponseRedirect('/')
+            next_url = request.GET.get('next')
+            if next_url:
+                return HttpResponseRedirect(next_url)
+            else:
+                return render(request, '/')
 
     else:
         form = FormConnexion()
@@ -229,6 +232,15 @@ def informationPerso(request):
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
 
+def aide(request):
+    if request.method == "POST":
+        form = FormAide(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/aide')
+    else:
+        form = FormAide()
+    return render(request,'espace_perso/demande_aide.html', {'form':form})
 #
 # 
 # espace PRODUCTEUR
@@ -256,6 +268,7 @@ def espace_producteur(request):
     
 
 def espacePersoProd(request):
+
     personne_id = request.user.personne_id
     u = Producteur.objects.get(personne_ptr_id=personne_id)
     form = FormDataModifProd(instance=u)
@@ -275,7 +288,10 @@ def ajout_prod_adresse(request):
             adresse.save()
             return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
-        form = AdresseModifForm(instance = request.user.adresse)
+        try : 
+            form = AdresseModifForm(instance = request.user.adresse)
+        except Adresse.DoesNotExist: 
+            form = AdresseModifForm()
     return render(request, 'espace_perso/ajout_adresse.html', {'form': form})
 
 

@@ -23,17 +23,17 @@ class CategorieForm(ModelForm):
 
 #A changer pour que le choix du producteur se fasse automatiquement
 class ProduitForm(ModelForm):
-    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
-    unit=forms.CharField(initial='(ex:Kg)',widget=forms.TextInput(attrs={'class': 'form-control col-md-2 container-fluid'}))
-    description=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-3 container-fluid'}))
-    date=forms.CharField(initial='aaaa-mm-jj')
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    unit=forms.CharField(initial='(ex:Kg)',widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    description=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    date=forms.CharField(initial='aaaa-mm-jj',widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
 
     #TODO : modifier la foreignkey du modele produit 
 
 
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'nom',
-                                    empty_label="Nom de la categorie")                                
+                                    empty_label="Nom de la categorie",)                                
     
     class Meta:
         model = Produit

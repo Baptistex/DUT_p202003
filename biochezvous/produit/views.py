@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import TypeProduit, Produit, Image
-from espace_perso.models import Personne, Producteur
+from .models import TypeProduit, Produit, Image, Panier
+from espace_perso.forms import FormSelectionQuantite
+from espace_perso.models import Personne, Producteur, Adresse
 from .forms import ProduitForm, ImageForm
 from espace_perso.utils import great_circle_vec
 
@@ -12,16 +13,28 @@ from espace_perso.utils import great_circle_vec
 
 
 def produit_django(request):
-    #Recuperation de toute la table personne dans une variable table_pers
-    #  et passage a la template via context
-    #TODO: Simplifier ce code une fois que la gestion de priorité sera ajoutée
+    """
+    Vue qui permet d'afficher les differents produits mis en vente sur le site
+    Un bouton permet de filtrer les produits à ceux étant vendus par des producteurs proches
+
+    Args:
+
+    Returns:
+        lesproduits : liste d'images desquelles ont peut obtenir les produits associés
+
+    Authors:
+        Baptiste Alix, Paul Breton
+    """
     userCoordsSet = False
+    ulat, ulon = 0, 0
     if request.user.is_authenticated:
         user = request.user
-        ulat, ulon = user.adresse.lat, user.adresse.lon
-        if not (ulat is None or ulon is None) :
-            userCoordsSet = True
-
+        try : 
+            ulat, ulon = user.adresse.lat, user.adresse.lon
+            if not (ulat is None or ulon is None) :
+                userCoordsSet = True
+        except Adresse.DoesNotExist:
+            pass
     images_produit = Image.objects.filter(priorite=1)
 
     #Si l'utilisateur appuie sur le bouton, affiche que les producteurs dans un rayon de moins de 10km
@@ -45,18 +58,38 @@ def produit_django(request):
 
 
 def produit(request, idProduit):
-    # affichage de la description du produit
+    """
+    Vue qui permet d'afficher un produit et ses informations
+    
+    Args:
+
+    Returns:
+        leproduit : le produit
+        id : identifiant du produit
+        producteur : producteur qui met en vente le produit
+        lesImages : les images du produit
+        range : range(produit.quantite)
+        qte : quantite du produit
+        notif10km : Un avertissement si le produit est trop loin ou que l'adresse de l'utilisateur n'a pas été ajoutée
+    Authors:
+        Baptiste Alix, Paul Breton
+    """
     userCoordsSet = False
+    notif10km = ""
+    ulat, ulon = 0, 0
     if request.user.is_authenticated:
         user = request.user
-        ulat, ulon = user.adresse.lat, user.adresse.lon
-        if not (ulat is None or ulon is None) :
-            userCoordsSet = True
+        try : 
+            ulat, ulon = user.adresse.lat, user.adresse.lon
+            if not (ulat is None or ulon is None) :
+                userCoordsSet = True
+        except Adresse.DoesNotExist:
+            notif10km = "Vous n'avez pas spécifié d'adresse sur votre profil."
 
     produit = Produit.objects.get(produit_id = idProduit)
     producteur = produit.producteur
 
-    notif10km = ""
+    
     plat, plon = producteur.adresse.lat, producteur.adresse.lon
     if userCoordsSet and not plat is None and not plon is None:
         distance = great_circle_vec(ulat, ulon, plat, plon)
@@ -66,8 +99,29 @@ def produit(request, idProduit):
 
     table_images = Image.objects.filter(produit = produit)
 
-    print("les images : ", table_images)
+    
 
+    if request.method == 'POST':
+        form = FormSelectionQuantite(request.POST)
+            
+        if form.is_valid():
+            if request.user.is_authenticated:
+                mon_panier_prod = Panier.objects.all().filter(produit=produit, personne=request.user).values('quantite')
+                
+                if mon_panier_prod.exists():
+                    qte = int(request.POST['quantite']) + mon_panier_prod[0]['quantite']
+                    Panier.objects.filter(produit=produit, personne=request.user).update(quantite = qte)
+                else:
+                    p = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
+                    p.save()
+                reste = int(produit.quantite) - int(request.POST['quantite'])
+                Produit.objects.filter(produit_id = idProduit).update(quantite = reste)
+                return redirect('/panier')
+            else: 
+                return redirect('/connexion')
+    else:
+        form = FormSelectionQuantite()
+    
     context = {
         'leproduit': produit,
         'id': produit.produit_id,
@@ -75,6 +129,7 @@ def produit(request, idProduit):
         'lesImages' : table_images,
         'range' : range(produit.quantite),
         'qte' : produit.quantite,
+        'form' : form,
         'notif10km' : notif10km,
     }
     return render(request, 'produit/description_prod.html', context)

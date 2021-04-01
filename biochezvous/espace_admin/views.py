@@ -1,18 +1,100 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
-from espace_perso.models import Personne #importer modèle de 'espace_perso' - pas nécessaire de recréer modèle personne
+from espace_perso.models import Personne
+from django.core.mail import send_mail
+from .models import Demandes
+from .forms import FormAideReponse
 
+#Accueil
 def espace_admin(request):
     template = loader.get_template('espace_admin/accueil_admin.html')
     return HttpResponse(template.render({},request))
 
-def util_inscris(request):
-    
-    #Tableau des producteurs
-    table_prod = Personne.objects.filter(groups__name='producteur')
+#Liste utilisateurs
+def userlist(request):
+    template = loader.get_template('espace_admin/userlist.html')
+    table_pers = Personne.objects.all()
+    context = {
+        'userlist': table_pers
+    }
 
-    #Tableau des consommateurs
-    table_conso = Personne.objects.filter(groups__name='utilisateur')
+    return HttpResponse(template.render(context,request))
 
-    return render(request, 'espace_admin/util_inscris.html',{'listeProd':table_prod,'listeConso':table_conso})
+#Supprimer tous les utilisateurs
+def delete_user(request):
+
+    if request.method == "GET":
+
+        dest = Personne.objects.all()
+        dest.delete()
+
+        template = loader.get_template('espace_admin/userlist.html')
+        table_pers = Personne.objects.all()
+
+        context = {
+            'userlist': table_pers
+        }
+
+    return HttpResponse(template.render(context,request))
+
+#Supprimer un utilisateur choisi 
+def deleteOneUser(request,id):
+
+    if request.method == "GET":
+
+        dest = Personne.objects.get(personne_id = id)
+        dest.delete()
+        
+        template = loader.get_template('espace_admin/userlist.html')
+        table_pers = Personne.objects.all()
+
+        context = {
+            'userlist': table_pers
+        }
+
+    return HttpResponse(template.render(context,request))
+
+
+#Afficher la liste des demandes d'aide et envoie d'un mail de réponse via le formulaire
+def util_aide(request):
+
+    template = loader.get_template('espace_admin/aide.html')
+    table_demandes = Demandes.objects.all()
+
+    if request.method == "POST":
+        form = FormAideReponse(request.POST)
+        if form.is_valid():
+
+            objet = form.cleaned_data['objet']
+            message = form.cleaned_data['message']
+            destinataire = form.cleaned_data['destinataire']
+
+            send_mail(objet,message,'sav.biochezvous@gmail.com',(destinataire,),fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
+
+        return redirect('/listeAides')
+    else:
+        form = FormAideReponse()
+
+    context = {
+        'listeAides' : table_demandes,
+        'form' : form
+    }
+    return HttpResponse(template.render(context,request))
+
+
+#Supprimer un message de demande  
+def deleteDemande(request,msg_id):
+
+    if request.method == "GET":
+        delDemande = Demandes.objects.get(message_id = msg_id) # On récupère l'id attribué au message
+        delDemande.delete()
+
+        template = loader.get_template('espace_admin/aide.html') # Retour à la liste une fois la suppression faite
+        table_demandes = Demandes.objects.all()
+
+        context = {
+            'listeAides' : table_demandes
+        }
+
+    return HttpResponse(template.render(context,request))
