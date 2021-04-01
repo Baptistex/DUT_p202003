@@ -1623,23 +1623,12 @@ input[type=range].quantite {
     color: #555555;
 }
 
-.navigation{
-    color: #00ffc6;
-    width: 52px;
-	height: 40%;
-    left:0;   
-    position: sticky;
-    top: 5.5em; /*endroit où la sidebar devient sticky*/
-    margin-left: -100px;
-}
-
 .navigation ul{
     list-style: none;
-    background-color :#555555;
-    position: absolute;
     border-radius: 5px;
     padding: 0;
     display: inline;
+    margin-left:395px;
 }
 
 .navigation ul li{
@@ -1651,30 +1640,6 @@ input[type=range].quantite {
     color:#00ffc6;
     font-size: 50px;
     margin: 0 auto;
-}
-
-@media screen and (max-width: 768px){
-    .navigation ul li a{
-        display: inline;
-        zoom:1;
-        padding-right: 10px;
-        text-align: center;
-        position: relative;
-    }
-
-    .navigation ul{
-        position: relative;
-        padding-top: 30px;
-        padding-bottom: 15px;
-        padding-left: 10px;
-        border-radius: 5px;
-        margin-left: 110px;
-    }
-
-    .navigation{
-        display: inline;
-        position:unset; /*Enlève le sticky*/
-    }
 }
 
 .supp a{
