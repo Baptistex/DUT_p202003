@@ -1,0 +1,110 @@
+{% extends "produit/base.html" %}
+{% load static %}
+{% block title %}Espace Administrateur - Demandes d'aide{% endblock %}
+{% block content %}
+<div class="container admin">
+    <div class="row">
+        <div class="col">
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Espace Administrateur</h2><br>
+                <h3>Les demandes d'aide</h3>
+            </div>
+        </div>
+    </div>
+
+    <!--Menu à revoir-->
+    <nav class="navigation">
+        <ul>
+            <li><a href="listeUtilisateurs"><i class="icofont-ui-user"></i></a></li>
+            <li><a href="transactions"><i class="icofont-envelope"></i></a></li>
+            <li><a href="transactions"><i class="icofont-exchange"></i></a></li>
+            <li><a href="transactions"><i class="icofont-help-robot"></i></a></li>
+        </ul>
+    </nav>
+
+    <table id="table" class="table table-hover table-mc-light-blue">
+
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Sujet</th>
+                <th>Voir & répondre</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+
+        {% for demande in listeAides %}
+        <tr>
+            <td>{{ demande.nom }}</td>
+            <td>{{ demande.prenom }}</td>
+            <td>{{ demande.mail }}</td>
+            <td>{{ demande.objet }}</td>
+            <!-- <td>{{ demande.message }}</td> -->
+
+            <!--Répondre à la demande-->
+            <td>
+                <a class="" href="" data-toggle="modal" data-target="#popup{{demande.message_id}}" data-popup-url="">
+                    <span class="glyphicon glyphicon-home"  style="padding-left: 35px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
+                            class="bi bi-reply-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M5.921 11.9L1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
+                        </svg>
+                    </span>
+                </a>
+
+                <!--Modal pour voir et répondre à la demande d'aide-->
+                <div id="popup{{demande.message_id}}" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="exampleModalCenterTitle{{demande.prenom}}" data-popup-url="">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                            <h4 class="text-center">Récapitulatif</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Contact :</h5> {{ demande.mail }}
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Objet :</h5> {{ demande.objet }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5>Message :</h5> {{demande.message}}
+                                </div>
+                            </div>
+                            <hr>
+                            <h4>Répondre au message de {{demande.nom}} {{demande.prenom}}</h4>
+                            <form method="POST" class="text-center post-form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="btn btn-primary " type="submit">Envoyer la réponse</button>
+                            </form>              
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </td>
+
+            <!--Supprimer la demande-->
+            <td>
+                {% url 'deleteDemande' demande.message_id as the_url %}
+                <a href="{{ the_url }}">
+                    <span class="glyphicon glyphicon-pencil" style="padding-left: 30px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
+                            class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                        </svg>
+                    </span>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

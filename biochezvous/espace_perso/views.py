@@ -4,8 +4,9 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
+from espace_admin.models import Demandes
 from .models import Utilisateur,Personne, Producteur
-from espace_perso.forms import FormInscriptionProd
+from espace_perso.forms import FormInscriptionProd, FormAide
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
@@ -161,8 +162,11 @@ def connexion(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-
-            return HttpResponseRedirect('/')
+            next_url = request.GET.get('next')
+            if next_url:
+                return HttpResponseRedirect(next_url)
+            else:
+                return render(request, '/')
 
     else:
         form = FormConnexion()
@@ -272,6 +276,15 @@ def informationPerso(request):
 #        Permission.objects.get(codename='can_view_espace_perso')
 #    )
 
+def aide(request):
+    if request.method == "POST":
+        form = FormAide(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/aide')
+    else:
+        form = FormAide()
+    return render(request,'espace_perso/demande_aide.html', {'form':form})
 #
 # 
 # espace PRODUCTEUR
@@ -299,6 +312,7 @@ def espace_producteur(request):
     
 
 def espacePersoProd(request):
+
     personne_id = request.user.personne_id
     u = Producteur.objects.get(personne_ptr_id=personne_id)
     form = FormDataModifProd(instance=u)

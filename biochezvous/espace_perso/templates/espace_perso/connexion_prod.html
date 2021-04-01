@@ -4,17 +4,24 @@
 {% block title %}Connexion d'un producteur{% endblock %}
 
 
-{% block content %}
+{% block content %} 
 <br>
 <div class="text-center">
 {{ verif_connexion }}
 </div>
 <br>
-    <form method="post" class="text-center" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Connexion</button>
-    </form>
-    <br>
+
+<div class="row d-flex justify-content-center">
+    <div class="d-flex justify-content-center"> 
+        <div class="form-group">
+            <form method="post" >
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Connexion</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
 {% endblock %}
 

@@ -19,4 +19,4 @@ urlpatterns = [
  
 
     path('produit/<int:id>/', views.deleteOneProd, name='deleteOneProd'),
-]
+] 
