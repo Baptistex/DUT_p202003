@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div class="description_prod container">
+<div class="description_prod container mb-5">
     <section id="maDescription">
         <div class="row">
             <div class="col">
@@ -27,7 +27,7 @@
         </div>
     </section>
     
-    <section id="mesProduits">
+    <section id="prod" class="prod mt-5">
         <div class="row">
             {% if not mesProduits %}
                 <div class="col text-center">
@@ -36,9 +36,9 @@
                 </div>
             {% else %}
                 {% for produit in mesProduits %}
-                    <div class="col col-lg-4 col-md-6 portfolio-item {{produit.produit.categorie.typeProduit.nom}}">
+                    <div class="col col-lg-4 col-md-6 portfolio-item">
                         <div class="prod-wrap">
-                            <img src="{{MEDIA_URL}}{{producteur.image}}" class="w-100" alt="">
+                            <img src="{{MEDIA_URL}}{{produit.image}}" class="w-100" alt="">
                             <div class="prod-links">
                                 <a href="#" title="App 1"><i class="icofont-heart"></i></a>
                                 <a href="{% url 'produit' produit.produit_id %}" title="More Details"><i class="icofont-plus"></i></a>

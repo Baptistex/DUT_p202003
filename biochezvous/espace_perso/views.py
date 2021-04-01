@@ -308,19 +308,6 @@ def panier(request):
     return render(request, 'espace_perso/panier.html',context)
 
 
-def ajouterPanier(request):
-    if request.method == 'POST':
-        form = ProduitForm(request.POST, request.FILES)
-        if form.is_valid():
-            instance = form.save()
-            instance.save()
-            #TODO: changer la redirection
-            return HttpResponseRedirect('/')
-    else:
-        form = ProduitForm()
-    return render(request, 'produit/ajout_produit.html', {'form': form})
-
-
 
 def suppressionPanier(request, id):
     """
