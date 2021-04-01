@@ -1677,12 +1677,40 @@ input[type=range].quantite {
     color: white;
 }
 
+.statsAdmin{
+    align-items: center;
+    justify-content: center;
+    margin: 20px !important;
+    width: 20em !important;
+    background-color: #00ffc6;
+    border-radius: 10px;
+    box-shadow: 8px 5px 5px #00ffc863;
+    transition: transform 0.2s, box-shadow 0.1s, color 0.1s;
+    color: #555555;
+    font-variant: small-caps;
+    font-size:20px;
+}
 
+.statsAdmin:hover{
+    transform: scale(1.2);  
+    box-shadow: none;  
+    color: #555555;
+}
+
+.stat{
+    font-size:45px;
+    font-style: oblique;
+    font-weight: bold;
+}
 
 .boxEspacePerso {  
+    align-items: center;
+    justify-content: center;
     margin: 20px !important;
     height: 10em !important;
     width: 20em !important;
     background-color: #00ffc6;
-    justify-content: center;
+    box-shadow: 8px 5px 5px #00ffc863;
+    transition: transform 0.2s, box-shadow 0.1s, color 0.1s;
+    color: #555555;
 }

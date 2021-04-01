@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from espace_perso.models import Personne
+from produit.models import Commande
 from django.core.mail import send_mail
 from .models import Demandes
 from .forms import FormAideReponse
@@ -9,7 +10,9 @@ from .forms import FormAideReponse
 #Accueil
 def espace_admin(request):
     template = loader.get_template('espace_admin/accueil_admin.html')
-    return HttpResponse(template.render({},request))
+    nbPers = Personne.objects.all();
+    nbComm = Commande.objects.all();
+    return HttpResponse(template.render({'nbPers':nbPers,'nbComm':nbComm},request))
 
 #Liste utilisateurs
 def userlist(request):
