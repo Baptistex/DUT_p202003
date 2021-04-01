@@ -1,0 +1,28 @@
+{% extends "produit/base.html" %}
+{% load static %}
+
+{% block title %}Demande d'aide{% endblock %}
+
+
+{% block content %}
+<br>
+<div class="container-fluid">
+
+    <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Espace personnel - Contacter le SAV</h2>
+    </div>
+
+    <div class="text-center">
+        <h5>Vous rencontrez un problème sur BioChezVous ? Parlez-en via ce formulaire de contact ! Nous serons ravis de vous aider.</h5>
+        <p>Nous voulons épauler au mieux nos producteurs et leurs clients.</p>
+    </div>
+    <br>
+    <form method="POST" class="text-center post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary " type="submit">Envoyer ma demande</button>
+    </form>
+
+    <br>
+</div>
+{% endblock %}

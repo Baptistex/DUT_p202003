@@ -5,7 +5,7 @@ from espace_perso.models import Personne
 
 class Produit(models.Model):
     produit_id = models.AutoField(primary_key=True)
-    producteur = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE)
+    producteur = models.ForeignKey('espace_perso.Producteur', on_delete=models.CASCADE)
     categorie = models.ForeignKey('Categorie', on_delete=models.CASCADE)
     nom = models.CharField(max_length=50)
     description = models.TextField()
@@ -18,6 +18,8 @@ class Produit(models.Model):
     class Meta:
         db_table = 'produit'
         default_permissions = ()
+    def __str__(self):
+        return self.nom
 
 class Image(models.Model):
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
@@ -34,6 +36,7 @@ class TypeProduit(models.Model):
     type_id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
+
     
     class Meta:
         db_table = 'typeproduit'
@@ -41,14 +44,14 @@ class TypeProduit(models.Model):
 
 class Categorie(models.Model):
     categorie_id = models.AutoField(primary_key=True)
-    typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
     nom = models.TextField()
-        
-
+    typeProduit = models.ForeignKey('TypeProduit', on_delete=models.CASCADE)
+    
     class Meta:
         db_table = 'categorie'
         default_permissions = ()
-
+    def __str__(self):
+        return self.nom
 
 class Commande(models.Model):
 

@@ -27,7 +27,13 @@ SECRET_KEY = 'a)qi_eb)06$&cp#k)a!erz6(lzw(7f8n(sgl#(w%v*5$595h3q'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sav.biochezvous@gmail.com'
+EMAIL_HOST_PASSWORD = 'biochezvous2021'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 # Application definition
 
@@ -94,7 +100,7 @@ DATABASES = {
         'USER': 'p202003',
         'PASSWORD': 'Ventes!?loc2021',
         'HOST': 'pg.infolannion.com',
-        'PORT': '5432',
+        'PORT': '5432'
     }
 }
 
@@ -102,7 +108,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS = [] 
+"""[
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -115,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
+]"""
 
 
 # Internationalization
