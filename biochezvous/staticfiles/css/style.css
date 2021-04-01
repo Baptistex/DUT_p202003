@@ -702,7 +702,6 @@ section {
     transition: transform 1s;
 }
 
-.recettes a[role="button"]:hover {}
 
 .recettes #fleche-droite:hover {
     transform: translate(10px);

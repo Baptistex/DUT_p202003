@@ -30,7 +30,7 @@
     <tbody>
       {% for elem in panier %}
       <tr>
-          <th scope="row" style="width: 15%;"> <img src="{{MEDIA_URL}}{{ elem.produit.main_image.image}} " class="img-thumbnail w-100"  alt=""></th>
+          <th scope="row" style="width: 6%;"> <img src="{{MEDIA_URL}}{{ elem.produit.main_image.image}} " class="img-thumbnail w-100"  alt=""></th>
         <td>
           <p> {{ elem.produit.nom }}</p>
           <p> ref : {{ elem.produit.produit_id }}</p>
