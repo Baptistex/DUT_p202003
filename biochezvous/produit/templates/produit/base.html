@@ -121,8 +121,10 @@
 
                     <div class="col-lg-6">
                         <form method="post">
+                            {% load feedback %}
                             {% csrf_token %}
-                            {{ form.as_p }}
+                            {% feedback_form as contactform %}
+                            {{ contactform.as_p }}
                             <div class="form-actions">
                                 <button type="submit">Envoyer</button>
                             </div>
