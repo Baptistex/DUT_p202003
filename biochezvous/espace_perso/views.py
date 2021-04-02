@@ -116,7 +116,7 @@ def connexion(request):
             if next_url:
                 return HttpResponseRedirect(next_url)
             else:
-                return render(request, '/')
+                return HttpResponseRedirect('/')
 
     else:
         form = FormConnexion()
