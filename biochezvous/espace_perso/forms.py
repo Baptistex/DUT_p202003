@@ -8,6 +8,8 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from .utils import getCoords
 from .models import Adresse
+from produit.models import Produit
+
 
 
 
@@ -100,6 +102,13 @@ class FormDataModification(ModelForm):
     class Meta:
         model = Personne
         fields = ['nom','prenom','mail','num_tel',]
+
+
+class FormSelectionQuantite(ModelForm):
+    quantite = forms.CharField(initial='1')
+    class Meta:
+        model = Produit 
+        fields = ['quantite']
 
 
 class FormDataModifProd(ModelForm):

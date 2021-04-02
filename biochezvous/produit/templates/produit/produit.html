@@ -54,7 +54,7 @@
         
         <div>
             <input type="checkbox" id="distance" name="distance" onclick="ajaxSearch()">
-            <label for="scales">Ne garder que les produits de producteurs éloignés de moins de 10km</label>
+            <label for="distance">Ne garder que les produits de producteurs éloignés de moins de 10km</label>
         </div>
         <section id="moteur_recherche" class="prod">
             <div class="container">
@@ -70,9 +70,9 @@
                 </div>
             </div>
         </section>
-
+        <!-- ======= Portfolio Section ======= -->
         {% include "produit/produitsearch.html" %}
-
+        <!-- End Portfolio Section -->
 {% endblock %}
 
 {% block morescripts %}

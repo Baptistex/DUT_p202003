@@ -414,10 +414,13 @@ section {
 # Counts
 --------------------------------------------------------------*/
 
-.counts {
-    padding-bottom: 30px;
-    clip-path: polygon(0 21%, 100% 0%, 100% 79%, 0% 100%);
+@media (min-width: 768px) {
+    .counts {
+        padding-bottom: 30px;
+        clip-path: polygon(0 21%, 100% 0%, 100% 79%, 0% 100%);
+    }
 }
+
 
 .counts .count-box {
     padding: 30px;
@@ -702,7 +705,6 @@ section {
     transition: transform 1s;
 }
 
-.recettes a[role="button"]:hover {}
 
 .recettes #fleche-droite:hover {
     transform: translate(10px);
@@ -1176,7 +1178,15 @@ section {
     opacity: 0;
 }
 
+
+
+
+
 @media screen and (min-width: 640px) {
+    .prod .mobile {
+        display: none;
+    }
+
     .prod .prod-wrap .prod-links {
         opacity: 1;
         left: 0;
@@ -1223,21 +1233,36 @@ section {
 /*----MEDIA QUERIES--------------------------------------------*/
 
 @media screen and (max-width: 640px) {
-    .prod .prod-wrap {
+    /*.prod .prod-wrap {
         transition: 0.3s;
         position: relative;
         overflow: visible;
         z-index: 1;
-        /*clip-path: circle(40%);*/
+        /*clip-path: circle(40%);
+    }*/
+
+    .prod .mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center; 
     }
-    .prod .prod-wrap img {
+
+    .prod .mobile a {
+        padding: 0 50px;
+    }
+
+    .prod-wrap .PC {
+        display: none;
+    }
+
+    .prod img {
         clip-path: circle(40%);
     }
-    .prod .prod-links {
+    /*.prod .prod-links {
         display: flex;
         justify-content: space-around;
         padding: 20px 70px;
-    }
+    }*/
     .prod .prod-links a {
         color: #555555;
         font-size: 25px;
@@ -1329,9 +1354,7 @@ section {
     display: flex;
 }
 
-.qty span {
-    
-}
+
 
 .qty select {
     width: 75px;
@@ -1344,7 +1367,7 @@ section {
 
 
 #description .carousel-inner {
-    margin-left: 80px;
+    margin-left: 18%;
 }
 
 #description img{
@@ -1695,9 +1718,30 @@ input[type=range].quantite {
 
 
 .boxEspacePerso {  
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 20px !important;
     height: 10em !important;
     width: 20em !important;
     background-color: #00ffc6;
-    justify-content: center;
+    box-shadow: 8px 5px 5px #00ffc863;
+    transition: transform 0.2s, box-shadow 0.1s, color 0.1s;
+    color: #555555;
+    
 }
+
+.boxEspacePerso:hover {
+    transform: scale(1.2);  
+    box-shadow: none;  
+    color: yellow;
+}
+
+.boxEspacePerso i {
+    font-size: 300%;
+}
+
+
+/*--------------------------------------------------------------
+# PANIER
+--------------------------------------------------------------*/

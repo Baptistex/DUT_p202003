@@ -21,8 +21,11 @@ class Produit(models.Model):
     def __str__(self):
         return self.nom
 
+    def main_image(self):
+        return self.images.all().filter(priorite=1).first()
+
 class Image(models.Model):
-    produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
+    produit = models.ForeignKey('Produit', on_delete=models.CASCADE, related_name='images')
     image   = models.ImageField(upload_to='images/')
     priorite = models.IntegerField()  
     
@@ -66,6 +69,8 @@ class Commande(models.Model):
     class Meta:
         db_table = 'commande'
         default_permissions = ()
+
+
 
 class ContenuCommande(models.Model):
 
