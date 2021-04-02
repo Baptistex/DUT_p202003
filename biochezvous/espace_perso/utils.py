@@ -25,8 +25,8 @@ def send_mail_mass():
 def send_mail_pay(request):
     user = request.user
     mail = request.user.mail
-    command = Commande.objects.filter(personne=user)
-
+    command = Commande.objects.filter(personne=user).latest("commande_id")
+    command = command.commande_id
     mail_subject = 'Votre commande a bien été prise en compte'
     message = render_to_string('pay_email.html', {
             'user': user,

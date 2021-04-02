@@ -50,3 +50,10 @@ class ImageForm(ModelForm):
     class Meta:
         model = Image
         fields = ['image','produit','priorite']
+
+
+
+class ContactForm(forms.Form):
+    from_email = forms.EmailField(required=True)
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea)
