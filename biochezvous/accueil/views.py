@@ -14,3 +14,8 @@ def accueil(request):
         'lesfraicheurs': table_fraicheur
     }
     return HttpResponse(template.render({},request))
+
+
+def propos(request):
+    template = loader.get_template('accueil/propos.html')
+    return HttpResponse(template.render({},request))
