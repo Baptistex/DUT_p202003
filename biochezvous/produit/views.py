@@ -26,44 +26,43 @@ def produit_django(request):
         Baptiste Alix, Paul Breton
     """
     if request.is_ajax():
-        print("hello")
+        userCoordsSet = False
+        ulat, ulon = 0, 0
+        if request.user.is_authenticated:
+            user = request.user
+            try : 
+                ulat, ulon = user.adresse.lat, user.adresse.lon
+                if not (ulat is None or ulon is None) :
+                    userCoordsSet = True
+            except Adresse.DoesNotExist:
+                pass
+
+        boutondistance = True if (request.POST.get("boutondistance", None) == "true") else False
         searchtext = request.POST.get("searchtext", None)
-        print(searchtext)
-        images_produit = Image.objects.filter(priorite=1).filter(produit__nom__icontains=searchtext)
+
+        if searchtext == "":
+            images_produit = Image.objects.filter(priorite=1)
+        else :
+            images_produit = Image.objects.filter(priorite=1).filter(produit__nom__icontains=searchtext)
+
+        if boutondistance :
+            for image in images_produit:        
+                padresse = image.produit.producteur.adresse
+                plat, plon = padresse.lat, padresse.lon
+                distance = great_circle_vec(ulat, ulon, plat, plon)
+                if distance > 10000 :
+                    images_produit = images_produit.exclude(id=image.id)
+
         html = render_to_string(
             template_name="produit/produitsearch.html", 
             context={"lesproduits": images_produit, "MEDIA_URL" : "/media/"},
             request=request
         )
-        print(images_produit)
         data_dict = {"html_from_view": html}
 
         return JsonResponse(data=data_dict, safe=False)
 
-
-    userCoordsSet = False
-    ulat, ulon = 0, 0
-    if request.user.is_authenticated:
-        user = request.user
-        try : 
-            ulat, ulon = user.adresse.lat, user.adresse.lon
-            if not (ulat is None or ulon is None) :
-                userCoordsSet = True
-        except Adresse.DoesNotExist:
-            pass
     images_produit = Image.objects.filter(priorite=1)
-    print(images_produit)
-    #Si l'utilisateur appuie sur le bouton, affiche que les producteurs dans un rayon de moins de 10km
-    #TODO : Détecter un bouton en particulier, plutot que n'importe quel bouton/form
-    if userCoordsSet and request.method == 'POST':
-        for image in images_produit:        
-            padresse = image.produit.producteur.adresse
-            plat, plon = padresse.lat, padresse.lon
-            distance = great_circle_vec(ulat, ulon, plat, plon)
-            print(padresse, distance)
-            if distance > 10000 :
-                print(image.id)
-                images_produit = images_produit.exclude(id=image.id)
 
     context = {
         'lesproduits': images_produit

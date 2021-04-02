@@ -52,29 +52,26 @@
         </section><!-- End Services Section -->
 
         
-
-
-        {% include "produit/produitsearch.html" %}
-
-
+        <div>
+            <input type="checkbox" id="distance" name="distance" onclick="ajaxSearch()">
+            <label for="scales">Ne garder que les produits de producteurs éloignés de moins de 10km</label>
+        </div>
         <section id="moteur_recherche" class="prod">
             <div class="container">
                 <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                     <h2>Une idée en tête ?</h2>
                     <p>Vous avez une envie particulière ? N'hésitez plus tapez votre demande juste en dessous dans la barre de recherche.</p>
                 </div>
-
-
                 <div class="input-group mb-3">
                     <input id="searchbar" type="text" class="form-control" placeholder="Patate douce ?" aria-label="Patate douce" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn" type="button" onclick="ajaxSearch()">Button</button>
-                    </div>
-                
-                    
+                    </div>                    
                 </div>
             </div>
         </section>
+
+        {% include "produit/produitsearch.html" %}
 
 {% endblock %}
 
@@ -82,15 +79,15 @@
 <script>
 function ajaxSearch() {
     str = document.getElementById('searchbar').value;
-    liste = document.getElementById('liste');
-    //tri = liste.options[liste.selectedIndex].value;
+    boutondistance = document.getElementById('distance').checked;
+    //liste = document.getElementById('liste');
     $.ajax({
         method: "post",
         url: "{% url 'produit_django' %}",
         data: {
             "searchtext": str,
-            //"liste": tri
-            'csrfmiddlewaretoken': '{{ csrf_token }}'
+            'boutondistance' : boutondistance,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
         },
         success: function(response) {
             $("#prod").html(response["html_from_view"]);
