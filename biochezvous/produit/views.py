@@ -167,13 +167,13 @@ def ajout_prod(request):
     if request.method == 'POST':
         form = ProduitForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = form.save()
+            instance = form.save(commit=False)
             instance.producteur = u
             instance.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/nouvelleimage')
     else:
-        form = ProduitForm(initial ={'producteur': u})
+        form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def aff_prod(request):
