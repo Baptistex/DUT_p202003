@@ -71,6 +71,8 @@ class Commande(models.Model):
         db_table = 'commande'
         default_permissions = ()
 
+
+
 class ContenuCommande(models.Model):
 
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
