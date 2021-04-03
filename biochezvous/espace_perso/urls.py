@@ -21,8 +21,17 @@ urlpatterns = [
     path('informationPerso',views.informationPerso, name='informationsPerso'),
     path('panier',views.panier, name='panier'),
     path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
+    path('decrementerArticlePanier/<int:id>',views.decrementerArticlePanier, name='decrementerArticlePanier'),
+    path('incrementerArticlePanier/<int:id>',views.incrementerArticlePanier, name='incrementerArticlePanier'),
     path('nouvelleAdresse',views.ajout_prod_adresse, name='ajout_prod_adresse'),
+    path('commander',views.commander, name='commander'),
+    
+    
    
     #espace producteur 
     path('producteur/<int:idProducteur>', views.producteur, name='producteur'),
+    path('test', views.index, name="test"),
+    path('pdf_view/<int:id>', views.PDF, name="pdf_view"),
+    path('pdf_download/', views.DownloadPDF.as_view(), name="pdf_download"),
+    
 ]

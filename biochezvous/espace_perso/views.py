@@ -5,14 +5,23 @@ from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from espace_admin.models import Demandes
-from .models import Utilisateur,Personne, Producteur
+from .models import Utilisateur,Personne, Producteur, Adresse
 from espace_perso.forms import FormInscriptionProd, FormAide
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
+#from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormQuantitePanier
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, AdresseModifForm
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from produit.models import Image
-from .models import Adresse
+from datetime import datetime
+
+
+from django.shortcuts import render
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.views import View
+from xhtml2pdf import pisa
 
 
 # Create your views here.
@@ -129,7 +138,7 @@ def deconnexion(request):
         logout(request)
     return HttpResponse(template.render({},request))
 
-@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
     """
     Vue qui permet d'accéder aux fonctionnalités concernant l'espace perso
@@ -209,13 +218,18 @@ def informationPerso(request):
     Authors:
         Justine Fouillé
     """
+    #TODO Vérifier la vérification automatique des champs du formulaire
+    personne_id = request.user.personne_id
+    u = Personne.objects.get(personne_id=personne_id)
+    formG = FormDataModification(instance=u)
     u = request.user
     form = FormDataModification(instance=u)
     if request.method == 'POST' :
-        form = FormDataModification(request.POST, instance=u)
-        if form.is_valid():
-            form.save()
-    context = {'form':form}
+        formG = FormDataModification(request.POST, instance=u)
+        if formG.is_valid():
+            formG.save()
+    context = {'formG':formG}
+
     return render(request, 'espace_perso/informationPerso.html', context)
 
 #   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
@@ -304,11 +318,20 @@ def panier(request):
     """
     context = {}
     personne_id = request.user.personne_id
-    context['panier'] = Panier.objects.filter(personne_id=personne_id)    
+
+    panier = Panier.objects.filter(personne_id=personne_id)
+    montantP = 0 
+    #calcul du montant
+    for prod in panier:
+        montantP = montantP + (prod.produit.prix * prod.quantite)
+
+    context['panier'] = panier
+    context['montant'] = montantP
+
     return render(request, 'espace_perso/panier.html',context)
 
 
-
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def suppressionPanier(request, id):
     """
     Supprimer un élement du panier
@@ -322,12 +345,146 @@ def suppressionPanier(request, id):
     Authors:
         Justine Fouillé
     """
-    #TODO : gérer le fait que ce soit les articles pour l'utilisateur donné 
+    #gérer le fait que ce soit les articles pour l'utilisateur donné 
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)  
+    produitDuPanier = panier.get(produit_id=id)
+    produit = Produit.objects.get(produit_id=id)
+    produit.quantite = produit.quantite + produitDuPanier.quantite
+    produit.save()
+    produitDuPanier.delete()
+    return redirect('panier')
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def decrementerArticlePanier(request, id):
+
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
     produit = panier.get(produit_id=id)
-    
-    produit.delete()
+
+    if (produit.quantite == 1):
+        return redirect('suppressionPanier', id=id)
+    else:
+        produit.quantite -= 1
+        produit.save()
+
     return redirect('panier')
+
+
+#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+def incrementerArticlePanier(request, id):
+
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)  
+    produitDuPanier = panier.get(produit_id=id)
+    stockArticle = Produit.objects.get(produit_id=id)
+
+    if (produitDuPanier.quantite >= stockArticle.quantite):
+        #TODO : comment gérer le cas où la personne veut commander + que en stock ???
+        print("trop")  
+    else:
+        produitDuPanier.quantite += 1
+        produitDuPanier.save()
+        return redirect('panier')
+
+def commander(request):
+    
+    context = {}
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)
+    montantP = 0 
+    #calcul du montant
+    for prod in panier:
+        montantP = montantP + (prod.produit.prix * prod.quantite)
+    
+    #Créer une commande dans Commande
+    c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
+    c.save()
+
+    #Mettre le contenu de panier dans ContenuCommande
+    
+    for prod in panier:
+        produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
+        produit.save()
+        #Vider le contenu de panier
+        prod.delete()
+
+    #NE PAS OUBLIER LES VÉRIFICATION
+    
+    #send_mail_pay(request)
+    return redirect('listeCommande')
+    #u = Personne.objects.get(personne_id=personne_id)
+    #print(u.Commande_set(related_name))
+
+    #contenuCommande = ContenuCommande.objects.filter(commande_id=id)
+    #context['Commande'] = Commande.objects.get(commande_id=id)
+    #Commande.objects.create()
+    #context = {}
+    #personne_id = request.user.personne_id
+    
+    #panier = Panier.objects.filter(personne_id=personne_id)
+    #for prod in panier:
+        #ContenuCommande.objects.create(prod)  
+    #return render(request, 'espace_perso/listeCommande.html',context)
+
+
+def render_to_pdf(template_src, context_dict={}):
+	template = get_template(template_src)
+	html  = template.render(context_dict)
+	result = BytesIO()
+	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
+	return None
+
+data = {
+	"company": "Dennnis Ivanov Company",
+	"address": "123 Street name",
+	"city": "Vancouver",
+	"state": "WA",
+	"zipcode": "98663",
+
+
+	"phone": "555-555-2345",
+	"email": "youremail@dennisivy.com",
+	"website": "dennisivy.com",
+	}
+
+
+
+def PDF(request, id):
+    context = {}
+    context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
+    context['Commande'] = Commande.objects.get(commande_id=id)
+    pdf = render_to_pdf('espace_perso/pdf_template.html', context)
+    return HttpResponse(pdf, content_type='application/pdf')
+
+#Opens up page as PDF
+class ViewPDF(View):
+
+	def get(self, request, *args, **kwargs):
+		pdf = render_to_pdf('espace_perso/pdf_template.html', commande)
+		return HttpResponse(pdf, content_type='application/pdf')
+
+#Automaticly downloads to PDF file
+class DownloadPDF(View):
+	def get(self, request, *args, **kwargs):
+		
+		pdf = render_to_pdf('espace_perso/pdf_template.html', data)
+
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = "facture.pdf"
+		content = "attachment; filename='\%s\'" %(filename)
+		response['Content-Disposition'] = content
+		return response
+
+def index(request):
+	context = {}
+	return render(request, 'espace_perso/test.html', context)
+
+
+
+
+
 
 

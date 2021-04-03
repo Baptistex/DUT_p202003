@@ -1,0 +1,93 @@
+{% block content %}
+
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td {
+            text-align: center; 
+            margin: 0;
+            border: 1px solid black;
+        }
+        tr {
+            padding-top: 5px;
+        }
+        p  {
+            margin: 0;
+            
+        }
+        .nom {
+            margin-top: 0;
+            font-size: 12px;
+        }
+        th{
+            font-size: large;
+        }
+        .petit {
+            width: 20%;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <h2> commande n° {{ Commande.commande_id }}</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th> Numéro de la commande </th>
+                <th class="petit"> Date </th>
+                <th class="petit">Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td >{{ Commande.commande_id }}</td>
+                <td class="petit">{{ Commande.date }}</td>
+                <td class="petit">{{ Commande.montant }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table>
+        <thead>
+            <tr>
+                <th >Produit</th>
+                <th class="petit">Prix unitaire</th>
+                <th class="petit">Quantite</th>
+                <th class="petit">Sous-Total</th>
+            </tr>
+            
+        </thead>
+
+        <tbody>
+            {% for ctn in contenuCommande %}
+
+            <tr>
+                <td>
+                    <p  class="nom">{{ ctn.produit.nom }}</p>
+                </td>
+                <td class="petit">{{ ctn.produit.prix }}</td>
+                <td class="petit">{{ ctn.quantite }}</td>
+                <td class="petit"></td>
+                {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td> Total commande </td>
+                <td> {{ Commande.montant }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endblock %}
+
+</body>
+
+</html>
+

@@ -59,7 +59,7 @@ class Categorie(models.Model):
 
 class Commande(models.Model):
 
-    personne = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE)
+    personne = models.ForeignKey('espace_perso.Personne', related_name='commandes', on_delete=models.CASCADE)
     commande_id = models.AutoField(primary_key=True)
     date =  models.DateTimeField()
     statut = models.IntegerField() #TODO: à aviser
