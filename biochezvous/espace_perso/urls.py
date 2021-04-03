@@ -22,6 +22,8 @@ urlpatterns = [
     path('panier',views.panier, name='panier'),
     path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
     path('nouvelleAdresse',views.ajout_prod_adresse, name='ajout_prod_adresse'),
+    path('commandeProducteur',views.commandeProducteur, name='commandeProducteur'),
+
    
     #espace producteur 
     path('producteur/<int:idProducteur>', views.producteur, name='producteur'),
