@@ -19,8 +19,9 @@
         <th scope="col">Référence de la commande</th>
         <th scope="col">Date</th>
 
-        <th scope="col">Montant total</th>
+        
         <th scope="col">Statut</th>
+        <th scope="col">Montant total</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
@@ -36,7 +37,7 @@
           <a href="commande/{{ cmd.commande_id}}"><span class="glyphicon glyphicon-pencil">Détails</span></a>
         </td>
         <td>
-          <a href="commande/{{ cmd.commande_id}}"><span class="glyphicon glyphicon-pencil">Facture</span></a>
+          <a href="pdf_view/{{ cmd.commande_id}}" target="_blank"><span class="glyphicon glyphicon-pencil">Facture</span></a>
         </td>
       </tr>
       {% endfor %}

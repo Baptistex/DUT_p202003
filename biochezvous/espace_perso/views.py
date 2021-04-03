@@ -16,6 +16,14 @@ from produit.models import Image
 from datetime import datetime
 
 
+from django.shortcuts import render
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.views import View
+from xhtml2pdf import pisa
+
+
 # Create your views here.
 
 def wip_userlist(request):
@@ -419,6 +427,60 @@ def commander(request):
         #ContenuCommande.objects.create(prod)  
     #return render(request, 'espace_perso/listeCommande.html',context)
 
+
+def render_to_pdf(template_src, context_dict={}):
+	template = get_template(template_src)
+	html  = template.render(context_dict)
+	result = BytesIO()
+	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
+	return None
+
+data = {
+	"company": "Dennnis Ivanov Company",
+	"address": "123 Street name",
+	"city": "Vancouver",
+	"state": "WA",
+	"zipcode": "98663",
+
+
+	"phone": "555-555-2345",
+	"email": "youremail@dennisivy.com",
+	"website": "dennisivy.com",
+	}
+
+
+
+def PDF(request, id):
+    context = {}
+    context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
+    context['Commande'] = Commande.objects.get(commande_id=id)
+    pdf = render_to_pdf('espace_perso/pdf_template.html', context)
+    return HttpResponse(pdf, content_type='application/pdf')
+
+#Opens up page as PDF
+class ViewPDF(View):
+
+	def get(self, request, *args, **kwargs):
+		pdf = render_to_pdf('espace_perso/pdf_template.html', commande)
+		return HttpResponse(pdf, content_type='application/pdf')
+
+#Automaticly downloads to PDF file
+class DownloadPDF(View):
+	def get(self, request, *args, **kwargs):
+		
+		pdf = render_to_pdf('espace_perso/pdf_template.html', data)
+
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = "facture.pdf"
+		content = "attachment; filename='\%s\'" %(filename)
+		response['Content-Disposition'] = content
+		return response
+
+def index(request):
+	context = {}
+	return render(request, 'espace_perso/test.html', context)
 
 
 
