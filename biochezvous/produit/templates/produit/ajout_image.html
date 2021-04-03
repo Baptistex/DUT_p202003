@@ -8,11 +8,63 @@
 <h3>Ajout d'une image</h3>
 </div>
 <br>
-<form class="text-center" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+<table align="center" class="sort-table">
+    
+    <tbody id="tb">
+        {% for img in images_produits  %}
+            <tr priorite="{{ img.priorite}}">
+
+                <td class="align-center" ><img class="sort-img" src ="{{MEDIA_URL}}{{ img.image }}"/></td>
+                <td><a href="{% url 'suppr_prod_image' img.id%}"><span class="glyphicon glyphicon-pencil"> <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill"
+                viewBox="0 0 16 16">
+                <path
+                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                </svg></span></a></td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% if images_produit.count > 0 %}
+<div class="text-center">
+    <button class="btn btn-primary" type="button" onclick="ajaxUpdate()">Mettre à jour l'ordre</button>
+</div>
+{% endif %}
+{% if images_produits.count < 3 %}
     <br>
-    <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
-</form>
+    <form class="text-center" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
+    </form>
+{% endif %}
 
 {% endblock %}
+{% block morescripts %}
+<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
+<script>
+$('.sort-table tbody').sortable({
+    handle: 'img.sort-img',
+    placeholder: "ui-state-highlight",
+    //opacity: 0.9,
+});
+$( "#sortable" ).disableSelection();
+
+function ajaxUpdate() {
+    var order       =   $('.sort-table tbody').sortable('toArray', { attribute: 'priorite'}); 
+    sortOrder=order.join(',');
+    $.ajax({
+        method: "post",
+        url: "{% url 'update_image_priorite'  %}",
+        data: {
+            'id_produit' : {{id_produit}},
+            'order' : sortOrder,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success: function(response) {}
+    });
+}
+</script>
+{% endblock morescripts %}
