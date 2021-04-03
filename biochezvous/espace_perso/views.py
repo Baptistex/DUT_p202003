@@ -333,9 +333,9 @@ def suppressionPanier(request, id):
 def commandeProducteur(request):
     template = loader.get_template('espace_perso/commandeProd.html')
     u = request.user.producteur
-    table_com = Commande.objects.all().filter(produits__in=u.produit_set.all())
+    cont=ContenuCommande.objects.all().filter(produit_id__in=u.produit_set.all())
     context = {
-        'comlist': table_com
+        'comlist': cont
     }
     return HttpResponse(template.render(context,request))
 

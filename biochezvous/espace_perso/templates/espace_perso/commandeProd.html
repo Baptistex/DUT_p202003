@@ -8,19 +8,15 @@
     <thead>
         <tr>
             <th>Identifiant</th>
-            <th>date</th>
-            <th>Statut</th>
-            <th>montant</th>
-            <th>Personne</th>
+            <th>quantite</th>
+            <th>Produit</th>
          </tr>
     </thead>
     {% for com in comlist %}
         <tr>
             <td>{{com.commande_id }}</td>
-            <td>{{com.date }}</td>
-            <td>{{com.statut }}</td>            
-            <td>{{com.montant }}</td>
-            <td>{{com.personne_id }}</td>    
+            <td>{{com.quantite }}</td>
+            <td>{{com.produit_id}}</td>               
         </tr>
     {% endfor %}
 </table>
