@@ -29,6 +29,11 @@ class Image(models.Model):
     image   = models.ImageField(upload_to='images/')
     priorite = models.IntegerField()  
     
+    def delete(self, using=None, keep_parents=False):
+        if self.image.storage.exists(self.image.name):
+            self.image.storage.delete(self.image.name)
+        super().delete()
+
     class Meta:
         db_table = 'image'
         default_permissions = ()
