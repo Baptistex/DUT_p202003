@@ -330,4 +330,19 @@ def suppressionPanier(request, id):
     produit.delete()
     return redirect('panier')
 
+def commandeProducteur(request):
+    template = loader.get_template('espace_perso/commandeProd.html')
+    u = request.user.producteur
+    table_com = Commande.objects.all().filter(produits__in=u.produit_set.all())
+    context = {
+        'comlist': table_com
+    }
+    return HttpResponse(template.render(context,request))
 
+#def contenueCommande(request):
+#    template = loader.get_template('espace_perso/commandeProd.html')
+#    table_contenue = ContenuCommande.objects.all()
+#    context = {
+#        'contlist': table_contenue
+#    }
+#    return HttpResponse(template.render(context,request))
