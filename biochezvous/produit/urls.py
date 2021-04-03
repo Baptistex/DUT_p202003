@@ -19,6 +19,6 @@ urlpatterns = [
     path('description',views.produit, name='produit_description'),
     path('nouvellecategorie',views.ajout_categorie, name='ajout_categorie'),
     
-
+    path('update_image_priorite', views.update_image_priorite, name='update_image_priorite'),
     path('produit/<int:id>/', views.deleteOneProd, name='deleteOneProd'),
 ] 

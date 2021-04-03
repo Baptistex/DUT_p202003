@@ -43,13 +43,10 @@ class ProduitForm(ModelForm):
 #Formulaire pour ajouter des images a un produit
 class ImageForm(ModelForm):
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
-    priorite=forms.CharField(initial='1',widget=forms.HiddenInput())
-    produit = forms.ModelChoiceField(queryset=Produit.objects.all(),
-                                    to_field_name = 'nom',
-                                    empty_label="Produit à selectionner")
+    
     class Meta:
         model = Image
-        fields = ['image','produit','priorite']
+        fields = ['image']
 
 class CategorieForm(ModelForm):
     nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))

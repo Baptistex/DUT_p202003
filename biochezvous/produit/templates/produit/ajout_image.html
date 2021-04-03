@@ -12,9 +12,9 @@
     
     <tbody id="tb">
         {% for img in images_produits  %}
-            <tr>
-                
-                <td align="center" ><img class="sort-img" src = "{{MEDIA_URL}}{{ img.image }}"/></td>
+            <tr priorite="{{ img.priorite}}">
+
+                <td class="align-center" ><img class="sort-img" src ="{{MEDIA_URL}}{{ img.image }}"/></td>
                 <td><a href="{% url 'suppr_prod_image' img.id%}"><span class="glyphicon glyphicon-pencil"> <svg
                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill"
                 viewBox="0 0 16 16">
@@ -27,7 +27,11 @@
     </tbody>
 </table>
 
+<div class="text-center">
+    <button class="btn btn-primary" type="button" onclick="ajaxUpdate()">Mettre à jour l'ordre</button>
+</div>
 {% if images_produits.count < 3 %}
+    <br>
     <form class="text-center" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
@@ -44,9 +48,23 @@ $('.sort-table tbody').sortable({
     handle: 'img.sort-img',
     placeholder: "ui-state-highlight",
     //opacity: 0.9,
-    update : function(){}
 });
 $( "#sortable" ).disableSelection();
 
+function ajaxUpdate() {
+    var order       =   $('.sort-table tbody').sortable('toArray', { attribute: 'priorite'}); 
+    console.log(order.join(','));
+    sortOrder=order.join(',');
+    $.ajax({
+        method: "post",
+        url: "{% url 'update_image_priorite'  %}",
+        data: {
+            'id_produit' : {{id_produit}},
+            'order' : sortOrder,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success: function(response) {}
+    });
+}
 </script>
 {% endblock morescripts %}
