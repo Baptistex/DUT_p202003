@@ -27,6 +27,7 @@ urlpatterns = [
     path('commander',views.commander, name='commander'),
     
     
+   
     #espace producteur 
     path('producteur/<int:idProducteur>', views.producteur, name='producteur'),
     path('test', views.index, name="test"),

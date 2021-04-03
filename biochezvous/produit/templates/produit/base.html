@@ -43,7 +43,7 @@
 <body>
     {% block header %}
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top header-transparent">
+    <header id="header" class="{% block headeropacity %}fixed-top header-scrolled{% endblock headeropacity %}">
         <div class="container d-flex align-items-center">
 
             <div class="logo mr-auto">
@@ -188,6 +188,7 @@
     <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
     <script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
+    {% block morescripts %}{% endblock %}
 
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>

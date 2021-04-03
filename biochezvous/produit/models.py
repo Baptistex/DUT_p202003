@@ -40,10 +40,11 @@ class TypeProduit(models.Model):
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
 
-    
     class Meta:
         db_table = 'typeproduit'
         default_permissions = ()
+    def __str__(self):
+        return self.nom
 
 class Categorie(models.Model):
     categorie_id = models.AutoField(primary_key=True)
@@ -69,6 +70,8 @@ class Commande(models.Model):
     class Meta:
         db_table = 'commande'
         default_permissions = ()
+
+
 
 class ContenuCommande(models.Model):
 

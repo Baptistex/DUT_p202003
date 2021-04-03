@@ -151,3 +151,4 @@ class AdresseModifForm(ModelForm):
     class Meta:
         model = Adresse
         fields = ['code_postal','ville','adresse',]
+
