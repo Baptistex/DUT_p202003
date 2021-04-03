@@ -197,7 +197,6 @@ def ajout_prod_image(request, id_produit):
         return redirect('producteur', idProducteur=u.pk)
 
     images_produits = Image.objects.filter(produit_id = id_produit).order_by('priorite')
-    print(images_produits)
     if request.method == 'POST' and images_produits.count() <3:
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -218,12 +217,19 @@ def ajout_prod_image(request, id_produit):
 @permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
 def suppr_prod_image(request, id_image):
     u = request.user.producteur
-    #Redirection de du producteur si le produit ne lui appartient pas
     image = Image.objects.get(pk=id_image)
+    #Redirection de du producteur si le produit ne lui appartient pas
     if image.produit.producteur!=u:
         return redirect('producteur', idProducteur=u.pk)
     id_produit = image.produit.pk
     image.delete()
+    image_list = Image.objects.filter(produit_id=id_produit).order_by('priorite')
+    count = 1
+    for image in image_list:
+        if image.priorite != count:
+            image.priorite -= 1
+            image.save()
+        count+=1
     return redirect('ajout_prod_image', id_produit)
 
 def update_image_priorite(request):
@@ -232,16 +238,12 @@ def update_image_priorite(request):
         order = request.POST.get("order", None)
         if Produit.objects.filter(producteur=request.user.producteur).filter(produit_id=id_produit).count()>0 : 
             order_list = order.split(',')
-            print(order_list)
-            print(Image.objects.filter(produit_id=id_produit).order_by('priorite'))
             image_list = Image.objects.filter(produit_id=id_produit).order_by('priorite')
             count = 1
             for image in image_list:
-                print(image)
                 image.priorite = order_list.index(str(count))+1
                 count += 1
                 image.save()
-            print(Image.objects.filter(produit_id=id_produit).order_by('priorite'))
         return HttpResponse()
     else : 
         return HttpResponseNotFound("Page not found")
