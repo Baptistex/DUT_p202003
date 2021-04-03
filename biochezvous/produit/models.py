@@ -74,7 +74,6 @@ class Commande(models.Model):
 
 
 class ContenuCommande(models.Model):
-
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
     commande = models.ForeignKey('Commande', on_delete=models.CASCADE)
     quantite = models.IntegerField()

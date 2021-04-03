@@ -53,3 +53,11 @@ class Adresse(models.Model):
     class Meta:
         db_table = 'adresse'
         default_permissions = ()
+
+class Preference(models.Model):
+    produit  = models.ForeignKey('produit.Produit', on_delete=models.CASCADE)
+    personne = models.ForeignKey('Personne', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'preference'
+        default_permissions = ()
