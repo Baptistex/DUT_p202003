@@ -18,6 +18,7 @@ urlpatterns = [
     path('espaceProducteur',views.espacePersoProd, name='espacePersoProd'),
     path('listeCommande',views.listeCommande, name='listeCommande'),
     path('commande/<int:id>',views.commande, name='commande'),
+    path('commanderEncore/<int:id>',views.commanderEncore, name='commanderEncore'),
     path('informationPerso',views.informationPerso, name='informationsPerso'),
     path('panier',views.panier, name='panier'),
     path('suppressionPanier/<int:id>',views.suppressionPanier, name='suppressionPanier'),
