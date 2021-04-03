@@ -7,6 +7,7 @@ from espace_perso.models import Personne, Producteur, Adresse
 from .forms import ProduitForm, ImageForm, CategorieForm
 from espace_perso.utils import great_circle_vec
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import permission_required
 
 
 # Create your views here.
@@ -187,7 +188,16 @@ def aff_prod(request):
     return HttpResponse(template.render(context,request))
 
 
-def ajout_prod_image(request):
+@permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
+def ajout_prod_image(request, id_produit):
+    u = request.user.producteur
+
+    #Redirection de du producteur si le produit ne lui appartient pas
+    if Produit.objects.filter(producteur=u).filter(pk=id_produit).count() == 0:
+        return redirect('producteur', idProducteur=u.pk)
+
+    images_produits = Image.objects.filter(produit_id = id_produit)
+    print(images_produits)
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -197,7 +207,22 @@ def ajout_prod_image(request):
             return HttpResponseRedirect('/accueilEspaceProducteur')
     else:
         form = ImageForm()
-    return render(request, 'produit/ajout_image.html', {'form': form})
+    context = {
+        'form' : form,
+        'images_produits' : images_produits
+    }
+    return render(request, 'produit/ajout_image.html', context)
+
+@permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
+def suppr_prod_image(request, id_image):
+    u = request.user.producteur
+    #Redirection de du producteur si le produit ne lui appartient pas
+    image = Image.objects.get(pk=id_image)
+    if image.produit.producteur!=u:
+        return redirect('producteur', idProducteur=u.pk)
+    id_produit = image.produit.pk
+    image.delete()
+    return redirect('ajout_prod_image', id_produit)
 
 def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')
