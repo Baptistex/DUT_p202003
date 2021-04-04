@@ -1,0 +1,27 @@
+{% extends "produit/base.html"%}
+{% load static %}
+
+{% block title %}Liste des commandes {% endblock %}
+
+{% block content %}
+ <table id="table" class="table table-hover table-mc-light-blue">
+    <thead>
+        <tr>
+            <th>Identifiant</th>
+            <th>quantite</th>
+            <th>Produit</th>
+         </tr>
+    </thead>
+    {% for com in comlist %}
+        <tr>
+            <td>{{com.commande_id }}</td>
+            <td>{{com.quantite }}</td>
+            <td>{{com.produit.nom}}</td>
+            <td>
+                {% url 'deleteOneProd' prod.produit_id as the_url %}
+                <button class="btn btn-primary"><a href="{{ the_url }}">Produit pret</a></button>
+            </td>               
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
