@@ -1659,8 +1659,14 @@ input[type=range].quantite {
     position: -webkit-sticky;
 }
 
+.navigation a:hover{
+    transform: scale(1.2);  
+    box-shadow: none;  
+    color: #00ffc6;
+}
+
 .navigation a{
-    color:#00ffc6;
+    color:#555555;
     font-size: 50px;
     margin: 0 auto;
 }
