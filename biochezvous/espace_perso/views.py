@@ -381,8 +381,9 @@ def incrementerArticlePanier(request, id):
     stockArticle = Produit.objects.get(produit_id=id)
 
     if (produitDuPanier.quantite >= stockArticle.quantite):
-        #TODO : comment gérer le cas où la personne veut commander + que en stock ???
-        print("trop")  
+        # cas où la personne veut commander + que en stock ???
+        messages.error(request, "Il n'y a pas assez de stocks pour le nombre d'articles que vous vouez commander")
+         
     else:
         produitDuPanier.quantite += 1
         produitDuPanier.save()
@@ -427,14 +428,13 @@ def commanderEncore(request, id):
         for prod in contenuCommande :
             produit = Panier(quantite=prod.quantite, personne_id=personne_id, produit_id=prod.produit_id)
             produit.save()
-            #Vider le contenu de panier
 
         #NE PAS OUBLIER LES VÉRIFICATION
     
         #send_mail_pay(request)
         messages.success(request, "Le contenu de votre commande a bien été ajouté")
         return redirect('panier')
-    messages.error(request, "Il y a déjà des articles dans votre panier")
+    messages.error(request, "Il y a déjà des articles dans votre panier. Vous devez d'abord appuyer sur le bouton commander encore de la commande que vous souhaiter acheter à nouveau avant de rajouter de nouveaux articles à votre panier.")
     return redirect('listeCommande')
 
     
