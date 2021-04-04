@@ -488,3 +488,11 @@ def index(request):
 
 
 
+def commandeProducteur(request):
+    template = loader.get_template('espace_perso/commandeProd.html')
+    u = request.user.producteur
+    cont=ContenuCommande.objects.all().filter(produit_id__in=u.produit_set.all())
+    context = {
+        'comlist': cont
+    }
+    return HttpResponse(template.render(context,request))
