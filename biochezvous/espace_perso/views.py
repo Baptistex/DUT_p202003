@@ -123,7 +123,7 @@ def connexion(request):
             if next_url:
                 return redirect(next_url)
             else:
-                return redirect('')
+                return redirect('accueil')
 
     else:
         form = FormConnexion()
@@ -269,7 +269,13 @@ def espace_producteur(request):
     template = loader.get_template('espace_perso/accueil_espaceProd.html')
     return HttpResponse(template.render({},request))
     
-
+def redirection(request):
+    personne_id = request.user.personne_id
+    u = Producteur.objects.filter(personne_ptr_id=personne_id)
+    if(u.count()>0):
+        return redirect('espace_producteur')
+    else:
+        return redirect('espacePersoUser')
     
 
 def espacePersoProd(request):

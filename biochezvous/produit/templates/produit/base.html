@@ -48,7 +48,7 @@
         <div class="container d-flex align-items-center">
 
             <div class="logo mr-auto">
-                <h1 class="text-light"><a href="index.html"><span>BIO CHEZ VOUS</span></a></h1>
+                <h1 class="text-light"><a href="{% url 'accueil' %}"><span>BIO CHEZ VOUS</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!--<a href="index.html"><img src="assets/img/logo" alt="" class="img-fluid"></a>-->
             </div>
@@ -58,7 +58,7 @@
                     <li><a href="{% url 'accueil' %}">Accueil</a></li>
                     <li><a href="{% url 'produit_django' %}">Nos Produits</a></li>
                     <li><a href="#">A propos</a></li>
-                    <li><a href="{% url 'espacePersoUser' %}"><i class="icofont-boy"></i></a></li>
+                    <li><a href="{% url 'rediriger_utilisateur' %}"><i class="icofont-boy"></i></a></li>
                     <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
                     <li><a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a></li>
 
