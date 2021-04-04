@@ -200,9 +200,7 @@ def ajout_prod_image(request, id_produit):
     if request.method == 'POST' and images_produits.count() <3:
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.priorite = images_produits.count()+1
-            instance.produit_id = id_produit
+            instance = form.save(priorite=images_produits.count()+1, produit_id=id_produit)
             instance.save()
             return redirect('ajout_prod_image', id_produit)
     else:
