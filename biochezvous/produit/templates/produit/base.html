@@ -27,7 +27,8 @@
     <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
-
+    <link href="{% static 'vendor/bootstrap/css/bootstrap-glyphicons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/cropper/cropper.min.css' %}" rel="stylesheet">
     <!-- Template Main CSS File -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
@@ -37,7 +38,7 @@
         rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
+    {% block morehead %}{% endblock morehead %}
 </head>
 
 <body>
@@ -188,6 +189,8 @@
     <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
     <script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
     <script src="{% static 'vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'vendor/jquery/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'vendor/cropper/cropper.js' %}"></script>
     {% block morescripts %}{% endblock %}
 
     <!-- Template Main JS File -->
