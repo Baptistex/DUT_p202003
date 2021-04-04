@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     
     path('produit/<int:idProduit>', views.produit, name='produit'),
+    path('preference/<int:produit>', views.ajout_preference, name='preference'),
 
     path('nouveauprod',views.ajout_prod, name='ajout_prod'),
     path('afficherproduit',views.aff_prod, name='aff_prod'),    

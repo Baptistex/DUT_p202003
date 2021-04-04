@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.forms import FormSelectionQuantite
-from espace_perso.models import Personne, Producteur, Adresse
+from espace_perso.models import Personne, Producteur, Adresse, Preference
 from .forms import ProduitForm, ImageForm, CategorieForm
 from espace_perso.utils import great_circle_vec
 from django.template.loader import render_to_string
@@ -65,9 +65,12 @@ def produit_django(request):
         return JsonResponse(data=data_dict, safe=False)
 
     images_produit = Image.objects.filter(priorite=1)
+    mesPref = Preference.objects.filter(personne=request.user)
+    produits_pref = Produit.objects.filter(preference__in=mesPref)
 
     context = {
-        'lesproduits': images_produit
+        'lesproduits': images_produit,
+        'produits_pref' : produits_pref,
     }
     return render(request, 'produit/produit.html', context)
 
@@ -105,8 +108,7 @@ def produit(request, idProduit):
 
     produit = Produit.objects.get(produit_id = idProduit)
     producteur = produit.producteur
-
-    
+        
     plat, plon = producteur.adresse.lat, producteur.adresse.lon
     if userCoordsSet and not plat is None and not plon is None:
         distance = great_circle_vec(ulat, ulon, plat, plon)
@@ -276,3 +278,16 @@ def ajout_categorie(request):
         form = CategorieForm()
     return render(request, 'produit/categorie.html', {'form': form})
  
+def ajout_preference(request, produit):
+    
+    if request.user.is_authenticated:
+        preference = Preference.objects.filter(produit=Produit.objects.get(produit_id=produit), personne=request.user)
+        pref = Preference(produit=Produit.objects.get(produit_id=produit), personne=request.user)
+        if preference.exists():
+            preference.delete()
+        else:            
+            pref.save()
+    else:
+        return redirect('/connexion')
+
+    return HttpResponseRedirect('/produits')
