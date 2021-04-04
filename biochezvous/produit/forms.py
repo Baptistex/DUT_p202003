@@ -64,7 +64,6 @@ class ImageForm(ModelForm):
         image = PILImage.open(instance.image)
         cropped_image = image.crop((x, y, w+x, h+y))
         resized_image = cropped_image.resize((200, 200), PILImage.ANTIALIAS)
-        print(instance.image.path)
         instance.save()
         resized_image.save(instance.image.path)
         return instance
