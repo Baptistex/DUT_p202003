@@ -120,7 +120,7 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <form method="post" class="php-email-form">
+                        <form method="post" class="php-email-form" action="{% url 'email' %}">
                             {% load feedback %}
                             {% csrf_token %}
                             {% feedback_form as contactform %}
