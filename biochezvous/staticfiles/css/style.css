@@ -1748,12 +1748,10 @@
     }
     
     @media (min-width: 992px) {
-        /* Show 4th slide on lg if col-lg-4*/
         .carousel-inner .active.col-lg-4.carousel-item+.carousel-item+.carousel-item+.carousel-item {
             position: absolute;
             top: 0;
             right: -33.3333%;
-            /*change this with javascript in the future*/
             z-index: -1;
             display: block;
             visibility: visible;
@@ -1761,24 +1759,20 @@
     }
     
     @media (min-width: 768px) and (max-width: 991px) {
-        /* Show 3rd slide on md if col-md-6*/
         .carousel-inner .active.col-md-6.carousel-item+.carousel-item+.carousel-item {
             position: absolute;
             top: 0;
             right: -50%;
-            /*change this with javascript in the future*/
             z-index: -1;
             display: block;
             visibility: visible;
         }
     }
-    /* MD */
     
     @media (min-width: 768px) {
         .carousel-item {
             margin-right: 0;
         }
-        /* show 2 items */
         .carousel-inner .active+.carousel-item {
             display: block;
         }
@@ -1790,7 +1784,6 @@
             position: relative;
             transform: translate3d(0, 0, 0);
         }
-        /* left or forward direction */
         .active.carousel-item-left+.carousel-item-next.carousel-item-left,
         .carousel-item-next.carousel-item-left+.carousel-item,
         .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item {
@@ -1798,7 +1791,6 @@
             transform: translate3d(-100%, 0, 0);
             visibility: visible;
         }
-        /* farthest right hidden item must be also positioned for animations */
         .carousel-inner .carousel-item-prev.carousel-item-right {
             position: absolute;
             top: 0;
@@ -1807,7 +1799,6 @@
             display: block;
             visibility: visible;
         }
-        /* right or prev direction */
         .active.carousel-item-right+.carousel-item-prev.carousel-item-right,
         .carousel-item-prev.carousel-item-right+.carousel-item,
         .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item {
@@ -1818,10 +1809,8 @@
             visibility: visible;
         }
     }
-    /* LG */
     
     @media (min-width: 992px) {
-        /* show 3rd of 3 item slide */
         .carousel-inner .active+.carousel-item+.carousel-item {
             display: block;
         }
@@ -1832,13 +1821,11 @@
             position: relative;
             transform: translate3d(0, 0, 0);
         }
-        /* left or forward direction */
         .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item {
             position: relative;
             transform: translate3d(-100%, 0, 0);
             visibility: visible;
         }
-        /* right or prev direction */
         .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item {
             position: relative;
             transform: translate3d(100%, 0, 0);
@@ -1917,12 +1904,10 @@
     }
     
     @media (min-width: 992px) {
-        /* Show 4th slide on lg if col-lg-4*/
         .carousel-inner .active.col-lg-4.carousel-item+.carousel-item+.carousel-item+.carousel-item {
             position: absolute;
             top: 0;
             right: -33.3333%;
-            /*change this with javascript in the future*/
             z-index: -1;
             display: block;
             visibility: visible;
@@ -1930,24 +1915,20 @@
     }
     
     @media (min-width: 768px) and (max-width: 991px) {
-        /* Show 3rd slide on md if col-md-6*/
         .carousel-inner .active.col-md-6.carousel-item+.carousel-item+.carousel-item {
             position: absolute;
             top: 0;
             right: -50%;
-            /*change this with javascript in the future*/
             z-index: -1;
             display: block;
             visibility: visible;
         }
     }
-    /* MD */
     
     @media (min-width: 768px) {
         .carousel-item {
             margin-right: 0;
         }
-        /* show 2 items */
         .carousel-inner .active+.carousel-item {
             display: block;
         }
@@ -1959,7 +1940,6 @@
             position: relative;
             transform: translate3d(0, 0, 0);
         }
-        /* left or forward direction */
         .active.carousel-item-left+.carousel-item-next.carousel-item-left,
         .carousel-item-next.carousel-item-left+.carousel-item,
         .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item {
@@ -1967,7 +1947,6 @@
             transform: translate3d(-100%, 0, 0);
             visibility: visible;
         }
-        /* farthest right hidden item must be also positioned for animations */
         .carousel-inner .carousel-item-prev.carousel-item-right {
             position: absolute;
             top: 0;
@@ -1976,7 +1955,6 @@
             display: block;
             visibility: visible;
         }
-        /* right or prev direction */
         .active.carousel-item-right+.carousel-item-prev.carousel-item-right,
         .carousel-item-prev.carousel-item-right+.carousel-item,
         .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item {
@@ -1987,10 +1965,8 @@
             visibility: visible;
         }
     }
-    /* LG */
     
     @media (min-width: 992px) {
-        /* show 3rd of 3 item slide */
         .carousel-inner .active+.carousel-item+.carousel-item {
             display: block;
         }
@@ -2001,13 +1977,11 @@
             position: relative;
             transform: translate3d(0, 0, 0);
         }
-        /* left or forward direction */
         .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item {
             position: relative;
             transform: translate3d(-100%, 0, 0);
             visibility: visible;
         }
-        /* right or prev direction */
         .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item {
             position: relative;
             transform: translate3d(100%, 0, 0);
