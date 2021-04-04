@@ -59,6 +59,7 @@
                     <li><a href="#">A propos</a></li>
                     <li><a href="{% url 'espacePersoUser' %}"><i class="icofont-boy"></i></a></li>
                     <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
+                    <li><a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a></li>
 
                 </ul>
             </nav><!-- .nav-menu -->
@@ -81,11 +82,19 @@
     <!-- ======= Footer ======= -->
     
     <footer id="footer">
+     
         <!-- ======= Contact Section ======= -->
         <section id="contact" class="contact section-bg">
             <div class="container">
 
                 <div class="row" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="info-box mb-4">
+                            <a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a>
+                             <h3>Déconnexion</h3>
+                        </div>
+                    </div>
+
                     <div class="col-lg-6">
                         <div class="info-box mb-4">
                             <i class="bx bx-map"></i>
@@ -93,14 +102,14 @@
                             <p>A108 Adam Street, New York, NY 535022</p>
                         </div>
                     </div>
-
+                    <!--
                     <div class="col-lg-3 col-md-6">
                         <div class="info-box  mb-4">
                             <i class="bx bx-envelope"></i>
                             <h3>Email Us</h3>
                             <p>contact@example.com</p>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-3 col-md-6">
                         <div class="info-box  mb-4">

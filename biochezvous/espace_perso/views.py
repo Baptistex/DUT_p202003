@@ -133,11 +133,10 @@ def connexion(request):
 
 
 def deconnexion(request):
-    template = loader.get_template('espace_perso/deconnexion.html')
     if request.user.is_authenticated:
         logout(request)
-    return HttpResponse(template.render({},request))
-
+    return redirect('accueil')
+ 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
     """
