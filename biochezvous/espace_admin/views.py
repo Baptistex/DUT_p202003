@@ -160,23 +160,15 @@ def deleteDemande(request,msg_id):
     return HttpResponse(template.render(context,request))
 
 #Liste des commandes
-def orderslist(request,):
-    template = loader.get_template('espace_admin/liste_commandes.html')
-    table_commandes = Commande.objects.all()
+def commande(request,id):
+    context = {}
+    context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
+    context['Commande'] = Commande.objects.get(commande_id = id)
     
-    context = {
-        'orderslist': table_commandes,
-    }
+    return render(request, 'espace_admin/liste_commandes.html',context)
 
-    return HttpResponse(template.render(context,request))
+def listeCommande(request):
+    context = {}
+    context['commandes'] = Commande.objects.all()    
+    return render(request, 'espace_admin/liste_commandes.html',context)
 
-#Voir les détails d'une commande
-def ordersDetails(request,comId):
-    template = loader.get_template('espace_admin/liste_commandes.html')
-    contenu = ContenuCommande.objects.select_related().all()
-
-    context = {
-        'contenu': contenu
-    }
-
-    return HttpResponse(template.render(context,request))
