@@ -29,6 +29,11 @@ class Image(models.Model):
     image   = models.ImageField(upload_to='images/')
     priorite = models.IntegerField()  
     
+    def delete(self, using=None, keep_parents=False):
+        if self.image.storage.exists(self.image.name):
+            self.image.storage.delete(self.image.name)
+        super().delete()
+
     class Meta:
         db_table = 'image'
         default_permissions = ()
@@ -40,10 +45,11 @@ class TypeProduit(models.Model):
     nom = models.CharField(max_length=50)
     tva = models.FloatField()
 
-    
     class Meta:
         db_table = 'typeproduit'
         default_permissions = ()
+    def __str__(self):
+        return self.nom
 
 class Categorie(models.Model):
     categorie_id = models.AutoField(primary_key=True)
@@ -58,7 +64,7 @@ class Categorie(models.Model):
 
 class Commande(models.Model):
 
-    personne = models.ForeignKey('espace_perso.Personne', on_delete=models.CASCADE)
+    personne = models.ForeignKey('espace_perso.Personne', related_name='commandes', on_delete=models.CASCADE)
     commande_id = models.AutoField(primary_key=True)
     date =  models.DateTimeField()
     statut = models.IntegerField() #TODO: à aviser
@@ -70,8 +76,9 @@ class Commande(models.Model):
         db_table = 'commande'
         default_permissions = ()
 
-class ContenuCommande(models.Model):
 
+
+class ContenuCommande(models.Model):
     produit = models.ForeignKey('Produit', on_delete=models.CASCADE)
     commande = models.ForeignKey('Commande', on_delete=models.CASCADE)
     quantite = models.IntegerField()

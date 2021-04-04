@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from .utils import getCoords
 from .models import Adresse
 from produit.models import Produit
-
+from PIL import Image as PILImage
 
 
 
@@ -120,10 +120,35 @@ class FormDataModifProd(ModelForm):
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png", required=False)
     iban = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
 
+    x = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    y = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    width = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    height = forms.FloatField(widget=forms.HiddenInput(), required=False)
+
+    def save(self):
+
+        instance = super(FormDataModifProd, self).save(commit=False)
+        
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('width')
+        h = self.cleaned_data.get('height')
+
+        if x==None or y==None or w==None or h==None :
+            x, y, w, h = 0, 0, 100, 100
+
+
+        image = PILImage.open(instance.image)
+        cropped_image = image.crop((x, y, w+x, h+y))
+        resized_image = cropped_image.resize((200, 200), PILImage.ANTIALIAS)
+        instance.save()
+        resized_image.save(instance.image.path)
+        return instance
+
     class Meta:
         model = Producteur
-        fields = ['nom','mail','num_tel','description','image','iban']
-
+        fields = ['nom','mail','num_tel','description','image','iban', 'x', 'y', 'width', 'height']
+    
 class FormAide(forms.ModelForm):
     nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
     prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
@@ -151,3 +176,4 @@ class AdresseModifForm(ModelForm):
     class Meta:
         model = Adresse
         fields = ['code_postal','ville','adresse',]
+

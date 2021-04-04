@@ -1,0 +1,80 @@
+
+{% load static %}
+
+        <!-- ======= Portfolio Section ======= -->
+        <section id="prod" class="prod">            
+            <div class="container-fluid">
+
+                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                    <div class="row">
+                        <div class="col-8 col-md-12">
+                            <h2>Les Fraicheurs</h2>
+                        </div>
+                        <div class="col-4 liste_fruits">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Carotte
+                                </button>
+                                <ul class="dropdown-menu" id="portfolio-flters" aria-labelledby="dropdownMenu2">
+                                    <!-- <li><button class="dropdown-item" type="button">Action</button></li>
+                                    <li><button class="dropdown-item" type="button">Another action</button></li>
+                                    <li><button class="dropdown-item" type="button">Something else here</button></li>-->
+
+                                    <li data-filter="*" class="dropdown-item filter-active"><i class="icofont-culinary"></i><span>Tous</span></li>
+                                    <li class="dropdown-item" data-filter=".FRUITS"><i class="icofont-apple"></i><span>Fruits</span></li>
+                                    <li class="dropdown-item" data-filter=".LEGUMES"><i class="icofont-broccoli"></i><span>Légumes</span></li>
+                                    <li class="dropdown-item" data-filter=".VIANDES"><i class="icofont-steak"></i><span>Viandes</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                </div>
+
+                {% if lesproduits %}
+                <div class="filtre_leg_fruit" data-aos="fade-in">
+                    <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active"><i class="icofont-culinary"></i></li>
+                        <li data-filter=".FRUITS"><i class="icofont-apple"></i></li>
+                        <li data-filter=".LEGUMES"><i class="icofont-broccoli"></i></li>
+                        <li data-filter=".VIANDES"><i class="icofont-steak"></i></li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if not lesproduits %}
+                    <div class="row">
+                        <div class="col text-center">
+                            <i class="icofont-panda display-1"></i>
+                            <p style="font-family: 'Architects Daughter', cursive;"> Les produits arrivent prochainement</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="row portfolio-container" data-aos="fade-up">
+                    {% for produit in lesproduits %}
+                        <div class="col col-lg-4 col-md-6 portfolio-item {{produit.produit.categorie.typeProduit.nom}}">
+                            <div class="prod-wrap">
+                                <img src="{{MEDIA_URL}}{{produit.image}}" class="w-100" alt="">
+                                <div class="prod-links">
+                                    {% if produit.produit in produits_pref %}                                    
+                                        <a href="{% url 'preference' produit.produit_id %}" title="App 1" style="color: red;"><i class="icofont-heart"></i></a>
+                                    {% else %}
+                                        <a href="{% url 'preference' produit.produit_id %}" title="App 1"><i class="icofont-heart"></i></a>
+                                    {% endif %}    
+                                    <a href="{% url 'produit' produit.produit_id %}" title="More Details"><i class="icofont-plus"></i></a>
+                                    <a href="#" title="More Details"><i class="icofont-search-2"></i></a>
+                                </div>
+                            </div>
+                        </div>                        
+                    {% endfor %}
+                </div>
+            </div>
+
+        </section><!-- End Portfolio Section -->
+
+
+
+

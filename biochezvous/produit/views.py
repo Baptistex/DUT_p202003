@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.forms import FormSelectionQuantite
@@ -8,6 +8,11 @@ from .forms import ProduitForm, ImageForm, ContactForm
 from espace_perso.utils import great_circle_vec
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail, BadHeaderError
+from espace_perso.models import Personne, Producteur, Adresse, Preference
+from .forms import ProduitForm, ImageForm, CategorieForm
+from espace_perso.utils import great_circle_vec
+from django.template.loader import render_to_string
+from django.contrib.auth.decorators import permission_required
 
 
 # Create your views here.
@@ -27,32 +32,50 @@ def produit_django(request):
     Authors:
         Baptiste Alix, Paul Breton
     """
-    userCoordsSet = False
-    ulat, ulon = 0, 0
-    if request.user.is_authenticated:
-        user = request.user
-        try : 
-            ulat, ulon = user.adresse.lat, user.adresse.lon
-            if not (ulat is None or ulon is None) :
-                userCoordsSet = True
-        except Adresse.DoesNotExist:
-            pass
-    images_produit = Image.objects.filter(priorite=1)
+    if request.is_ajax():
+        userCoordsSet = False
+        ulat, ulon = 0, 0
+        if request.user.is_authenticated:
+            user = request.user
+            try : 
+                ulat, ulon = user.adresse.lat, user.adresse.lon
+                if not (ulat is None or ulon is None) :
+                    userCoordsSet = True
+            except Adresse.DoesNotExist:
+                pass
 
-    #Si l'utilisateur appuie sur le bouton, affiche que les producteurs dans un rayon de moins de 10km
-    #TODO : Détecter un bouton en particulier, plutot que n'importe quel bouton/form
-    if userCoordsSet and request.method == 'POST':
-        for image in images_produit:        
-            padresse = image.produit.producteur.adresse
-            plat, plon = padresse.lat, padresse.lon
-            distance = great_circle_vec(ulat, ulon, plat, plon)
-            print(padresse, distance)
-            if distance > 10000 :
-                print(image.id)
-                images_produit = images_produit.exclude(id=image.id)
+        boutondistance = True if (request.POST.get("boutondistance", None) == "true") else False
+        searchtext = request.POST.get("searchtext", None)
+
+        if searchtext == "":
+            images_produit = Image.objects.filter(priorite=1)
+        else :
+            images_produit = Image.objects.filter(priorite=1).filter(produit__nom__icontains=searchtext)
+
+        if boutondistance :
+            for image in images_produit:        
+                padresse = image.produit.producteur.adresse
+                plat, plon = padresse.lat, padresse.lon
+                distance = great_circle_vec(ulat, ulon, plat, plon)
+                if distance > 10000 :
+                    images_produit = images_produit.exclude(id=image.id)
+
+        html = render_to_string(
+            template_name="produit/produitsearch.html", 
+            context={"lesproduits": images_produit, "MEDIA_URL" : "/media/"},
+            request=request
+        )
+        data_dict = {"html_from_view": html}
+
+        return JsonResponse(data=data_dict, safe=False)
+
+    images_produit = Image.objects.filter(priorite=1)
+    mesPref = Preference.objects.filter(personne=request.user)
+    produits_pref = Produit.objects.filter(preference__in=mesPref)
 
     context = {
-        'lesproduits': images_produit
+        'lesproduits': images_produit,
+        'produits_pref' : produits_pref,
     }
     return render(request, 'produit/produit.html', context)
 
@@ -90,8 +113,7 @@ def produit(request, idProduit):
 
     produit = Produit.objects.get(produit_id = idProduit)
     producteur = produit.producteur
-
-    
+        
     plat, plon = producteur.adresse.lat, producteur.adresse.lon
     if userCoordsSet and not plat is None and not plon is None:
         distance = great_circle_vec(ulat, ulon, plat, plon)
@@ -118,9 +140,9 @@ def produit(request, idProduit):
                     p.save()
                 reste = int(produit.quantite) - int(request.POST['quantite'])
                 Produit.objects.filter(produit_id = idProduit).update(quantite = reste)
-                return redirect('/panier')
+                return redirect('panier')
             else: 
-                return redirect('/connexion')
+                return redirect('connexion')
     else:
         form = FormSelectionQuantite()
     
@@ -153,13 +175,13 @@ def ajout_prod(request):
     if request.method == 'POST':
         form = ProduitForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = form.save()
+            instance = form.save(commit=False)
             instance.producteur = u
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/nouvelleimage')
+            return redirect('accueilEspaceProducteur')
     else:
-        form = ProduitForm(initial ={'producteur': u})
+        form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def aff_prod(request):
@@ -173,18 +195,97 @@ def aff_prod(request):
     return HttpResponse(template.render(context,request))
 
 
-def ajout_prod_image(request):
-    if request.method == 'POST':
+@permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
+def ajout_prod_image(request, id_produit):
+    """
+    Vue qui permet de modifier les images d'un produit, par le producteur.
+    Lui permet d'ajouter des images, les supprimer, et de changer l'ordre de priorité.
+
+    Args : id_produit : clé primaire de l'instance de Produit.
+
+    Returns: une vue, avec le context suivant : 
+        form : le formulaire
+        lesproduits : liste d'images desquelles ont peut obtenir les produits associés
+        id_produit : clé primaire de l'instance de Produit.
+
+    Authors:
+        Baptiste Alix
+    """
+    u = request.user.producteur
+
+    #Redirection de du producteur si le produit ne lui appartient pas
+    if Produit.objects.filter(producteur=u).filter(pk=id_produit).count() == 0:
+        return redirect('producteur', idProducteur=u.pk)
+
+    images_produits = Image.objects.filter(produit_id = id_produit).order_by('priorite')
+    if request.method == 'POST' and images_produits.count() <3:
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = form.save()
+            instance = form.save(priorite=images_produits.count()+1, produit_id=id_produit)
             instance.save()
-            #TODO: changer la redirection
-            return HttpResponseRedirect('/accueilEspaceProducteur')
+            return redirect('ajout_prod_image', id_produit)
     else:
         form = ImageForm()
-    return render(request, 'produit/ajout_image.html', {'form': form})
+    context = {
+        'form' : form,
+        'images_produits' : images_produits,
+        'id_produit' : id_produit
+    }
+    return render(request, 'produit/ajout_image.html', context)
 
+@permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
+def suppr_prod_image(request, id_image):
+    """
+    Vue qui permet de supprimer une image de produit
+
+    Args : id_image : clé primaire de l'instance de Image.
+
+    Returns: une redirection vers ajout_prod_image(id_produit)
+        avec id_produit la clé primaire de l'instance de Produit
+
+
+    Authors:
+        Baptiste Alix
+    """
+    u = request.user.producteur
+    image = Image.objects.get(pk=id_image)
+    #Redirection de du producteur si le produit ne lui appartient pas
+    if image.produit.producteur!=u:
+        return redirect('producteur', idProducteur=u.pk)
+    id_produit = image.produit.pk
+    image.delete()
+    image_list = Image.objects.filter(produit_id=id_produit).order_by('priorite')
+    count = 1
+    for image in image_list:
+        if image.priorite != count:
+            image.priorite -= 1
+            image.save()
+        count+=1
+    return redirect('ajout_prod_image', id_produit)
+
+def update_image_priorite(request):
+    """
+    Vue qui de mettre à jour les priorité des images d'un produit.
+    Fonctionne en ajax
+
+    Authors:
+        Baptiste Alix
+    """
+    if request.is_ajax():
+        id_produit = request.POST.get("id_produit", None)
+        order = request.POST.get("order", None)
+        if Produit.objects.filter(producteur=request.user.producteur).filter(produit_id=id_produit).count()>0 : 
+            order_list = order.split(',')
+            image_list = Image.objects.filter(produit_id=id_produit).order_by('priorite')
+            count = 1
+            for image in image_list:
+                image.priorite = order_list.index(str(count))+1
+                count += 1
+                image.save()
+        return HttpResponse()
+    else : 
+        return HttpResponseNotFound("Page non trouvée")
+    
 def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')
     return HttpResponse(template.render({},request))
@@ -220,3 +321,27 @@ def email(request):
 
 def thanks(request):
     return HttpResponse('Merci pour votre message')
+def ajout_categorie(request):
+    if request.method == 'POST':
+        form = CategorieForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.save()
+            return HttpResponseRedirect('/accueilEspaceProducteur')
+    else:
+        form = CategorieForm()
+    return render(request, 'produit/categorie.html', {'form': form})
+ 
+def ajout_preference(request, produit):
+    
+    if request.user.is_authenticated:
+        preference = Preference.objects.filter(produit=Produit.objects.get(produit_id=produit), personne=request.user)
+        pref = Preference(produit=Produit.objects.get(produit_id=produit), personne=request.user)
+        if preference.exists():
+            preference.delete()
+        else:            
+            pref.save()
+    else:
+        return redirect('/connexion')
+
+    return HttpResponseRedirect('/produits')

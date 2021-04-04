@@ -1,36 +1,23 @@
-{% extends "produit/base.html"%}
+{% extends "produit/base.html" %}
 {% load static %}
-
-{% block title %}Mon espace{% endblock %}
-
+{% block title %}Ajout d'une catégorie{% endblock %}
 {% block content %}
-
-
-
 <div class="container-fluid">
 
     <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
-        <h2> Mes informations </h2>
+        <h3>Ajout d'une nouvelle catégorie</h3>
     </div>
-
-    <!-- le formulaire -->
-
     <div class="row d-flex justify-content-center">
         <div class="d-flex justify-content-center">
-
-
             <div class="form-group">
-                <form action="" method="post">
+                <form method="post">
                     {% csrf_token %}
-                    {{ formG.as_p }}
-                    <button type="submit">Go</button>
+                    {{ form.as_p }}
+                    <br>
+                    <button class="btn btn-primary" type="submit">Enregistrer la catégorie</button>
                 </form>
-
             </div>
         </div>
     </div>
-
-
-
 </div>
-{% endblock %} 
+{% endblock %}
