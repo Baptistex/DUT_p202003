@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from espace_perso.models import Personne, Utilisateur, Producteur
-from produit.models import Commande
+from produit.models import Commande, ContenuCommande
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from .models import Demandes
@@ -156,5 +156,26 @@ def deleteDemande(request,msg_id):
         context = {
             'listeAides' : table_demandes
         }
+
+    return HttpResponse(template.render(context,request))
+
+#Liste des commandes
+def orderslist(request,):
+    template = loader.get_template('espace_admin/liste_commandes.html')
+    table_commandes = Commande.objects.all()
+    
+    context = {
+        'orderslist': table_commandes,
+    }
+
+    return HttpResponse(template.render(context,request))
+
+#Voir les détails d'une commande
+def ordersDetails(request,id):
+    template = loader.get_template('espace_admin/liste_commandes.html')
+    contenu = ContenuCommande.objects.get(commande_id = id)
+    context = {
+        'contenu': contenu
+    }
 
     return HttpResponse(template.render(context,request))

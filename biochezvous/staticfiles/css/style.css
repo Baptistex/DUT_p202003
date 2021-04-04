@@ -1732,6 +1732,10 @@ input[type=range].quantite {
     font-weight: bold;
 }
 
+.btn-modal{
+    background-color: #00ffc6;
+}
+
 .boxEspacePerso {  
     display: flex;
     align-items: center;
