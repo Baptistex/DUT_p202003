@@ -171,9 +171,10 @@ def orderslist(request,):
     return HttpResponse(template.render(context,request))
 
 #Voir les détails d'une commande
-def ordersDetails(request,id):
+def ordersDetails(request,comId):
     template = loader.get_template('espace_admin/liste_commandes.html')
-    contenu = ContenuCommande.objects.get(commande_id = id)
+    contenu = ContenuCommande.objects.select_related().all()
+
     context = {
         'contenu': contenu
     }

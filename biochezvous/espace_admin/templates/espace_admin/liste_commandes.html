@@ -100,15 +100,16 @@
             <td>
                 {% url 'ordersDetails' commande.commande_id as the_url %}
                 <a class="" href="{{ the_url }}" data-toggle="modal" data-target="#popup{{commande.commande_id}}" data-popup-url="">
-                    <i class="bi bi-three-dots-vertical">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <i class="bi bi-three-dots-vertical" style="padding-left: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                         </svg>
                     </i>
                 </a>
 
                 <!--Modal pour voir et répondre à la demande d'aide-->
-                <div id="popup{{commande.commande_id}}" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="ModalCenterTitle{{commande.commande_id}}" data-popup-url="">
+                
+                <div id="popup{{commande.commande_id}}"  class="modal fade" role="dialog" tabindex="-1" aria-labelledby="ModalCenterTitle{{commande.commande_id}}" data-popup-url="">
                     <div class="modal-dialog modal-lg">
                       <div class="modal-content">
                         <div class="modal-body">
@@ -117,9 +118,9 @@
                                 <div class="col-md-6">
                                     <h5>N° de commande :</h5> {{ commande.commande_id }}
                                 </div>
-                                {% for det in contenu %}
+                                {% for details in ordersDetails %}
                                 <div class="col-md-6">
-                                    <h5>Contenu :</h5> {{ det.produit_id }}
+                                    <h5>Contenu :</h5> {{ details.produit_id }}
                                 </div>
                                 {% endfor %}
                             </div>
