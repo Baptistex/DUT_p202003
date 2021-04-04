@@ -159,16 +159,12 @@ def deleteDemande(request,msg_id):
 
     return HttpResponse(template.render(context,request))
 
-#Liste des commandes
-def commande(request,id):
-    context = {}
-    context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
-    context['Commande'] = Commande.objects.get(commande_id = id)
-    
-    return render(request, 'espace_admin/liste_commandes.html',context)
-
+#Liste de toutes les commandes et afficher le détail de chaque commande
 def listeCommande(request):
+
     context = {}
-    context['commandes'] = Commande.objects.all()    
+    context['commandes'] = Commande.objects.all()   
+    context['contenuCommande'] = ContenuCommande.objects.all()
+
     return render(request, 'espace_admin/liste_commandes.html',context)
 

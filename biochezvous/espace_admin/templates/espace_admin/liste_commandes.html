@@ -84,35 +84,64 @@
             </li>
         </ul>
     </nav>
-
+<br>
     {% if commandes %}
     <table id="table" class="table table-hover table-mc-light-blue">
         <thead>
             <tr>
-                <th scope="col">Référence de la commande</th>
-                <th scope="col">Date</th>
-                <th scope="col">Statut</th>
-                <th scope="col">Montant total</th>
-                <th scope="col">Détails</th>
+                <th>Référence de la commande</th>
+                <th>Numéro client</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th>Montant total</th>
+                <th>Détails</th>
             </tr>
         </thead>
+
         <tbody>
             {% for cmd in commandes %}
             <tr>
                 <th scope="row">{{ cmd.commande_id }}</th>
+                <td>{{ cmd.personne_id }}</td>
                 <td>{{ cmd.date }}</td>
-                <td> {% include 'espace_perso/statut.html' %} </td>
+                <!--  à décommenter quand Justine aura inclu ce fichier
+                    <td> {% include 'espace_perso/statut.html' %} </td> -->
                 <td>{{ cmd.montant }}</td>
                 <td>
-                    <a href="{% url 'commande' cmd.commande_id %}" class="bi bi-three-dots-vertical"
-                        style="padding-left: 10px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
-                            class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <a href="" class="bi bi-three-dots-vertical" data-toggle="modal" data-target="#popup{{cmd.commande_id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                             <path
-                                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                         </svg>
                     </a>
+    
+                    <!--Modal pour voir et répondre à la demande d'aide-->
+                    <div id="popup{{cmd.commande_id}}"  class="modal fade" role="dialog" tabindex="-1" aria-labelledby="ModalCenterTitle{{cmd.commande_id}}">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content" style="overflow:hidden;">
+                                <div class="modal-body">
+                                    <h3 class="text-center">Récapitulatif de la commande</h3>
+                                    <h4 style="font-weight: bold;">Produits</h4>
+                                    {% for ctn in contenuCommande %}
+                                    {% if cmd.commande_id == ctn.commande_id %}
+                                            <p> {{ ctn.produit.nom }} - {{ ctn.produit.prix }}€</p> 
+                                            <p> {{ ctn.produit.description }} </p> 
+                                            <br>                               
+                                    {% endif %}
+                                    {% endfor %}
+                                    <hr>
+                                    <h4 style="font-weight: bold;">Prix total</h4>
+                                    <p> {{ cmd.montant }} </p>
+                                </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-modal" data-dismiss="modal">Fermer</button>
+                            </div>
+                          </div>
+                          </div>
+                        </div>
+                    </div>
                 </td>
+
             </tr>
             {% endfor %}
         </tbody>
@@ -122,7 +151,7 @@
 
 <div class="row justify-content-center text-center">
     <div class="col-md-6">
-        <p> Vous n'avez pas encore de commandes.</p>
+        <p> Aucune commande n'est passée pour l'instant ! Revenez plus tard.</p>
     </div>
 </div>
 

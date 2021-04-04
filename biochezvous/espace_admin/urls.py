@@ -11,5 +11,5 @@ urlpatterns = [
     path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
     path('demande/<int:msg_id>/', views.deleteDemande, name='deleteDemande'),
     path('orderslist', views.listeCommande, name='orderslist'),
-    path('commande/<int:id>/', views.commande, name='commande'),
+    #path('detailsCommande/<int:id>/', views.detailsCommande, name='detailsCommande'),
 ]
