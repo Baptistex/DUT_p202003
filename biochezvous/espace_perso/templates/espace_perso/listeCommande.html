@@ -36,7 +36,7 @@
       <tr>
         <th scope="row">{{ cmd.commande_id }}</th>
         <td>{{ cmd.date }}</td>
-        <td>{{ cmd.statut }}</td>
+        <td> {% include 'espace_perso/statut.html' %} </td>
         <td>{{ cmd.montant }}</td>
         <td>
           <a href="{% url 'commande' cmd.commande_id %}"><span class="glyphicon glyphicon-pencil">Détails</span></a>
@@ -46,8 +46,8 @@
               class="glyphicon glyphicon-pencil">Facture</span></a>
         </td>
         <td>
-          <a href="{% url 'commanderEncore' cmd.commande_id %}"><span
-              class="glyphicon glyphicon-pencil">Commander encore</span></a>
+          <a href="{% url 'commanderEncore' cmd.commande_id %}"><span class="glyphicon glyphicon-pencil">Commander
+              encore</span></a>
         </td>
       </tr>
       {% endfor %}

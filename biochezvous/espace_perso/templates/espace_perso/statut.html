@@ -1,0 +1,17 @@
+{% block content %}
+        {% if cmd.statut is 0 %}
+        <span class="badge badge-info">Validée</span>
+        {% endif %}
+        {% if cmd.statut is 1 %}
+        <span class="badge badge-warning">En cours de préparation</span>
+        {% endif %}
+        {% if cmd.statut is 2 %}
+        <span class="badge badge-success">Prête</span>
+        {% endif %}
+        {% if cmd.statut is 3 %}
+        <span class="badge badge-success">Retirée</span>
+        {% endif %}
+        {% if cmd.statut is 4 %}
+        <span class="badge badge-danger">Annulée</span>
+        {% endif %}
+{% endblock %}

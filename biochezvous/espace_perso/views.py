@@ -390,12 +390,13 @@ def incrementerArticlePanier(request, id):
         return redirect('panier')
 
 def commander(request):
-    
     context = {}
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)
     montantP = 0 
-    #calcul du montant
+
+    
+   """ #calcul du montant
     for prod in panier:
         montantP = montantP + (prod.produit.prix * prod.quantite)
     
@@ -413,7 +414,7 @@ def commander(request):
 
     #NE PAS OUBLIER LES VÉRIFICATION
     
-    #send_mail_pay(request)
+    #send_mail_pay(request)"""
     return redirect('listeCommande')
 
 def commanderEncore(request, id):
