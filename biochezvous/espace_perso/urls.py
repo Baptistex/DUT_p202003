@@ -12,7 +12,6 @@ urlpatterns = [
     path('connexion', views.connexion, name='connexion'),
     path('deconnexion', views.deconnexion, name='deconnexion'),
     path('connexion', auth_views.LoginView.as_view()),
-    path('send_mail_paiement', views.send_mail_paiement, name='send_mail_paiement'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
     path('aide', views.aide, name='aide'),
@@ -30,6 +29,7 @@ urlpatterns = [
     path('nouvelleAdresse',views.ajout_prod_adresse, name='ajout_prod_adresse'),
     path('commander',views.commander, name='commander'),
     path('espace_Personnelle',views.redirection,name='rediriger_utilisateur'),
+    path('send_mail_commande/<int:commande_id>',views.send_mail_commande,name='send_mail_commande'),
     
     path('commandeProducteur',views.commandeProducteur, name='commandeProducteur'),
 

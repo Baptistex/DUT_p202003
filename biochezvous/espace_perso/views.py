@@ -92,13 +92,13 @@ def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')
     return HttpResponse(template.render({},request))
 
-def send_mail_paiement(request):
-    send_mail_pay(request)
-    return HttpResponseRedirect('/')
-
-def send_mail_commande(request):
-    send_mail_cmd(request)
-    return HttpResponseRedirect('/')
+def send_mail_commande(request, commande_id):
+    if Commande.objects.filter(produits__in=request.user.producteur.produit_set.all()).filter(commande_id=commande_id).count() <= 0 :
+        redirect("accueil")
+    else:
+        user = Personne.objects.get(commandes__exact=commande_id)
+        send_mail_cmd(user, commande_id)
+    return redirect('commandeProducteur')
 
     
 def inscription_user(request):
@@ -441,6 +441,7 @@ def incrementerArticlePanier(request, id):
         return redirect('panier')
 
 def commander(request):
+    send_mail_pay(request)
     
     context = {}
     personne_id = request.user.personne_id

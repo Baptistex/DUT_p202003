@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from produit.models import Commande, ContenuCommande, Panier, Produit
+from django.shortcuts import render, redirect
 
 
 
@@ -37,12 +38,12 @@ def send_mail_pay(request):
     )
     email.send()
 
-def send_mail_cmd(request):
-    mail = request.user.mail
-    user = request.user
+def send_mail_cmd(user, commande_id):
+    mail = user.mail
     mail_subject = 'Votre commande est prête'
     message = render_to_string('command_email.html', {
             'user': user,
+            'command': commande_id,
             })
     email = EmailMessage(
             mail_subject, message, to=[mail]
