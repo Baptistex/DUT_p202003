@@ -338,11 +338,3 @@ def commandeProducteur(request):
         'comlist': cont
     }
     return HttpResponse(template.render(context,request))
-
-#def contenueCommande(request):
-#    template = loader.get_template('espace_perso/commandeProd.html')
-#    table_contenue = ContenuCommande.objects.all()
-#    context = {
-#        'contlist': table_contenue
-#    }
-#    return HttpResponse(template.render(context,request))

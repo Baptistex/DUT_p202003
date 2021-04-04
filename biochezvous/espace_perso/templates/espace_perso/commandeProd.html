@@ -16,7 +16,11 @@
         <tr>
             <td>{{com.commande_id }}</td>
             <td>{{com.quantite }}</td>
-            <td>{{com.produit_id}}</td>               
+            <td>{{com.produit.nom}}</td>
+            <td>
+                {% url 'deleteOneProd' prod.produit_id as the_url %}
+                <button class="btn btn-primary"><a href="{{ the_url }}">Produit pret</a></button>
+            </td>               
         </tr>
     {% endfor %}
 </table>

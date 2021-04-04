@@ -26,7 +26,7 @@
             <td>{{prod.date }}</td>
             <td>
                 {% url 'deleteOneProd' prod.produit_id as the_url %}
-                <button class="btn btn-primary"><a href="{{ the_url }}">Supprimer l'utilisateurs</a></button>
+                <button class="btn btn-primary"><a href="{{ the_url }}">Supprimer le produit</a></button>
             </td>
         </tr>
     {% endfor %}
