@@ -21,6 +21,6 @@ urlpatterns = [
     path('produit/<int:id>/', views.deleteOneProd, name='deleteOneProd'),
 
 
-    path(r'^email/$',views.email,name='email'),
-    path(r'^thanks/$', views.thanks, name='thanks'),
+    path('email',views.email,name='email'),
+    path('thanks', views.thanks, name='thanks'),
 ] 

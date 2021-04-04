@@ -120,7 +120,7 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <form method="post">
+                        <form method="post" class="php-email-form">
                             {% load feedback %}
                             {% csrf_token %}
                             {% feedback_form as contactform %}
@@ -168,6 +168,7 @@
 
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/flickity.pkgd.js' %}"></script>
 
 </body>
 

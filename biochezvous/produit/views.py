@@ -219,4 +219,4 @@ def email(request):
     return render(request, "produit/base.html", {'form': form})
 
 def thanks(request):
-    return HttpResponse('Thank you for your message.')
+    return HttpResponse('Merci pour votre message')
