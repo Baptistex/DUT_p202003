@@ -173,7 +173,7 @@ def connexion(request):
             if next_url:
                 return redirect(next_url)
             else:
-                return redirect('')
+                return redirect('accueil')
 
     else:
         form = FormConnexion()
@@ -181,11 +181,10 @@ def connexion(request):
 
 
 def deconnexion(request):
-    template = loader.get_template('espace_perso/deconnexion.html')
     if request.user.is_authenticated:
         logout(request)
-    return HttpResponse(template.render({},request))
-
+    return redirect('accueil')
+ 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
     """
@@ -320,7 +319,13 @@ def espace_producteur(request):
     template = loader.get_template('espace_perso/accueil_espaceProd.html')
     return HttpResponse(template.render({},request))
     
-
+def redirection(request):
+    personne_id = request.user.personne_id
+    u = Producteur.objects.filter(personne_ptr_id=personne_id)
+    if(u.count()>0):
+        return redirect('espace_producteur')
+    else:
+        return redirect('espacePersoUser')
     
 
 def espacePersoProd(request):
