@@ -135,9 +135,9 @@ def produit(request, idProduit):
                     p.save()
                 reste = int(produit.quantite) - int(request.POST['quantite'])
                 Produit.objects.filter(produit_id = idProduit).update(quantite = reste)
-                return redirect('/panier')
+                return redirect('panier')
             else: 
-                return redirect('/connexion')
+                return redirect('connexion')
     else:
         form = FormSelectionQuantite()
     
@@ -174,7 +174,7 @@ def ajout_prod(request):
             instance.producteur = u
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/nouvelleimage')
+            return redirect('accueilEspaceProducteur')
     else:
         form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
@@ -192,6 +192,20 @@ def aff_prod(request):
 
 @permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
 def ajout_prod_image(request, id_produit):
+    """
+    Vue qui permet de modifier les images d'un produit, par le producteur.
+    Lui permet d'ajouter des images, les supprimer, et de changer l'ordre de priorité.
+
+    Args : id_produit : clé primaire de l'instance de Produit.
+
+    Returns: une vue, avec le context suivant : 
+        form : le formulaire
+        lesproduits : liste d'images desquelles ont peut obtenir les produits associés
+        id_produit : clé primaire de l'instance de Produit.
+
+    Authors:
+        Baptiste Alix
+    """
     u = request.user.producteur
 
     #Redirection de du producteur si le produit ne lui appartient pas
@@ -202,9 +216,7 @@ def ajout_prod_image(request, id_produit):
     if request.method == 'POST' and images_produits.count() <3:
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.priorite = images_produits.count()+1
-            instance.produit_id = id_produit
+            instance = form.save(priorite=images_produits.count()+1, produit_id=id_produit)
             instance.save()
             return redirect('ajout_prod_image', id_produit)
     else:
@@ -218,6 +230,18 @@ def ajout_prod_image(request, id_produit):
 
 @permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
 def suppr_prod_image(request, id_image):
+    """
+    Vue qui permet de supprimer une image de produit
+
+    Args : id_image : clé primaire de l'instance de Image.
+
+    Returns: une redirection vers ajout_prod_image(id_produit)
+        avec id_produit la clé primaire de l'instance de Produit
+
+
+    Authors:
+        Baptiste Alix
+    """
     u = request.user.producteur
     image = Image.objects.get(pk=id_image)
     #Redirection de du producteur si le produit ne lui appartient pas
@@ -235,6 +259,13 @@ def suppr_prod_image(request, id_image):
     return redirect('ajout_prod_image', id_produit)
 
 def update_image_priorite(request):
+    """
+    Vue qui de mettre à jour les priorité des images d'un produit.
+    Fonctionne en ajax
+
+    Authors:
+        Baptiste Alix
+    """
     if request.is_ajax():
         id_produit = request.POST.get("id_produit", None)
         order = request.POST.get("order", None)
@@ -248,7 +279,7 @@ def update_image_priorite(request):
                 image.save()
         return HttpResponse()
     else : 
-        return HttpResponseNotFound("Page not found")
+        return HttpResponseNotFound("Page non trouvée")
     
 def ajout_quantite(request):
     template = loader.get_template('produit/ajout_quantite.html')

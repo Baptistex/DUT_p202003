@@ -1,6 +1,7 @@
 {% extends "produit/base.html" %}
+{% load static %}
+{% block title %}Modification des images{% endblock %}
 
-{% block title %}Ajout d'un produit{% endblock %}
 
 {% block content %}
 <br>
@@ -13,44 +14,72 @@
     <tbody id="tb">
         {% for img in images_produits  %}
             <tr priorite="{{ img.priorite}}">
-
+                <td class="hello">{{ img.priorite }}</td>
+                <td><span class="glyphicon glyphicon-resize-vertical sort-img"> </span></td>
                 <td class="align-center" ><img class="sort-img" src ="{{MEDIA_URL}}{{ img.image }}"/></td>
-                <td><a href="{% url 'suppr_prod_image' img.id%}"><span class="glyphicon glyphicon-pencil"> <svg
-                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill"
-                viewBox="0 0 16 16">
-                <path
-                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                </svg></span></a></td>
+                {% if images_produits.count > 1 %}
+                <td><a href="{% url 'suppr_prod_image' img.id%}"><span class="glyphicon glyphicon-trash"> </span></a></td>
+                {% endif %}
             </tr>
         {% endfor %}
 
     </tbody>
 </table>
-{% if images_produit.count > 0 %}
+{% if images_produits.count > 0 %}
 <div class="text-center">
     <button class="btn btn-primary" type="button" onclick="ajaxUpdate()">Mettre à jour l'ordre</button>
 </div>
 {% endif %}
 {% if images_produits.count < 3 %}
     <br>
-    <form class="text-center" method="post" enctype="multipart/form-data">
+    <form class="text-center" method="post" enctype="multipart/form-data" id="formUpload">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <br>
         <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
     </form>
+    <div class="modal fade" id="modalCrop">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Redimensionner l'image</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="" id="image" style="max-width: 100%;">
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group pull-left" role="group">
+                    <button type="button" class="btn btn-default js-zoom-in">
+                        <span class="glyphicon glyphicon-zoom-in"></span>
+                    </button>
+                    <button type="button" class="btn btn-default js-zoom-out">
+                        <span class="glyphicon glyphicon-zoom-out"></span>
+                    </button>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Abandonner</button>
+                    <button type="button" class="btn btn-primary js-crop-and-upload">Redimensionner et mettre en ligne</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+
 {% endif %}
 
 {% endblock %}
 {% block morescripts %}
-<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
+
 <script>
 $('.sort-table tbody').sortable({
-    handle: 'img.sort-img',
+    handle: '.sort-img',
     placeholder: "ui-state-highlight",
     //opacity: 0.9,
 });
-$( "#sortable" ).disableSelection();
+$( ".sort-table" ).disableSelection();
 
 function ajaxUpdate() {
     var order       =   $('.sort-table tbody').sortable('toArray', { attribute: 'priorite'}); 
@@ -63,8 +92,70 @@ function ajaxUpdate() {
             'order' : sortOrder,
             'csrfmiddlewaretoken': '{{ csrf_token }}',
         },
-        success: function(response) {}
+        success: function(response) {
+            location.href = "{% url 'ajout_prod_image' id_produit %}";
+        }
     });
 }
+</script>
+<script>
+    $(function () {
+
+    /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+    $("#id_image").change(function () {
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $("#image").attr("src", e.target.result);
+            $("#modalCrop").modal("show");
+        }
+        reader.readAsDataURL(this.files[0]);
+    }
+    });
+    $("#id_image").click(function () {
+    if (this.files && this.files[0]) {
+        $("#id_image").val(null);
+    }
+    });
+    /* SCRIPTS TO HANDLE THE CROPPER BOX */
+    var $image = $("#image");
+    var cropBoxData;
+    var canvasData;
+    $("#modalCrop").on("shown.bs.modal", function () {
+        $image.cropper({
+        viewMode: 1,
+        aspectRatio: 1/1,
+        minCropBoxWidth: 200,
+        minCropBoxHeight: 200,
+        ready: function () {
+            $image.cropper("setCanvasData", canvasData);
+            $image.cropper("setCropBoxData", cropBoxData);
+        }
+        });
+    }).on("hidden.bs.modal", function () {
+        cropBoxData = $image.cropper("getCropBoxData");
+        canvasData = $image.cropper("getCanvasData");
+        $image.cropper("destroy");
+    });
+
+    $(".js-zoom-in").click(function () {
+        $image.cropper("zoom", 0.1);
+    });
+
+    $(".js-zoom-out").click(function () {
+        $image.cropper("zoom", -0.1);
+    });
+
+      /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+    $(".js-crop-and-upload").click(function () {
+        var cropData = $image.cropper("getData");
+        $("#id_x").val(cropData["x"]);
+        $("#id_y").val(cropData["y"]);
+        $("#id_height").val(cropData["height"]);
+        $("#id_width").val(cropData["width"]);
+        $("#formUpload").submit();
+    });
+
+    });
 </script>
 {% endblock morescripts %}

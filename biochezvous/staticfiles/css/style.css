@@ -1646,23 +1646,12 @@ input[type=range].quantite {
     color: #555555;
 }
 
-.navigation{
-    color: #00ffc6;
-    width: 52px;
-	height: 40%;
-    left:0;   
-    position: sticky;
-    top: 5.5em; /*endroit où la sidebar devient sticky*/
-    margin-left: -100px;
-}
-
 .navigation ul{
     list-style: none;
-    background-color :#555555;
-    position: absolute;
     border-radius: 5px;
     padding: 0;
     display: inline;
+    margin-left:395px;
 }
 
 .navigation ul li{
@@ -1670,8 +1659,14 @@ input[type=range].quantite {
     position: -webkit-sticky;
 }
 
+.navigation a:hover{
+    transform: scale(1.2);  
+    box-shadow: none;  
+    color: #00ffc6;
+}
+
 .navigation a{
-    color:#00ffc6;
+    color:#555555;
     font-size: 50px;
     margin: 0 auto;
 }
@@ -1679,24 +1674,20 @@ input[type=range].quantite {
 @media screen and (max-width: 768px){
     .navigation ul li a{
         display: inline;
-        zoom:1;
-        padding-right: 10px;
         text-align: center;
-        position: relative;
     }
 
     .navigation ul{
-        position: relative;
         padding-top: 30px;
         padding-bottom: 15px;
-        padding-left: 10px;
+        padding-right: 15px;
         border-radius: 5px;
         margin-left: 110px;
     }
 
     .navigation{
         display: inline;
-        position:unset; /*Enlève le sticky*/
+        position:unset; /*EnlÃ¨ve le sticky*/
     }
 }
 
@@ -1715,7 +1706,31 @@ input[type=range].quantite {
     color: white;
 }
 
+.statsAdmin{
+    align-items: center;
+    justify-content: center;
+    margin: 20px !important;
+    width: 20em !important;
+    background-color: #00ffc6;
+    border-radius: 10px;
+    box-shadow: 8px 5px 5px #00ffc863;
+    transition: transform 0.2s, box-shadow 0.1s, color 0.1s;
+    color: #555555;
+    font-variant: small-caps;
+    font-size:20px;
+}
 
+.statsAdmin:hover{
+    transform: scale(1.2);  
+    box-shadow: none;  
+    color: #555555;
+}
+
+.stat{
+    font-size:45px;
+    font-style: oblique;
+    font-weight: bold;
+}
 
 .boxEspacePerso {  
     display: flex;
@@ -1727,8 +1742,6 @@ input[type=range].quantite {
     background-color: #00ffc6;
     box-shadow: 8px 5px 5px #00ffc863;
     transition: transform 0.2s, box-shadow 0.1s, color 0.1s;
-    color: #555555;
-    
 }
 
 .boxEspacePerso:hover {
