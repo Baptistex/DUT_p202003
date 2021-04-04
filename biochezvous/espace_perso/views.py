@@ -327,7 +327,7 @@ def panier(request):
         montantP = montantP + (prod.produit.prix * prod.quantite)
 
     context['panier'] = panier
-    context['montant'] = montantP
+    context['montant'] = round(montantP,2)
 
     return render(request, 'espace_perso/panier.html',context)
 
@@ -394,27 +394,22 @@ def commander(request):
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)
     montantP = 0 
+    producteurs = Producteur.objects.filter(produit__in=Produit.objects.filter(panier__in=panier))
 
-    
-   """ #calcul du montant
-    for prod in panier:
-        montantP = montantP + (prod.produit.prix * prod.quantite)
-    
-    #Créer une commande dans Commande
-    c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
-    c.save()
-
-    #Mettre le contenu de panier dans ContenuCommande
-    
-    for prod in panier:
-        produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
-        produit.save()
-        #Vider le contenu de panier
-        prod.delete()
-
-    #NE PAS OUBLIER LES VÉRIFICATION
-    
-    #send_mail_pay(request)"""
+    for producteur in producteurs:
+        u = producteur
+        produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
+        for prod in produits:
+            montantP = montantP + (prod.produit.prix * prod.quantite)
+        c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
+        c.save()
+        
+        produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
+        for prod in produits:
+            produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
+            produit.save()
+            prod.delete()
+            montantP = 0
     return redirect('listeCommande')
 
 def commanderEncore(request, id):
