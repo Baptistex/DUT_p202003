@@ -1659,8 +1659,6 @@
     font-size: 300%;
 }
 
-
-/*--------------------------------------------------------------
     
     .navigation a:hover {
         transform: scale(1.2);
@@ -1689,7 +1687,6 @@
         .navigation {
             display: inline;
             position: unset;
-            /*EnlÃ¨ve le sticky*/
         }
     }
     
