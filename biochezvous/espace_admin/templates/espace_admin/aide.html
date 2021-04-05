@@ -98,13 +98,11 @@
             <!--Répondre à la demande-->
             <td>
                 <a class="" href="" data-toggle="modal" data-target="#popup{{demande.message_id}}" data-popup-url="">
-                    <span class="glyphicon glyphicon-home"  style="padding-left: 35px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
-                            class="bi bi-reply-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M5.921 11.9L1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
-                        </svg>
-                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
+                        class="bi bi-reply-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M5.921 11.9L1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
+                    </svg>
                 </a>
 
                 <!--Modal pour voir et répondre à la demande d'aide-->
@@ -146,13 +144,11 @@
             <td>
                 {% url 'deleteDemande' demande.message_id as the_url %}
                 <a href="{{ the_url }}">
-                    <span class="glyphicon glyphicon-pencil" style="padding-left: 30px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
-                            class="bi bi-trash-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                        </svg>
-                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
+                        class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                    </svg>
                 </a>
             </td>
         </tr>

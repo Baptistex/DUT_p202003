@@ -18,7 +18,7 @@ from datetime import datetime
 
 from django.shortcuts import render
 from io import BytesIO
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import get_template
 from django.views import View
 from xhtml2pdf import pisa
@@ -359,20 +359,46 @@ def suppressionPanier(request, id):
     return redirect('panier')
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+
+
+def varierArticlePanier(request):
+    if request.is_ajax():
+        id = request.POST.get("id_produit", None)
+        amount = int(request.POST.get("amount", None))
+        suppression = 0
+        try :
+            item = Panier.objects.filter(personne=request.user).get(produit_id=id)
+            if amount == -1 :
+                if item.quantite <= 1:
+                    suppression = 1
+                else : 
+                    item.quantite -= 1
+
+            if amount == 1 :
+                if item.quantite >= item.produit.quantite:
+                    pass #TODO : Envoyer un avertissement, maximum atteint
+                else:
+                    item.quantite += 1
+            item.save()
+            data = {
+                'quantite' : item.quantite,
+                'suppression' : suppression
+            }
+        except : 
+            suppression = 2 
+            data = {
+                'quantite' : 0,
+                'suppression' : suppression
+            }
+        
+
+        
+        return JsonResponse(data=data, safe=False)
+    else : 
+        redirect('accueil')
+
 def decrementerArticlePanier(request, id):
-
-    personne_id = request.user.personne_id
-    panier = Panier.objects.filter(personne_id=personne_id)  
-    produit = panier.get(produit_id=id)
-
-    if (produit.quantite == 1):
-        return redirect('suppressionPanier', id=id)
-    else:
-        produit.quantite -= 1
-        produit.save()
-
-    return redirect('panier')
-
+    pass
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def incrementerArticlePanier(request, id):
