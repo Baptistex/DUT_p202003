@@ -8,46 +8,55 @@
 
 
 
-<div class="container-fluid">
+<div class="container">
 
-  <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
-    <h2> Commande  n° {{ Commande.commande_id }} </h2>
+  <div class="row">
+    <div class="col">
+      <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Commande  n° {{ Commande.commande_id }} </h2>
+      </div>
+    </div>
   </div>
+  
 
 
-
-  <table class="table cmd">
-    <thead>
-      <tr>
-        <th scope="col">Produit</th>
-        <th scope="col">Prix unitaire</th>
-        <th scope="col">Quantite</th>
-        <th scope="col">Sous-Total</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      {% for ctn in contenuCommande %}
-
-      <tr>
-
-        <td>
-          <p> {{ ctn.produit.nom }}</p>
-          <p> {{ ctn.produit.description }}</p>
-        </td>
-        <td>{{ ctn.produit.prix }}</td>
-        <td>{{ ctn.quantite }}</td>
-        <td>{{ ctn.produit.prix|mul:ctn.quantite }}</td>
-
-      </tr>
-      {% endfor %}
-      <tr>
-        <td></td>
-        <td></td>
-        <td> Total commande </td>
-        <td> {{ Commande.montant }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="row">
+  <div class="col">
+    <table class="table cmd">
+      <thead>
+        <tr>
+          <th scope="col">Produit</th>
+          <th scope="col">Prix unitaire</th>
+          <th scope="col">Quantite</th>
+          <th scope="col">Sous-Total</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+        {% for ctn in contenuCommande %}
+  
+        <tr>
+  
+          <td>
+            <p> {{ ctn.produit.nom }}</p>
+            <p> {{ ctn.produit.description }}</p>
+          </td>
+          <td>{{ ctn.produit.prix }}</td>
+          <td>{{ ctn.quantite }}</td>
+          <td>{{ ctn.produit.prix|mul:ctn.quantite }}</td>
+  
+        </tr>
+        {% endfor %}
+        <tr>
+          <td></td>
+          <td></td>
+          <td> Total commande </td>
+          <td> {{ Commande.montant }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+  
 
   {% endblock %}

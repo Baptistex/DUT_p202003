@@ -30,6 +30,27 @@
     h6 {
         font-family: "poppins", sans-serif;
     }
+
+    .btn-formulaire {
+        background-color: #00ffc6 !important;
+        border-color: #00ffc6;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 20px;
+        color: #555555;
+        outline: none;
+    }
+
+    .btn-formulaire:hover,
+    .btn-formulaire:active {
+        background-color: #00ffc6 !important;
+        border-color: #00ffc6;
+        outline: none;
+    }
+
+    .formulaire {
+        padding: 0 35%;
+    }
     /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
