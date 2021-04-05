@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initia-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap-glyphicons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/cropper/cropper.min.css' %}" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="../../staticfiles/css/style.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fugaz+One&family=Poppins&display=swap"
+        rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <title>{{title}}</title>
 </head>
-<body>
-<h1 style="background-color: yellow; color: blue;">{{content}}</h1>
+
+<body id="mail">
+    <div class="container-fluid">
+        <h3>{{content}}</h3>
+        <footer style="background-color: #555555;">
+
+            <h1 class="text-center">BIO CHEZ VOUS</h1>
+
+            <h4>Notre adresse</h4>
+            <p>Rue Édouard Branly, 22300 Lannion</p>
+
+            <h4>Appelez nous</h4>
+            <p>06 06 06 06 06</p>
+
+    </div>
+    </footer>
 </body>
+
 </html>
