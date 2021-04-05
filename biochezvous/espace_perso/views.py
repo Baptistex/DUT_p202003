@@ -265,12 +265,15 @@ def producteur(request, idProducteur):
 
 def ajout_prod_adresse(request):
     if request.method == 'POST':
-        form = AdresseModifForm(request.POST, instance=request.user.adresse)
+        try:
+            form = AdresseModifForm(request.POST, instance=request.user.adresse)
+        except Adresse.DoesNotExist: 
+            form = AdresseModifForm(request.POST)
         if form.is_valid():
             adresse = form.save(commit=False)
             adresse.personne = request.user 
             adresse.save()
-            return HttpResponseRedirect('/accueilEspaceProducteur')
+            return redirect('espacePerso')
     else:
         try : 
             form = AdresseModifForm(instance = request.user.adresse)
