@@ -187,9 +187,9 @@ def ajout_prod(request):
             else:
                 form = ProduitForm()
         else:
-            return redirect('informationPerso')
+            return redirect('ajout_prod_adresse')
     except  Adresse.DoesNotExist:
-        return redirect('informationPerso')
+        return redirect('ajout_prod_adresse')
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def aff_prod(request):

@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
+import produit.views
 
 urlpatterns = [
     path('accueilAdmin', views.espace_admin, name='espace_admin'),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('personne/', views.delete_user, name='delete_user'),
     path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
     path('demande/<int:msg_id>/', views.deleteDemande, name='deleteDemande'),
+    path('nouveautype',produit.views.addType, name='ajout_type'),
 ]
