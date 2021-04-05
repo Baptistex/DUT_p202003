@@ -16,14 +16,14 @@
 
     <div class="row justify-content-around text-center">
         
-        <a href="listeCommande" class="col-md-3 boxEspacePerso">                
+        <a href="{% url 'listecommande' %}" class="col-md-3 boxEspacePerso">                
             <div class=" ">
                 <i class="icofont-bar-code"></i>
                 <p> Historique des commandes </p>                
             </div>                
         </a>
         
-        <a href="informationPerso" class="col-md-3 boxEspacePerso">
+        <a href="{% url 'informationPerso' %}" class="col-md-3 boxEspacePerso">
             <div>
                 <i class="icofont-address-book"></i>                
                 <p> Mes informations </p>
@@ -31,7 +31,7 @@
         </a>
 
         <div class="col-md-3 boxEspacePerso">
-            <a href="nouvelleAdresse">
+            <a href="{% url 'ajout_prod_adresse' %}">
                 <p> Modifier mon adresse </p>
             </a>
         </div>

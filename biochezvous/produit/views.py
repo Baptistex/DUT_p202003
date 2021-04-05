@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import permission_required
 
 
 
-def produit_django(request):
+def catalogue(request):
     """
     Vue qui permet d'afficher les differents produits mis en vente sur le site
     Un bouton permet de filtrer les produits à ceux étant vendus par des producteurs proches
@@ -65,9 +65,11 @@ def produit_django(request):
         return JsonResponse(data=data_dict, safe=False)
 
     images_produit = Image.objects.filter(priorite=1)
-    mesPref = Preference.objects.filter(personne=request.user)
-    produits_pref = Produit.objects.filter(preference__in=mesPref)
-
+    if request.user.is_authenticated :
+        mesPref = Preference.objects.filter(personne=request.user)
+        produits_pref = Produit.objects.filter(preference__in=mesPref)
+    else : 
+        produits_pref = ""
     context = {
         'lesproduits': images_produit,
         'produits_pref' : produits_pref,
