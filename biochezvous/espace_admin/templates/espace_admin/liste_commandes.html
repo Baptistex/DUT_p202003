@@ -104,8 +104,8 @@
                 <th scope="row">{{ cmd.commande_id }}</th>
                 <td>{{ cmd.personne_id }}</td>
                 <td>{{ cmd.date }}</td>
-                <!--  à décommenter quand Justine aura inclu ce fichier
-                    <td> {% include 'espace_perso/statut.html' %} </td> -->
+                <!--  ajouter statut.html -->
+                <td>statut</td>
                 <td>{{ cmd.montant }}</td>
                 <td>
                     <a href="" class="bi bi-three-dots-vertical" data-toggle="modal" data-target="#popup{{cmd.commande_id}}">
