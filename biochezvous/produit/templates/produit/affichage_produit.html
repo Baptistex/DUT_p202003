@@ -14,6 +14,7 @@
                 <th>quantité</th>
                 <th>Date d'ajout</th>
                 <th>Modifier l'image du produit</th>
+                <th>Modifier les informations du produit</th>
                 <th>Supprimer le produit</th>
          </tr>
     </thead>
@@ -29,6 +30,10 @@
             <td>
                 {% url 'ajout_prod_image' prod.produit_id as the_url %}
                 <button class="btn btn-primary"><a href="{{ the_url }}">Modifier l'image</a></button>
+            </td>
+            <td>
+                {% url 'modif_prod' prod.produit_id as the_url %}
+                <button class="btn btn-primary"><a href="{{ the_url }}">Modifier le produit</a></button>
             </td>
             <td>
                 {% url 'deleteOneProd' prod.produit_id as the_url %}
