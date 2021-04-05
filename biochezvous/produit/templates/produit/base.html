@@ -7,6 +7,7 @@
     {% load static %}
     {% load loader%}
     {% infoConnexion as info %}
+    {% affDeco as button%}
     <title>{% block title %}BIO CHEZ VOUS{% endblock %}</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
@@ -62,9 +63,15 @@
                     <li><a href="#">A propos</a></li>
                     <li><a href="{% url 'connexion' %}"><i class="icofont-login"></i></a></li>
                     <li><a href="{% url 'rediriger_utilisateur' %}"><i class="icofont-boy"></i></a></li>
-                    <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
-                    <li><a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a></li>
-
+                    {% if button.buttonDeco%}
+                        <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
+                    {% else %}
+                        <li><a href="{% url 'connexion' %}"><i class="icofont-spoon-and-fork"></i></a></li>
+                    {%endif%}
+                    
+                    {% if button.buttonDeco%}
+                        <li><a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a></li>
+                    {% endif %}
                 </ul>
             </nav><!-- .nav-menu -->
             <div class="logo mr-auto">
@@ -102,13 +109,14 @@
             <div class="container">
 
                 <div class="row" data-aos="fade-up" data-aos-delay="100">
+                    {% if button.buttonDeco%}
                     <div class="col-lg-3 col-md-6">
                         <div class="info-box mb-4">
                             <a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a>
                              <h3>Déconnexion</h3>
                         </div>
                     </div>
-
+                    {% endif %}
                     <div class="col-lg-6">
                         <div class="info-box mb-4">
                             <i class="bx bx-map"></i>

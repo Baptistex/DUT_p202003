@@ -20,3 +20,13 @@ def infoConnexion(context):
     else:
         typeUser="Inconnu"
     return {'type_user': typeUser}
+
+@register.simple_tag( takes_context=True)
+def affDeco(context):
+    request = context['request']
+    if(request.user.is_authenticated):
+        deco=True
+    else:
+        deco=False
+    return {'buttonDeco':deco}
+
