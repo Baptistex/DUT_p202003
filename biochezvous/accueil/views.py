@@ -22,4 +22,10 @@ def accueil(request):
         'nb_happyClient': len(client),
         'nb_produit':len(produit),
     }
+    return HttpResponse(template.render({},request))
+
+
+def propos(request):
+    template = loader.get_template('accueil/propos.html')
+    return HttpResponse(template.render({},request))
     return HttpResponse(template.render(context,request))

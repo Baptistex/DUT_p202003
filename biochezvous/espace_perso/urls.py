@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 from . import views
+from . import utils
 
 urlpatterns = [
     #Connexions/Inscriptions
@@ -10,6 +11,8 @@ urlpatterns = [
     path('connexion',                       views.connexion,            name='connexion'),
     path('connexion',                       auth_views.LoginView.as_view()),
     path('deconnexion',                     views.deconnexion,          name='deconnexion'),
+    path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
     #Utilisateur        
     path('profil',                          views.espacePerso,          name='espacePerso'),
     path('profil/edit',                     views.informationPerso,     name='informationPerso'),
@@ -24,6 +27,7 @@ urlpatterns = [
     path('profil/commandes',                views.listeCommande,        name='listecommande'),
     path('profil/commande/<int:id>',        views.commande,             name='commande'),
     path('profil/panier/varier',            views.varierArticlePanier,  name='varierArticlePanier'),
+    path('send_mail_commande/<int:commande_id>',views.send_mail_commande,name='send_mail_commande'),
     #Catalogue
     path('producteur/<int:idProducteur>',   views.producteur,           name='producteur'),
     #Administration

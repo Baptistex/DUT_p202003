@@ -9,11 +9,23 @@ from .models import Utilisateur,Personne, Producteur, Adresse
 from espace_perso.forms import FormInscriptionProd, FormAide
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
+from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser #, Suppression
+from .utils import send_mail_pay
+from .utils import send_mail_cmd
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 #from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormQuantitePanier
 from .forms import FormInscription, FormConnexion, FormDataModification, FormInscriptionUser, FormDataModifProd, AdresseModifForm
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from produit.models import Image
 from datetime import datetime
+from django.utils.html import strip_tags
 
 
 from django.shortcuts import render
@@ -26,14 +38,8 @@ from xhtml2pdf import pisa
 
 # Create your views here.
 
-def wip_userlist(request):
-    template = loader.get_template('espace_perso/wip_userlist.html')
-    table_pers = Personne.objects.all()
-    context = {
-        'userlist': table_pers
-    }
 
-    return HttpResponse(template.render(context,request))
+
 
 
     
@@ -72,13 +78,38 @@ def paiement(request):
     template = loader.get_template('espace_perso/paiement.html')
     return HttpResponse(template.render({},request))
 
+def send_mail_commande(request, commande_id):
+    if Commande.objects.filter(produits__in=request.user.producteur.produit_set.all()).filter(commande_id=commande_id).count() <= 0 :
+        redirect("accueil")
+    else:
+        user = Personne.objects.get(commandes__exact=commande_id)
+        send_mail_cmd(user, commande_id)
+    return redirect('commandeProducteur')
+
     
 def inscription_user(request):
     if request.method == 'POST':
         form = FormInscriptionUser(request.POST)
         if form.is_valid():
-            instance = form.save()
-            instance.save()
+            user = form.save()
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Bienvenue'
+            message = render_to_string('acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            text_content = strip_tags(message)
+            to_email = form.cleaned_data.get('mail')
+            email = EmailMultiAlternatives(
+                        mail_subject, message, to=[to_email]
+            )
+            email.attach_alternative(message, "text/html")
+            email.send()
+            return HttpResponse('Veuillez confirmer votre adresse mail pour finaliser votre inscription')
             #TODO: changer la redirection
             return HttpResponseRedirect('/connexion')
     else:
@@ -86,9 +117,25 @@ def inscription_user(request):
     #TODO : un template propre à chaque type d'inscription
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
 
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = Personne.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        redirect('/connexion')
+        return HttpResponse("Merci d'avoir confirmer votre adresse email. Maintenant vous pouvez vous connecter à votre compte.")
+    else:
+        print(token)
+        return HttpResponse("Le lien d'activation n'est pas valide!")
+
 def inscription_prod(request):
     if request.method == 'POST':
-        form = FormInscriptionProd(request.POST)
+        form = FormInscriptionProd(request.POST) 
         if form.is_valid():
             instance = form.save()
             instance.save()
@@ -260,6 +307,17 @@ def producteur(request, idProducteur):
     
 
 
+def espacePersoProd(request):
+    
+    personne_id = request.user.personne_id
+    u = Producteur.objects.get(personne_ptr_id=personne_id)
+    form = FormDataModifProd(instance=u)
+    if request.method == 'POST':
+        form = FormDataModifProd(request.POST, request.FILES, instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/nouvelleAdresse')
+    return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
 
 
 
@@ -393,6 +451,7 @@ def incrementerArticlePanier(request, id):
         return redirect('panier')
 
 def commander(request):
+
     
     context = {}
     personne_id = request.user.personne_id
@@ -415,8 +474,8 @@ def commander(request):
         prod.delete()
 
     #NE PAS OUBLIER LES VÉRIFICATION
-    
-    #send_mail_pay(request)
+
+    send_mail_pay(request)
     return redirect('listeCommande')
     #u = Personne.objects.get(personne_id=personne_id)
     #print(u.Commande_set(related_name))
@@ -431,6 +490,7 @@ def commander(request):
     #for prod in panier:
         #ContenuCommande.objects.create(prod)  
     #return render(request, 'espace_perso/listeCommande.html',context)
+    
 
 
 def render_to_pdf(template_src, context_dict={}):
