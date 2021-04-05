@@ -316,7 +316,7 @@ def espacePersoProd(request):
         form = FormDataModifProd(request.POST, request.FILES, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/nouvelleAdresse')
+            return HttpResponseRedirect('/profil/adresse/edit')
     return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
 
 
