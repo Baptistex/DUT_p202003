@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     #Catalogue
-    path('catalogue',                                   views.produit_django,               name='produit_django'),
+    path('catalogue',                                   views.catalogue,               name='catalogue'),
 
     #Utilisateur
     path('produit/<int:idProduit>',                     views.produit,                      name='produit'),
