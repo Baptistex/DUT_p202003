@@ -88,3 +88,9 @@ class TypeProduitForm(ModelForm):
     class Meta:
         model=TypeProduit
         fields = ['nom','tva']
+
+
+class ContactForm(forms.Form):
+    from_email = forms.EmailField(label='',widget=forms.TextInput(attrs={'placeholder':'Votre email'}), required=True)
+    subject = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder':'Objet'}), required=True)
+    message = forms.CharField(label='',widget=forms.Textarea(attrs={'placeholder':'Message'}))

@@ -3,6 +3,11 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.forms import FormSelectionQuantite
+from espace_perso.models import Personne, Producteur, Adresse
+from .forms import ProduitForm, ImageForm, ContactForm
+from espace_perso.utils import great_circle_vec
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail, BadHeaderError
 from espace_perso.models import Personne, Producteur, Adresse, Preference
 from .forms import ProduitForm, ImageForm, CategorieForm,TypeProduitForm
 from espace_perso.utils import great_circle_vec
@@ -300,6 +305,24 @@ def deleteOneProd(request,id):
         }
     return HttpResponse(template.render(context,request))
 
+def email(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['biochezvous.iut@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('thanks')
+    return render(request, "produit/base.html", {'form': form})
+
+def thanks(request):
+    return HttpResponse('Merci pour votre message')
 def ajout_categorie(request):
     if request.method == 'POST':
         form = CategorieForm(request.POST, request.FILES)

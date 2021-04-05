@@ -2,9 +2,9 @@ from django import forms
 from django.forms import Form
 
 class FormAideReponse(forms.Form):
-    destinataire = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
-    objet = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
-    message = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
+    destinataire = forms.EmailField(label='',widget=forms.TextInput(attrs={'placeholder':'Destinataire'}), required=True)
+    objet = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder':'Objet'}), required=True)
+    message = forms.CharField(label='',widget=forms.Textarea(attrs={'placeholder':'Message'}))
 
     class Meta:
         fields = ['destinataire','objet','message']
