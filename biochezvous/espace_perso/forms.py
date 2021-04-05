@@ -32,6 +32,13 @@ class FormInscriptionProd(UserCreationForm):
     mail=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     num_tel=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control col-md-12 '}))
+    iban = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png", required=False)
+
+    x = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    y = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    width = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    height = forms.FloatField(widget=forms.HiddenInput(), required=False)
     def save(self):
         user = super().save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
@@ -48,7 +55,7 @@ class FormInscriptionProd(UserCreationForm):
         return user
     class Meta:
         model = Producteur
-        fields = ['nom','prenom','mail','num_tel','description']
+        fields = ['nom', 'prenom', 'mail', 'num_tel','description','image','iban', 'x', 'y', 'width', 'height']
 
 class FormInscriptionUser(UserCreationForm):
     
@@ -99,6 +106,8 @@ class FormSelectionQuantite(ModelForm):
 class FormDataModifProd(ModelForm):
     
     nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    prenom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+
     num_tel=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control col-md-12 '}))
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png", required=False)
@@ -131,7 +140,7 @@ class FormDataModifProd(ModelForm):
 
     class Meta:
         model = Producteur
-        fields = ['nom','num_tel','description','image','iban', 'x', 'y', 'width', 'height']
+        fields = ['nom', 'prenom','num_tel','description','image','iban', 'x', 'y', 'width', 'height']
     
 class FormAide(forms.ModelForm):
     nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))
