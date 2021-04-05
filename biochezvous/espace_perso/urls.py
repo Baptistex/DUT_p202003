@@ -28,7 +28,6 @@ urlpatterns = [
     path('espace_Personnelle',views.redirection,name='rediriger_utilisateur'),
     
     path('commandeProducteur',views.commandeProducteur, name='commandeProducteur'),
-
    
     #espace producteur 
     path('producteur/<int:idProducteur>', views.producteur, name='producteur'),

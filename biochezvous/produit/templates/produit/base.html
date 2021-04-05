@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     {% load static %}
+    {% load loader%}
+    {% infoConnexion as info %}
     <title>{% block title %}BIO CHEZ VOUS{% endblock %}</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
@@ -58,14 +60,21 @@
                     <li><a href="{% url 'accueil' %}">Accueil</a></li>
                     <li><a href="{% url 'produit_django' %}">Nos Produits</a></li>
                     <li><a href="#">A propos</a></li>
+                    <li><a href="{% url 'connexion' %}"><i class="icofont-login"></i></a></li>
                     <li><a href="{% url 'rediriger_utilisateur' %}"><i class="icofont-boy"></i></a></li>
                     <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
                     <li><a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a></li>
 
                 </ul>
             </nav><!-- .nav-menu -->
+            <div class="logo mr-auto">
+            
+             <h3 class="text-light">Vous etes connecté en tant que : {{ info.type_user}}
 
+             <h3>
+            </div>
         </div>
+       
     </header><!-- End Header -->
     {% endblock %}
     {% block hero%}
@@ -73,7 +82,11 @@
     {% endblock %}
     
     <main id="main">
-
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <div id="content">
             {% block content %}{% endblock %}
         </div>

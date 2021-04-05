@@ -499,3 +499,4 @@ def commandeProducteur(request):
         'comlist': cont
     }
     return HttpResponse(template.render(context,request))
+
