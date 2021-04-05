@@ -35,16 +35,7 @@ def wip_userlist(request):
 
     return HttpResponse(template.render(context,request))
 
-def delete_user(request):
-    if request.method == "GET":
-        dest = Personne.objects.all()
-        dest.delete()
-        template = loader.get_template('espace_perso/wip_userlist.html')
-        table_pers = Personne.objects.all()
-        context = {
-            'userlist': table_pers
-        }
-    return HttpResponse(template.render(context,request))
+
     
 def deleteOneUser(request,id):
     if request.method == "GET":
@@ -135,7 +126,7 @@ def deconnexion(request):
         logout(request)
     return redirect('accueil')
  
-#@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
+@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
 def espacePerso(request):
     """
     Vue qui permet d'accéder aux fonctionnalités concernant l'espace perso
@@ -150,7 +141,11 @@ def espacePerso(request):
         Justine Fouillé
     """
     context = {}
-    return render(request, 'espace_perso/espacePerso.html', context)
+    if Producteur.objects.filter(personne_ptr_id=request.user.personne_id).count() > 0 :
+        return render(request, 'espace_perso/espaceProd.html', context)
+
+    else : 
+        return render(request, 'espace_perso/espacePerso.html', context)
 
 
 
@@ -213,29 +208,29 @@ def informationPerso(request):
         form : formulaire avec les informations prérentrer dedans
 
     Authors:
-        Justine Fouillé
+        Justine Fouillé, Melvin
     """
-    #TODO Vérifier la vérification automatique des champs du formulaire
-    personne_id = request.user.personne_id
-    u = Personne.objects.get(personne_id=personne_id)
-    formG = FormDataModification(instance=u)
     u = request.user
-    form = FormDataModification(instance=u)
-    if request.method == 'POST' :
-        formG = FormDataModification(request.POST, instance=u)
-        if formG.is_valid():
-            formG.save()
-    context = {'formG':formG}
+    #Si l'user est un producteur : 
+    if Producteur.objects.filter(personne_ptr_id=u.personne_id).count() > 0 :
+        form = FormDataModifProd(instance=u.producteur)
+        if request.method == 'POST' :
+            form = FormDataModifProd(request.POST, request.FILES, instance=u.producteur)
+            if form.is_valid():
+                form.save()
+        context = {'form':form}
+        return render(request, 'espace_perso/informationProd.html', context)
 
-    return render(request, 'espace_perso/informationPerso.html', context)
+    #Sinon : 
+    else :
+        form = FormDataModification(instance=u)
+        if request.method == 'POST' :
+            form = FormDataModification(request.POST, instance=u)
+            if form.is_valid():
+                form.save()
+        context = {'formG':form}
+        return render(request, 'espace_perso/informationPerso.html', context)
 
-#   Utilisez ces fonctions (en remplaçant name et codename) pour ajouter une permission à un groupe
-#def update_Permissions(request):
-#    prod_group, created = Group.objects.get_or_create(name='producteur')
-#    print(prod_group.permissions)
-#    prod_group.permissions.add(
-#        Permission.objects.get(codename='can_view_espace_perso')
-#    )
 
 def aide(request):
     if request.method == "POST":
@@ -264,31 +259,9 @@ def producteur(request, idProducteur):
     return render(request, 'espace_perso/description_producteur.html', context)
     
 
-@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
-def espace_producteur(request):
-    template = loader.get_template('espace_perso/accueil_espaceProd.html')
-    return HttpResponse(template.render({},request))
-    
-def redirection(request):
-    personne_id = request.user.personne_id
-    u = Producteur.objects.filter(personne_ptr_id=personne_id)
-    if(u.count()>0):
-        return redirect('espace_producteur')
-    else:
-        return redirect('espacePersoUser')
-    
 
-def espacePersoProd(request):
 
-    personne_id = request.user.personne_id
-    u = Producteur.objects.get(personne_ptr_id=personne_id)
-    form = FormDataModifProd(instance=u)
-    if request.method == 'POST':
-        form = FormDataModifProd(request.POST, request.FILES, instance=u)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/nouvelleAdresse')
-    return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
+
 
 def ajout_prod_adresse(request):
     if request.method == 'POST':

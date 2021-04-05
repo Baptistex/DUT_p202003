@@ -83,7 +83,7 @@ function ajaxSearch() {
     //liste = document.getElementById('liste');
     $.ajax({
         method: "post",
-        url: "{% url 'produit_django' %}",
+        url: "{% url 'catalogue' %}",
         data: {
             "searchtext": str,
             'boutondistance' : boutondistance,
