@@ -1,3 +1,22 @@
 # Projet P202003 - Vente de produits locaux en ligne
 
-Description du projet
+
+
+
+
+
+
+# Dépendances du projet : 
+```
+django
+psycopg2
+numpy
+Pillow
+xhtml2pdf
+django-easy-pdf
+django-image-cropping
+easy-thumbnails
+```
+```
+python -m pip install django psycopg2 numpy Pillow xhtml2pdf django-easy-pdf django-image-cropping easy-thumbnails
+```
