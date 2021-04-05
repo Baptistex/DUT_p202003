@@ -19,6 +19,7 @@ urlpatterns = [
     path('profil/adresse/edit',             views.ajout_prod_adresse,   name='ajout_prod_adresse'),
     #Producteur
     path('profil/producteur/commandes',     views.commandeProducteur,   name='commandeProducteur'),
+    
     #Panier/Commande
     path('profil/panier',                   views.panier,               name='panier'),
     path('profil/panier/<int:id>/suppression',views.suppressionPanier,  name='suppressionPanier'),

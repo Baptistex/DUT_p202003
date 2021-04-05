@@ -83,6 +83,9 @@ def send_mail_commande(request, commande_id):
     if Commande.objects.filter(produits__in=request.user.producteur.produit_set.all()).filter(commande_id=commande_id).count() <= 0 :
         redirect("accueil")
     else:
+        com = Commande.objects.get(commande_id=commande_id)
+        com.statut = 1
+        com.save()
         user = Personne.objects.get(commandes__exact=commande_id)
         send_mail_cmd(user, commande_id)
     return redirect('commandeProducteur')
@@ -559,16 +562,25 @@ def index(request):
 
 
 
-
-
-
-
 def commandeProducteur(request):
+    context = {}
     template = loader.get_template('espace_perso/commandeProd.html')
     u = request.user.producteur
     cont=ContenuCommande.objects.all().filter(produit_id__in=u.produit_set.all())
-    context = {
-        'comlist': cont
-    }
+    listeCommandes = []
+    listeproduits = []
+    for c in cont:
+        commandes=Commande.objects.all().filter(commande_id=c.commande_id)  
+        for cmd in commandes:
+            if (cmd.statut == 0):
+                listeproduits.append(c)
+                if (cmd not in listeCommandes):
+                    listeCommandes.append(cmd)
+    
+    context['listeproduits'] = listeproduits
+    context['listecommandes'] = listeCommandes
+
     return HttpResponse(template.render(context,request))
+
+
 
