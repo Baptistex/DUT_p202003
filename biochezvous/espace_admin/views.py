@@ -83,21 +83,17 @@ def devenirPro(request,id):
         newProd = Producteur(client)
         newProd.__dict__.update(client.__dict__)
         newProd.save()
-        
+        mail_subject = 'Bienvenue !'
         message = render_to_string('confirmation_prod.html', {
             'user': client,
+            'title': 'Confirmation producteur',
             })
-        send_mail(
-            'Bienvenu !',
-            message,
-            'sav.biochezvous@gmail.com',
-            (client.mail,),
-            fail_silently=False, 
-            auth_user=None, 
-            auth_password=None, 
-            connection=None, 
-            html_message=None
+        text_content = strip_tags(message)
+        email = EmailMultiAlternatives(
+            mail_subject, message, to=[client.mail]
         )
+        email.attach_alternative(message, "text/html")
+        email.send()
 
         template = loader.get_template('espace_admin/devenir_prod.html')
         table_client = Personne.objects.exclude(personne_id__in = Producteur.objects.all())
@@ -122,7 +118,7 @@ def util_aide(request):
             message = form.cleaned_data['message']
             destinataire = form.cleaned_data['destinataire']
 
-            html_content = render_to_string("aide_reponse.html", {'title':'test mail','content':message})
+            html_content = render_to_string("aide_reponse.html", {'title':'réponse mail','content':message})
             text_content = strip_tags(html_content)
 
 
