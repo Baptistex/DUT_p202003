@@ -457,28 +457,31 @@ def incrementerArticlePanier(request, id):
 
 def commander(request):
 
-    
     context = {}
     personne_id = request.user.personne_id
-    panier = Panier.objects.filter(personne_id=personne_id)
-    montantP = 0 
-    producteurs = Producteur.objects.filter(produit__in=Produit.objects.filter(panier__in=panier))
+    adresses = Adresse.objects.filter(personne_id=personne_id)
+    if (len(adresses)==0):
+        messages.error(request, "Vous devez renseigner votre adresse avant de passer commande. Vous pouvez le faire depuis votre espace personnel")
+        return redirect('panier')
+    else:
+        panier = Panier.objects.filter(personne_id=personne_id)
+        montantP = 0 
+        producteurs = Producteur.objects.filter(produit__in=Produit.objects.filter(panier__in=panier))
 
-    for producteur in producteurs:
-        u = producteur
-        produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
-        for prod in produits:
-            montantP = montantP + (prod.produit.prix * prod.quantite)
-        c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
-        c.save()
-        
-        produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
-        for prod in produits:
-            produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
-            produit.save()
-            prod.delete()
-            montantP = 0
-    return redirect('listeCommande')
+        for producteur in producteurs:
+            u = producteur
+            produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
+            for prod in produits:
+                montantP = montantP + (prod.produit.prix * prod.quantite)
+            c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
+            c.save()
+            produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
+            for prod in produits:
+                produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
+                produit.save()
+                prod.delete()
+                montantP = 0
+        return redirect('listeCommande')
 
 def commanderEncore(request, id):
     context = {}
