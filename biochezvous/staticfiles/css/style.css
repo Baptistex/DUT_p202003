@@ -133,6 +133,12 @@ h6 {
     /*background: rgba(255, 255, 255, 0.2);*/
 }
 
+.nav-menu ul {    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .nav-menu a {
     display: block;
     position: relative;

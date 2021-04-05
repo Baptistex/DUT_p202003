@@ -48,7 +48,7 @@
     {% block header %}
     <!-- ======= Header ======= -->
     <header id="header" class="{% block headeropacity %}fixed-top header-scrolled{% endblock headeropacity %}">
-        <div class="container d-flex align-items-center">
+        <div class="container-fluid d-flex align-items-center">
 
             <div class="logo mr-auto">
                 <h1 class="text-light"><a href="{% url 'accueil' %}"><span>BIO CHEZ VOUS</span></a></h1>
@@ -63,26 +63,16 @@
                     <li><a href="#">A propos</a></li>
                     {% if not button.buttonDeco%}
                         <li><a href="{% url 'connexion' %}"><i class="icofont-login"></i></a></li>
-                    {% endif %}
-                    <li><a href="{% url 'espacePerso' %}"><i class="icofont-boy"></i></a></li>
-
-                    {% if button.buttonDeco%}
+                    {%else%}
+                        <li><a href="{% url 'espacePerso' %}"><i class="icofont-boy"></i></a></li>
                         <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
-                    {% else %}
-                        <li><a href="{% url 'connexion' %}"><i class="icofont-spoon-and-fork"></i></a></li>
-                    {%endif%}
-
+                    {% endif %}
+                
                     {% if button.buttonDeco%}
                         <li><a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a></li>
                     {% endif %}
                 </ul>
-            </nav><!-- .nav-menu -->
-            <div class="logo mr-auto">
-            
-             <h3 class="text-light">Vous etes connecté en tant que : {{ info.type_user}}
-
-             <h3>
-            </div>
+            </nav>
         </div>
        
     </header><!-- End Header -->
