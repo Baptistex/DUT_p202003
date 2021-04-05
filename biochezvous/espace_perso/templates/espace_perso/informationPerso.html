@@ -18,15 +18,14 @@
 
     <!-- le formulaire -->
 
-    <div class="row d-flex justify-content-center">
-        <div class="d-flex justify-content-center">
-
+    <div class="row">
+        <div class="col formulaire">
 
             <div class="form-group">
                 <form action="" method="post">
                     {% csrf_token %}
                     {{ formG.as_p }}
-                    <button type="submit">Go</button>
+                    <button class="btn-formulaire" type="submit">Go</button>
                 </form>
 
             </div>
