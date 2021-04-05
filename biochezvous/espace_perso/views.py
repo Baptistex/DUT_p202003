@@ -4,6 +4,7 @@ from django.db import connection
 from collections import namedtuple
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from espace_admin.models import Demandes
 from .models import Utilisateur,Personne, Producteur, Adresse
 from espace_perso.forms import FormInscriptionProd, FormAide
@@ -78,12 +79,19 @@ def wip_inscription(request):
 def paiement(request):
     if not request.user.confirmation :
         return redirect('panier')
+    adresses = Adresse.objects.filter(personne_id=request.user.personne_id)
+    if (len(adresses)==0):
+        messages.error(request, "Vous devez renseigner votre adresse avant de passer commande. Vous pouvez le faire depuis votre espace personnel")
+        return redirect('panier')
     return render(request, 'espace_perso/paiement.html')
 
 def send_mail_commande(request, commande_id):
     if Commande.objects.filter(produits__in=request.user.producteur.produit_set.all()).filter(commande_id=commande_id).count() <= 0 :
         return redirect("accueil")
     else:
+        com = Commande.objects.get(commande_id=commande_id)
+        com.statut = 1
+        com.save()
         user = Personne.objects.get(commandes__exact=commande_id)
         send_mail_cmd(user, commande_id)
     return redirect('commandeProducteur')
@@ -370,7 +378,7 @@ def panier(request):
 
 
     context['panier'] = panier
-    context['montant'] = montantP
+    context['montant'] = round(montantP,2)
 
     return render(request, 'espace_perso/panier.html',context)
 
@@ -448,8 +456,9 @@ def incrementerArticlePanier(request, id):
     stockArticle = Produit.objects.get(produit_id=id)
 
     if (produitDuPanier.quantite >= stockArticle.quantite):
-        #TODO : comment gérer le cas où la personne veut commander + que en stock ???
-        print("trop")  
+        # cas où la personne veut commander + que en stock ???
+        messages.error(request, "Il n'y a pas assez de stocks pour le nombre d'articles que vous vouez commander")
+         
     else:
         produitDuPanier.quantite += 1
         produitDuPanier.save()
@@ -457,44 +466,49 @@ def incrementerArticlePanier(request, id):
 
 def commander(request):
 
-    
     context = {}
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)
     montantP = 0 
-    #calcul du montant
-    for prod in panier:
-        montantP = montantP + (prod.produit.prix * prod.quantite)
-    
-    #Créer une commande dans Commande
-    c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
-    c.save()
+    producteurs = Producteur.objects.filter(produit__in=Produit.objects.filter(panier__in=panier))
+    for producteur in producteurs:
+        u = producteur
+        produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
+        for prod in produits:
+            montantP = montantP + (prod.produit.prix * prod.quantite)
+        c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
+        c.save()
+        produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
+        for prod in produits:
+            produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
+            produit.save()
+            prod.delete()
+        montantP = 0
+    return redirect('listecommande')
 
-    #Mettre le contenu de panier dans ContenuCommande
-    
-    for prod in panier:
-        produit = ContenuCommande(quantite=prod.quantite, commande_id=c.commande_id, produit_id=prod.produit_id)
-        produit.save()
-        #Vider le contenu de panier
-        prod.delete()
+def commanderEncore(request, id):
+    context = {}
+    personne_id = request.user.personne_id
+    panier = Panier.objects.filter(personne_id=personne_id)
 
+    if not panier:  
+        commande = Commande.objects.get(commande_id=id)
+        contenuCommande = ContenuCommande.objects.filter(commande_id=id)
+        #Mettre le contenu de panier dans ContenuCommande 
+        for prod in contenuCommande :
+            produit = Panier(quantite=prod.quantite, personne_id=personne_id, produit_id=prod.produit_id)
+            produit.save()
+
+        #NE PAS OUBLIER LES VÉRIFICATION
+    
+        #send_mail_pay(request)
+        messages.success(request, "Le contenu de votre commande a bien été ajouté")
+        return redirect('panier')
+    messages.error(request, "Il y a déjà des articles dans votre panier. Vous devez d'abord appuyer sur le bouton commander encore de la commande que vous souhaiter acheter à nouveau avant de rajouter de nouveaux articles à votre panier.")
     #NE PAS OUBLIER LES VÉRIFICATION
 
     send_mail_pay(request)
     return redirect('listeCommande')
-    #u = Personne.objects.get(personne_id=personne_id)
-    #print(u.Commande_set(related_name))
-
-    #contenuCommande = ContenuCommande.objects.filter(commande_id=id)
-    #context['Commande'] = Commande.objects.get(commande_id=id)
-    #Commande.objects.create()
-    #context = {}
-    #personne_id = request.user.personne_id
-    
-    #panier = Panier.objects.filter(personne_id=personne_id)
-    #for prod in panier:
-        #ContenuCommande.objects.create(prod)  
-    #return render(request, 'espace_perso/listeCommande.html',context)
     
 
 
@@ -507,26 +521,15 @@ def render_to_pdf(template_src, context_dict={}):
 		return HttpResponse(result.getvalue(), content_type='application/pdf')
 	return None
 
-data = {
-	"company": "Dennnis Ivanov Company",
-	"address": "123 Street name",
-	"city": "Vancouver",
-	"state": "WA",
-	"zipcode": "98663",
-
-
-	"phone": "555-555-2345",
-	"email": "youremail@dennisivy.com",
-	"website": "dennisivy.com",
-	}
-
 
 
 def PDF(request, id):
     context = {}
     context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
     context['Commande'] = Commande.objects.get(commande_id=id)
+    context['client'] = request.user
     pdf = render_to_pdf('espace_perso/pdf_template.html', context)
+
     return HttpResponse(pdf, content_type='application/pdf')
 
 #Opens up page as PDF
@@ -553,17 +556,31 @@ def index(request):
 	return render(request, 'espace_perso/test.html', context)
 
 
-
-
-
-
-
 def commandeProducteur(request):
+    context = {}
     template = loader.get_template('espace_perso/commandeProd.html')
     u = request.user.producteur
     cont=ContenuCommande.objects.all().filter(produit_id__in=u.produit_set.all())
-    context = {
-        'comlist': cont
-    }
+    listeCommandes = []
+    listeproduits = []
+    for c in cont:
+        commandes=Commande.objects.all().filter(commande_id=c.commande_id)  
+        for cmd in commandes:
+            if ((cmd.statut == 0) or (cmd.statut == 1)) :
+                listeproduits.append(c)
+                if (cmd not in listeCommandes):
+                    listeCommandes.append(cmd)
+    
+    context['listeproduits'] = listeproduits
+    context['listecommandes'] = listeCommandes
+
     return HttpResponse(template.render(context,request))
+
+
+
+def terminerCommande(request, commande_id):
+    com = Commande.objects.get(commande_id=commande_id)
+    com.statut = 2
+    com.save()
+    return redirect('commandeProducteur')
 

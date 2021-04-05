@@ -7,7 +7,6 @@
 {% block content %}
 
 
-
 <div class="container-fluid mt-5" id="panier">
 
   <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
@@ -16,6 +15,7 @@
 
   {% include 'espace_perso/messages.html' %}
 
+  
   {% if panier %}
   <table class="table">
     <thead>
@@ -51,7 +51,6 @@
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
           </svg></span>
 
-          
         </td>
         <td>{{ elem.produit.prix|mul:elem.quantite }}</td>
         <td>
@@ -74,8 +73,8 @@
 
       <a href="{% url 'paiement' %}">
         <button type="button" class="btn btn-primary btn-lg"> Payer </button>
-    </a>
-      
+      </a>
+
     </div>
   </div>
   {% else %}

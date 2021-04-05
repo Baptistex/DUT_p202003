@@ -13,15 +13,21 @@
     <h2> MES COMMANDES </h2>
   </div>
 
+  {% include 'espace_perso/messages.html' %}
+
+
+  {% if commandes %}
   <table class="table">
     <thead>
       <tr>
         <th scope="col">Référence de la commande</th>
         <th scope="col">Date</th>
 
-        
+
         <th scope="col">Statut</th>
         <th scope="col">Montant total</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
@@ -31,18 +37,35 @@
       <tr>
         <th scope="row">{{ cmd.commande_id }}</th>
         <td>{{ cmd.date }}</td>
-        <td>{{ cmd.statut }}</td>
+        <td> {% include 'espace_perso/statut.html' %} </td>
         <td>{{ cmd.montant }}</td>
         <td>
-          <a href="{% url 'commande' cmd.commande_id%}">Détails</a>
+          <a href="{% url 'commande' cmd.commande_id %}">Détails</a>
         </td>
-        <td> 
-          <a href="{% url 'pdf_view' cmd.commande_id%}" target="_blank">Facture</a>
+        <td>
+          <a href="{% url 'pdf_view' cmd.commande_id %}" target="_blank">Facture</a>
+        </td>
+        <td>
+          <a href="{% url 'commanderEncore' cmd.commande_id %}">Commander
+              encore</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+
+
+</div>
+{% else %}
+
+<div class="row justify-content-center text-center">
+  <div class="col-md-6">
+    <p> Vous n'avez pas encore de commandes.</p>
+  </div>
+</div>
+
+{% endif %}
+
 
 
 </div>

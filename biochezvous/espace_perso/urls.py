@@ -19,6 +19,7 @@ urlpatterns = [
     path('profil/adresse/edit',             views.ajout_prod_adresse,   name='ajout_prod_adresse'),
     #Producteur
     path('profil/producteur/commandes',     views.commandeProducteur,   name='commandeProducteur'),
+    path('producteur/terminerCommander/<int:commande_id>',views.terminerCommande,name='terminerCommande'),
     #Panier/Commande
     path('profil/panier',                   views.panier,               name='panier'),
     path('profil/panier/<int:id>/suppression',views.suppressionPanier,  name='suppressionPanier'),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('profil/commande/<int:id>',        views.commande,             name='commande'),
     path('profil/panier/varier',            views.varierArticlePanier,  name='varierArticlePanier'),
     path('send_mail_commande/<int:commande_id>',views.send_mail_commande,name='send_mail_commande'),
+    path('profil/commanderEncore/<int:id>',        views.commanderEncore,             name='commanderEncore'),
     #Catalogue
     path('producteur/<int:idProducteur>',   views.producteur,           name='producteur'),
     #Administration

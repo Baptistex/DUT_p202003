@@ -4,29 +4,65 @@
 {% block title %}Liste des commandes {% endblock %}
 
 {% block content %}
-<div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
-    <h2> MES COMMANDES </h2>
-  </div>
-  
- <table id="table" class="table table-hover table-mc-light-blue">
+
+{% if listecommandes %}
+<div class="container-fluid mt-5" id="commandeProd">
+
+<table id="table" class="table table-hover table-mc-light-blue">
     <thead>
         <tr>
-            <th>Identifiant</th>
-            <th>quantite</th>
-            <th>Produit</th>
-            <th>commande prête</th>
-         </tr>
+            <th> Id commande </th>
+            <th> Date </th>
+            <th> Montant </th>
+            <th>Id acheteur</th>
+            <th></th>
+        </tr>
     </thead>
-    {% for com in comlist %}
+    <tbody>
+        {% for commande in listecommandes %}
+        <tr>
+
+            <th>{{commande.commande_id }}</th>
+            <th>{{commande.date }}</th>
+            <th>{{commande.montant}}</th>
+            <th>{{commande.personne.nom}}</th>
+            {% if commande.statut is 1 %}
+            <td>
+                <button type="button" class="btn btn-secondary"><a href="{% url 'terminerCommande' commande.commande_id %}"> Commande
+                        retirée </a></button>
+            </td>
+            {% else %}
+            <td>
+                <button type="button" class="btn btn-secondary"><a href="{% url 'send_mail_commande' commande.commande_id %}"> Commande
+                        prête </a></button>
+            </td>
+            {% endif %}
+
+            
+        </tr>
+        {% for com in listeproduits %}
         <tr>
             <td>{{com.commande_id }}</td>
             <td>{{com.quantite }}</td>
             <td>{{com.produit.nom}}</td>
+            <td>{{com.produit.stock}}</td>
+            <td></td>
             <td>
                 
                 <button class="btn-formulaire"><a href="{% url 'send_mail_commande' com.commande_id %}">Produit pret</a></button>
             </td>               
         </tr>
-    {% endfor %}
+        {% endfor %}
+{% endfor %}
+</tbody>
 </table>
+{% else %}
+<div class="row justify-content-center text-center">
+    <div class="col-md-6">
+      <p> Vous n'avez pas pas de commandes à préparer.</p>
+    </div>
+  </div>
+  {% endif %}
+
+
 {% endblock %}
