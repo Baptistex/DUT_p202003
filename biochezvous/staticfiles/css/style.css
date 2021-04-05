@@ -1685,7 +1685,7 @@
     .boxEspacePerso:hover {
         transform: scale(1.2);
         box-shadow: none;
-        color: yellow;
+        color: #555555;
     }
     
     .boxEspacePerso i {
@@ -1779,7 +1779,7 @@
     .boxEspacePerso:hover {
         transform: scale(1.2);
         box-shadow: none;
-        color: yellow;
+        color: #555555;
     }
     
     .boxEspacePerso i {
