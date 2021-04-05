@@ -34,10 +34,10 @@
         <td>{{ cmd.statut }}</td>
         <td>{{ cmd.montant }}</td>
         <td>
-          <a href="commande/{{ cmd.commande_id}}"><span class="glyphicon glyphicon-pencil">Détails</span></a>
+          <a href="commande/{{ cmd.commande_id}}">Détails</a>
         </td>
-        <td>
-          <a href="pdf_view/{{ cmd.commande_id}}" target="_blank"><span class="glyphicon glyphicon-pencil">Facture</span></a>
+        <td> 
+          <a href="pdf_view/{{ cmd.commande_id}}" target="_blank">Facture</a>
         </td>
       </tr>
       {% endfor %}
