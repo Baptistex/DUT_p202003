@@ -35,19 +35,19 @@
           <p> ref : {{ elem.produit.produit_id }}</p>
         </td>
         <td>{{ elem.produit.prix }}</td>
-        <td>
+        <td style="user-select: none">
 
-          <a href="decrementerArticlePanier/{{ elem.produit.produit_id }}"><span class="glyphicon glyphicon-pencil"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+          <span style="cursor: pointer;" onclick="ajaxUpdate({{ elem.produit.produit_id }},-1)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-          </svg></span></a>
+          </svg></span>
 
           
-          {{ elem.quantite }}
+          <div style="display : inline;"id="quantite-{{ elem.produit.produit_id }}">{{ elem.quantite }}</div>
 
-          <a href="incrementerArticlePanier/{{ elem.produit.produit_id }}"><span class="glyphicon glyphicon-pencil"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
+          <span style="cursor: pointer;" onclick="ajaxUpdate({{ elem.produit.produit_id }},1)"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
             viewBox="0 0 16 16">
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-          </svg></span></a>
+          </svg></span>
 
           
         </td>
@@ -95,3 +95,33 @@
 
 </div>
 {% endblock %}
+
+{% block morescripts %}
+<script>
+
+function ajaxUpdate(id, amount) {
+    $.ajax({
+        method: "post",
+        url: "{% url 'varierArticlePanier'  %}",
+        data: {
+            'id_produit' : id,
+            'amount' : amount,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success: function(response) {
+          var url_mask = "{% url 'suppressionPanier' id=12345 %}".replace(/12345/, id.toString());
+          if (response["suppression"]==1){
+            location.href = url_mask;
+          } else if (response["suppression"]==2){
+            location.href = "{% url 'panier' %}";
+          }  
+          $("#quantite-"+id).html(response["quantite"]);
+        }
+    });
+}
+
+</script>
+
+{% endblock morescripts %}
+
+
