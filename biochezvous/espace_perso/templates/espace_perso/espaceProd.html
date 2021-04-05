@@ -3,46 +3,55 @@
 {% block title %}Espace Producteur{% endblock %}
 {% block content %}
 <div class="container admin">
-    <div class="row">
-        <div class="col">
+    <div class="col">
             <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                 <h2>Espace producteur</h2>
             </div>
-        </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="text-center">
-                <a href="{% url 'ajout_categorie' %}" class="espaceadmin">Ajouter une catégorie</a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-sm-12">
-            <div class="text-center">
-                <a href="{% url 'ajout_prod' %}" class="espaceadmin">Ajouter un produits</a>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="text-center">
-                <a href="{% url 'commandeProducteur' %}" class="espaceadmin">Voir les commandes</a>
-            </div>
-        </div>
-        <div class="marge"></div>
-        <div class="col-md-4 col-sm-12">
-            <div class="text-center">
-            
-                <a href="{% url 'informationPerso' %}" class="espaceadmin">Modifier mes infos personnelles</a>
-            </div>
-        </div>
+    <div class="row justify-content-around text-center">
         
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="text-center">
-                <a href="afficherproduit" class="espaceadmin">Liste des produits</a>
-            </div>
+        <a href="{% url 'ajout_categorie' %}" class="col-md-3 boxEspacePerso">                
+            <div class=" ">
+                <i class="icofont-bar-code"></i>
+                <p> Ajouter une catégorie </p>                
+            </div>                
+        </a>
+        
+        <a href="{% url 'informationPerso' %}" class="col-md-3 boxEspacePerso">
+            <div>
+                <i class="icofont-address-book"></i>                
+                <p> Mes informations </p>
+            </div>           
+        </a>
+
+        <div class="col-md-3 boxEspacePerso">
+            <a href="{% url 'ajout_prod_adresse' %}">
+                <i class="icofont-edit"></i>
+                <p> Modifier mon adresse </p>
+            </a>
         </div>
+    </div>
+
+    <div class="row justify-content-around text-center">
+        <a href="{% url 'ajout_prod' %}" class="col-md-3 boxEspacePerso">
+            <div>
+                <i class="icofont-ui-add"></i>
+                <p> Ajouter un produit </p>
+            </div>
+        </a>
+        <a href="{% url 'aff_prod' %}" class="col-md-3 boxEspacePerso">
+            <div>
+                <i class="icofont-listine-dots"></i>
+                <p> Liste de mes produits </p>                
+            </div>            
+        </a>
+        <a href="{% url 'commandeProducteur' %}" class="col-md-3 boxEspacePerso">
+            <div>
+                <i class="icofont-list"></i>
+                <p> Voir les commandes </p>                
+            </div>            
+        </a>
+
     </div>
     
 </div>
