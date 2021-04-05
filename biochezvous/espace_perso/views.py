@@ -395,8 +395,6 @@ def suppressionPanier(request, id):
     return redirect('panier')
 
 #@permission_required ('espace_perso.can_view_espace_perso', login_url='connexion')
-
-
 def varierArticlePanier(request):
     if request.is_ajax():
         id = request.POST.get("id_produit", None)
