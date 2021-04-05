@@ -154,7 +154,6 @@ class AdresseModifForm(ModelForm):
     def save(self, commit=True):
         instance = super().save(commit)
         instance.lat, instance.lon = getCoords(instance.adresse, instance.ville, instance.code_postal)
-        instance.save(commit)
         return instance
 
     class Meta:

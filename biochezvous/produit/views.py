@@ -3,8 +3,13 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.forms import FormSelectionQuantite
+from espace_perso.models import Personne, Producteur, Adresse
+from .forms import ProduitForm, ImageForm, ContactForm
+from espace_perso.utils import great_circle_vec
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail, BadHeaderError
 from espace_perso.models import Personne, Producteur, Adresse, Preference
-from .forms import ProduitForm, ImageForm, CategorieForm
+from .forms import ProduitForm, ImageForm, CategorieForm,TypeProduitForm
 from espace_perso.utils import great_circle_vec
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import permission_required
@@ -167,18 +172,24 @@ def liste_produit(request):
 
 
 def ajout_prod(request):
-    personne_id = request.user.pk
-    u = Producteur.objects.get(personne_ptr_id=personne_id)
-    if request.method == 'POST':
-        form = ProduitForm(request.POST, request.FILES)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.producteur = u
-            instance.save()
-            #TODO: changer la redirection
-            return redirect('/accueilEspaceProducteur')
-    else:
-        form = ProduitForm()
+    try:
+        personne_id = request.user.pk
+        adresse = Adresse.objects.get(personne_id=personne_id)
+        u = Producteur.objects.get(personne_ptr_id=personne_id)
+        if(adresse.lat !=0 and adresse.lon !=0):
+            if request.method == 'POST':
+                form = ProduitForm(request.POST, request.FILES)
+                if form.is_valid():
+                    instance = form.save(commit=False)
+                    instance.producteur = u
+                    instance.save()
+                    return redirect('aff_prod')
+            else:
+                form = ProduitForm()
+        else:
+            return redirect('ajout_prod_adresse')
+    except  Adresse.DoesNotExist:
+        return redirect('ajout_prod_adresse')
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def aff_prod(request):
@@ -300,6 +311,24 @@ def deleteOneProd(request,id):
         }
     return HttpResponse(template.render(context,request))
 
+def email(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['biochezvous.iut@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('thanks')
+    return render(request, "produit/base.html", {'form': form})
+
+def thanks(request):
+    return HttpResponse('Merci pour votre message')
 def ajout_categorie(request):
     if request.method == 'POST':
         form = CategorieForm(request.POST, request.FILES)
@@ -324,3 +353,15 @@ def ajout_preference(request, produit):
         return redirect('/connexion')
 
     return HttpResponseRedirect('/produits')
+
+def addType(request):
+    if request.method == 'POST':
+        form = TypeProduitForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            #TODO: changer la redirection
+            return redirect('espace_admin')
+    else:
+        form = TypeProduitForm()
+    return render(request, 'produit/ajout_typeProduit.html', {'form': form})
