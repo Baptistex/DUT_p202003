@@ -368,7 +368,7 @@ def ajout_preference(request, produit):
     else:
         return redirect('/connexion')
 
-    return HttpResponseRedirect('/produits')
+    return HttpResponseRedirect('/catalogue')
 
 def addType(request):
     if request.method == 'POST':
