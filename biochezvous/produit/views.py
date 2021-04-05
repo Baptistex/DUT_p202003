@@ -68,7 +68,8 @@ def catalogue(request):
     if request.user.is_authenticated :
         mesPref = Preference.objects.filter(personne=request.user)
         produits_pref = Produit.objects.filter(preference__in=mesPref)
-
+    else : 
+        produits_pref = ""
     context = {
         'lesproduits': images_produit,
         'produits_pref' : produits_pref,

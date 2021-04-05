@@ -65,11 +65,7 @@
                         <li><a href="{% url 'connexion' %}"><i class="icofont-login"></i></a></li>
                     {% endif %}
                     <li><a href="{% url 'espacePerso' %}"><i class="icofont-boy"></i></a></li>
-                    <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
-                    <li><a href="{% url 'deconnexion' %}"><i class="icofont-logout"></i></a></li>
 
-                    <li><a href="{% url 'rediriger_utilisateur' %}"><i class="icofont-boy"></i></a></li>
-                    
                     {% if button.buttonDeco%}
                         <li><a href="{% url 'panier' %}"><i class="icofont-spoon-and-fork"></i></a></li>
                     {% else %}
