@@ -103,15 +103,17 @@
                     {% if button.buttonDeco%}
                         <div class="col-lg-3 col-md-6 bloc-footer">
                             <div class="info-box mb-4">
-                                <i class="icofont-sign-out"><a href="{% url 'deconnexion' %}"></a></i>
+                                <i class="icofont-sign-out"></i>
                                 <h3>Déconnexion</h3>
+                                <a href="{% url 'deconnexion' %}">Se déconnecter !</a>
                             </div>
                         </div>
                     {% else %}
                         <div class="col-lg-3 col-md-6 bloc-footer">
                             <div class="info-box mb-4">
-                                <i class="icofont-sign-in"><a href="{% url 'connexion' %}"></a></i>
+                                <i class="icofont-sign-in"></i>
                                 <h3>Connexion</h3>
+                                <a href="{% url 'connexion' %}">Se connecter !</a>
                             </div>
                         </div>
                     {% endif %}
