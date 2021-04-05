@@ -3,21 +3,20 @@
 {% block title %}Données personnelles{% endblock %}
 
 {% block content %}
-<br>
 <div class="container-fluid">
 
     <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
-        <h3>Ajout d'une adresse</h3>
+        <h2>Ajout d'une adresse</h2>
     </div>
-    <div class="row d-flex justify-content-center">
-        <div class="d-flex justify-content-center">
+    <div class="row">
+        <div class="col formulaire">
             <div class="form-group"> 
-            <form  method="post" >
-                {% csrf_token %}
-                {{ form.as_p }}
-                <br>
-                <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
-            </form>
+                <form  method="post" >
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+                    <button class="btn-formulaire" type="submit">Enregistrer les modifications</button>
+                </form>
             </div>
         </div>
     </div>
