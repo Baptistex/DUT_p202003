@@ -7,14 +7,10 @@ from espace_perso.models import Producteur, Personne
 # Create your views here.
 
 def accueil(request):
-    template = loader.get_template('accueil/index.html')
-
     images_produit = Image.objects.filter(priorite=1)[:6]
     producteur = Producteur.objects.all()
     produit = Produit.objects.all()
     client = Personne.objects.all()
-    print(images_produit)
-
     context = {
         'lesfraicheurs': images_produit,
         'nb_producteur' : len(producteur),
@@ -22,7 +18,7 @@ def accueil(request):
         'nb_happyClient': len(client),
         'nb_produit':len(produit),
     }
-    return HttpResponse(template.render({},request))
+    return render(request, 'accueil/index.html', context)
 
 
 def propos(request):
