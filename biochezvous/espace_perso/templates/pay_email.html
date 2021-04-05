@@ -1,12 +1,22 @@
-{% autoescape off%} 
-<p style="background-color=red">Bonjour {{user.prenom}},  👋 
+<!DOCTYPE html>
+<html>
 
-Votre paiement a bien été pris en compte. Votre commande n°{{command}} a été validée. Vous recevrez un mail lorsqu’elle sera prête.
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initia-scale=1.0">
+    <title>{{title}}</title>
+</head>
 
-Votre commande contient :
-{{contenu}}
+<body>
+    <p>Bonjour {{user.prenom}}, 👋 <br>
+        <br>
 
-Merci d’avoir commandé.
-À bientôt sur BioChezVous !</p>
+        Votre paiement a bien été pris en compte. Votre commande n°{{command}} a été validée. Vous recevrez un mail lorsqu’elle sera prête.<br>
+        <br>
+        Merci d’avoir commandé.<br>
+        <br>
+        À bientôt sur BioChezVous !
+    </p>
+</body>
 
-{% endautoescape%}
+</html>

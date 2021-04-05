@@ -1,9 +1,22 @@
-{% autoescape off%} 
-Bonjour {{user.prenom}},  👋 
+<!DOCTYPE html>
+<html>
 
-Votre commande n°{{command}} est prête ! Vous pouvez venir retirer votre commande directement chez votre producteur !
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initia-scale=1.0">
+    <title>{{title}}</title>
+</head>
 
-Merci pour votre confiance.
-À bientôt sur BioChezVous !
+<body>
+    <p>Bonjour {{user.prenom}}, 👋 <br>
+        <br>
 
-{% endautoescape%}
+        Votre commande n°{{command}} est prête ! Vous pouvez venir retirer votre commande directement chez votre producteur !<br>
+        <br>
+        Merci pour votre confiance.<br>
+        <br>
+        À bientôt sur BioChezVous !
+    </p>
+</body>
+
+</html>

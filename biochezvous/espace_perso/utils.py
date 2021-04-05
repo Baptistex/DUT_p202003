@@ -1,11 +1,12 @@
 from django.core.mail import send_mail
 from .models import Utilisateur,Personne,Producteur
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from django.shortcuts import render, redirect
+from django.utils.html import strip_tags
 
 
 
@@ -30,12 +31,15 @@ def send_mail_pay(request):
     command = command.commande_id
     mail_subject = 'Votre commande a bien été prise en compte'
     message = render_to_string('pay_email.html', {
+            'title': 'Commande validé',
             'user': user,
             'command': command,
             })
-    email = EmailMessage(
+    text_content = strip_tags(message)
+    email = EmailMultiAlternatives(
             mail_subject, message, to=[mail]
     )
+    email.attach_alternative(message, "text/html")
     email.send()
 
 def send_mail_cmd(user, commande_id):

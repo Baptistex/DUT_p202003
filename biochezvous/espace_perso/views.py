@@ -13,7 +13,7 @@ from .forms import FormInscription, FormConnexion, FormDataModification, FormIns
 from .utils import send_mail_pay
 from .utils import send_mail_cmd
 from .tokens import account_activation_token
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
@@ -25,6 +25,7 @@ from .forms import FormInscription, FormConnexion, FormDataModification, FormIns
 from produit.models import Commande, ContenuCommande, Panier, Produit
 from produit.models import Image
 from datetime import datetime
+from django.utils.html import strip_tags
 
 
 from django.shortcuts import render
@@ -116,10 +117,12 @@ def inscription_user(request):
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':account_activation_token.make_token(user),
             })
+            text_content = strip_tags(message)
             to_email = form.cleaned_data.get('mail')
-            email = EmailMessage(
+            email = EmailMultiAlternatives(
                         mail_subject, message, to=[to_email]
             )
+            email.attach_alternative(message, "text/html")
             email.send()
             return HttpResponse('Veuillez confirmer votre adresse mail pour finaliser votre inscription')
             #TODO: changer la redirection
@@ -139,7 +142,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        redirect('/connexion')
+        #redirect('/connexion')
         return HttpResponse('Merci pour votre confirmation par e-mail. Maintenant vous pouvez vous connecter à votre compte.')
     else:
         print(token)

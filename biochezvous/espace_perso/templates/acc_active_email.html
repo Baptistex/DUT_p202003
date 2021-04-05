@@ -1,12 +1,23 @@
-{% autoescape off%} 
-Bonjour {{user.prenom}}, 
+<!DOCTYPE html>
+<html>
 
-Aller ! Encore un dernier effort 💪 ! Il vous reste à confirmer votre mail pour finaliser votre inscription. 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initia-scale=1.0">
+    <title>{{title}}</title>
+</head>
 
-Cliquez ici !
+<body>
+    <p>Bonjour {{user.prenom}}, <br>
+        <br>
+        Aller ! Encore un dernier effort 💪 ! Il vous reste à confirmer votre mail pour finaliser votre inscription. <br>
+        <br>
+        <a href="http://localhost:8000{% url 'activate' uidb64=uid token=token %} ">Cliquez ici !</a><br>
+        <br>
 
-http://localhost:8000{% url 'activate' uidb64=uid token=token %} 
 
-À bientôt chez BioChezVous
+        À bientôt chez BioChezVous
+    </p>
+</body>
 
-{% endautoescape%}
+</html>
