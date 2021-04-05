@@ -265,6 +265,7 @@ def informationPerso(request):
             form = FormDataModifProd(request.POST, request.FILES, instance=u.producteur)
             if form.is_valid():
                 form.save()
+                return redirect('espacePerso')
         context = {'form':form}
         return render(request, 'espace_perso/informationProd.html', context)
 
@@ -275,6 +276,7 @@ def informationPerso(request):
             form = FormDataModification(request.POST, instance=u)
             if form.is_valid():
                 form.save()
+                return redirect('espacePerso')
         context = {'formG':form}
         return render(request, 'espace_perso/informationPerso.html', context)
 
