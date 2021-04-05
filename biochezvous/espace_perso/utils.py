@@ -49,9 +49,11 @@ def send_mail_cmd(user, commande_id):
             'user': user,
             'command': commande_id,
             })
-    email = EmailMessage(
+    text_content = strip_tags(message)
+    email = EmailMultiAlternatives(
             mail_subject, message, to=[mail]
     )
+    email.attach_alternative(message, "text/html")
     email.send()
 
 import requests
