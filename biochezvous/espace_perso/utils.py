@@ -46,6 +46,7 @@ def send_mail_cmd(user, commande_id):
     mail = user.mail
     mail_subject = 'Votre commande est prête'
     message = render_to_string('command_email.html', {
+            'title': 'La commande est prête',
             'user': user,
             'command': commande_id,
             })
