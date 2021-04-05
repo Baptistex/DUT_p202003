@@ -53,7 +53,7 @@
     
                 <!--Liste des commandes-->
                 <li>
-                    <!-- <a href="transactions"> -->
+                    <a href="{% url 'orderslist' %}">
                         <i class="bi bi-upc">
                             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-upc" viewBox="0 0 16 16">
                                 <path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z"/>
@@ -95,10 +95,7 @@
             <th>Identifiant</th>
             <th>Adresse mail</th>
             <th>Téléphone</th>
-            <th>
-                {% url 'deleteUser' as the_url %}
-                <button class="btn supp" id="btnSuppr" ><a href="{{ the_url }}">Supprimer tous les utilisateurs</a></button>
-            </th>
+            <th>Supprimer</th>
          </tr>
     </thead>
     {% for user in userlist %}
@@ -110,7 +107,13 @@
             <td>{{user.num_tel }}</td>
             <td>
                 {% url 'deleteOneUser' user.personne_id as the_url %}
-                <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Supprimer l'utilisateur</a></button>
+                <a href="{{ the_url }}" style="padding-left: 25px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                        class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                    </svg>
+                </a>            
             </td>
         </tr>
     {% endfor %}

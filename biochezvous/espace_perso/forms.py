@@ -21,7 +21,7 @@ class FormInscription(UserCreationForm):
 
 class FormConnexion(AuthenticationForm):
     username=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 container-fluid'}))
-    password=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 container-fluid'}))
+    password=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 container-fluid','type':'password'}))
     class Meta:
         model = Personne
         fields = ['username', 'password']
