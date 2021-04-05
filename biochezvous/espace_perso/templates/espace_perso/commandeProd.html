@@ -1,0 +1,28 @@
+{% extends "produit/base.html"%}
+{% load static %}
+
+{% block title %}Liste des commandes {% endblock %}
+
+{% block content %}
+ <table id="table" class="table table-hover table-mc-light-blue">
+    <thead>
+        <tr>
+            <th>Identifiant</th>
+            <th>quantite</th>
+            <th>Produit</th>
+            <th>commande prête</th>
+         </tr>
+    </thead>
+    {% for com in comlist %}
+        <tr>
+            <td>{{com.commande_id }}</td>
+            <td>{{com.quantite }}</td>
+            <td>{{com.produit.nom}}</td>
+            <td>
+                
+                <button class="btn btn-primary"><a href="{% url 'send_mail_commande' com.commande_id %}">Produit pret</a></button>
+            </td>               
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

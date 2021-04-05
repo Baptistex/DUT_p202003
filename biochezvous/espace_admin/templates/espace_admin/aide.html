@@ -1,6 +1,6 @@
 {% extends "produit/base.html" %}
 {% load static %}
-{% block title %}Espace Administrateur - Demandes d'aide{% endblock %}
+{% block title %}Demandes d'aide{% endblock %}
 {% block content %}
 <div class="container admin">
     <div class="row">
@@ -12,13 +12,65 @@
         </div>
     </div>
 
-    <!--Menu à revoir-->
+    <!--Menu-->
     <nav class="navigation">
         <ul>
-            <li><a href="listeUtilisateurs"><i class="icofont-ui-user"></i></a></li>
-            <li><a href="transactions"><i class="icofont-envelope"></i></a></li>
-            <li><a href="transactions"><i class="icofont-exchange"></i></a></li>
-            <li><a href="transactions"><i class="icofont-help-robot"></i></a></li>
+            <!--Accueil-->
+            <li>
+                <a href="accueilAdmin">
+                    <i class="bi bi-person-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                    </i>
+                </a>
+            </li>
+
+            <!--Liste d'utilisateurs-->
+            <li>
+                <a href="userlist">
+                    <i class="bi bi-person-lines-fill">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+                        </svg>
+                    </i>
+                </a>
+            </li>
+
+            <!--Demandes SAV-->
+            <li>
+                <a href="listeAides">
+                    <i class="bi bi-card-checklist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                    </i>
+                </a>
+            </li>
+
+            <!--Liste des commandes-->
+            <li>
+                <a href="transactions">
+                    <i class="bi bi-upc">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-upc" viewBox="0 0 16 16">
+                            <path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z"/>
+                        </svg>
+                    </i>
+                </a>
+            </li>
+            
+            <!--Mettre un client en producteur-->
+            <li>
+                <a href="clientlist">
+                    <i class="bi bi-arrow-down-up">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                    </i>
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -46,17 +98,15 @@
             <!--Répondre à la demande-->
             <td>
                 <a class="" href="" data-toggle="modal" data-target="#popup{{demande.message_id}}" data-popup-url="">
-                    <span class="glyphicon glyphicon-home"  style="padding-left: 35px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
-                            class="bi bi-reply-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M5.921 11.9L1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
-                        </svg>
-                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
+                        class="bi bi-reply-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M5.921 11.9L1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
+                    </svg>
                 </a>
 
                 <!--Modal pour voir et répondre à la demande d'aide-->
-                <div id="popup{{demande.message_id}}" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="exampleModalCenterTitle{{demande.prenom}}" data-popup-url="">
+                <div id="popup{{demande.message_id}}" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="ModalCenterTitle{{demande.prenom}}" data-popup-url="">
                     <div class="modal-dialog modal-lg">
                       <div class="modal-content">
                         <div class="modal-body">
@@ -94,13 +144,11 @@
             <td>
                 {% url 'deleteDemande' demande.message_id as the_url %}
                 <a href="{{ the_url }}">
-                    <span class="glyphicon glyphicon-pencil" style="padding-left: 30px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
-                            class="bi bi-trash-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                        </svg>
-                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
+                        class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                    </svg>
                 </a>
             </td>
         </tr>

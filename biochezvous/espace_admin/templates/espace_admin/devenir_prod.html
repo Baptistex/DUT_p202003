@@ -1,15 +1,17 @@
 {% extends "produit/base.html" %}
 {% load static %}
 
-{% block title %}Liste des utilisateurs{% endblock %}
+{% block title %}Changer client{% endblock %}
 {% block content %}
+
 <div class="container admin">
     <div class="row">
         <div class="col">
             <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                 <h2>Espace Administrateur</h2><br>
-                <h3>Liste d'utilisateurs inscrit</h3>
+                <h3>Liste de clients</h3>
             </div>
+            <p class="text-center">Vous pouvez mettre un utilisateur en producteur, la personne recevra alors un mail !</p>
         </div>
     </div>
 
@@ -74,31 +76,32 @@
             </li>
         </ul>
     </nav>
-    
- <table id="table" class="table table-responsive-sm table-hover table-mc-light-blue">
+ <table id="table" class="table table-hover table-mc-light-blue">
     <thead>
         <tr>
             <th>Nom</th>
             <th>Prénom</th>
-            <th>Identifiant</th>
-            <th>Adresse mail</th>
+            <th>Mail</th>
             <th>Téléphone</th>
-            <th>
-                {% url 'deleteUser' as the_url %}
-                <button class="btn supp" id="btnSuppr" ><a href="{{ the_url }}">Supprimer tous les utilisateurs</a></button>
-            </th>
+            <th>Passer en producteur</th>
          </tr>
     </thead>
-    {% for user in userlist %}
+    {% for client in clientlist %}
         <tr>
-            <td>{{user.nom }}</td>
-            <td>{{user.prenom }}</td>
-            <td>{{user.personne_id }}</td>            
-            <td>{{user.mail }}</td>
-            <td>{{user.num_tel }}</td>
+            <td>{{client.nom }}</td>
+            <td>{{client.prenom}}</td>     
+            <td>{{client.mail }}</td>
+            <td>{{client.num_tel }}</td>
             <td>
-                {% url 'deleteOneUser' user.personne_id as the_url %}
-                <button class="btn supp" id="btnSuppr"><a href="{{ the_url }}">Supprimer l'utilisateur</a></button>
+                {% url 'devenirPro' client.personne_id as the_url %}
+                <a href="{{ the_url }}">
+                    <span class="bi bi-plus-circle" style="padding-left: 60px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#00ffc6" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </span>
+                </a>            
             </td>
         </tr>
     {% endfor %}

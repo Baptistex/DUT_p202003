@@ -151,3 +151,4 @@ def addition(value, arg):
             return value + arg
         except Exception:
             return ''
+

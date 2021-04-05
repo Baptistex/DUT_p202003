@@ -1,44 +1,31 @@
-{% extends "produit/base.html" %}
+{% extends "produit/base.html"%}
 {% load static %}
-{% block title %}Modification des images{% endblock %}
 
+{% block title %}Mon espace{% endblock %}
 
 {% block content %}
-<br>
-<div class="text-center">
-<h3>Ajout d'une image</h3>
-</div>
-<br>
-<table align="center" class="sort-table">
-    
-    <tbody id="tb">
-        {% for img in images_produits  %}
-            <tr priorite="{{ img.priorite}}">
-                <td class="hello">{{ img.priorite }}</td>
-                <td><span class="glyphicon glyphicon-resize-vertical sort-img"> </span></td>
-                <td class="align-center" ><img class="sort-img" src ="{{MEDIA_URL}}{{ img.image }}"/></td>
-                {% if images_produits.count > 1 %}
-                <td><a href="{% url 'suppr_prod_image' img.id%}"><span class="glyphicon glyphicon-trash"> </span></a></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
 
-    </tbody>
-</table>
-{% if images_produits.count > 0 %}
-<div class="text-center">
-    <button class="btn btn-primary" type="button" onclick="ajaxUpdate()">Mettre à jour l'ordre</button>
+
+<div class="container-fluid">
+
+    <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Espace personnel du producteur</h2>
+    </div>
+<div class="row d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
+        <div class="form-group">
+            <form  method="post" enctype="multipart/form-data" id="formUpload">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+                <button class="btn btn-primary" type="submit">Enregistrer mes infos</button>
+            </form>
+        </div>
+    </div>
 </div>
-{% endif %}
-{% if images_produits.count < 3 %}
-    <br>
-    <form class="text-center" method="post" enctype="multipart/form-data" id="formUpload">
-        {% csrf_token %}
-        {{ form }}
-        <br>
-        <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
-    </form>
-    <div class="modal fade" id="modalCrop">
+</div>
+
+<div class="modal fade" id="modalCrop">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -64,42 +51,13 @@
                 </div>
             </div>
         </div>
-    </div>    
-
-
-
-{% endif %}
+    </div>
 
 {% endblock %}
+
 {% block morescripts %}
-
 <script>
-$('.sort-table tbody').sortable({
-    handle: '.sort-img',
-    placeholder: "ui-state-highlight",
-    //opacity: 0.9,
-});
-$( ".sort-table" ).disableSelection();
-
-function ajaxUpdate() {
-    var order       =   $('.sort-table tbody').sortable('toArray', { attribute: 'priorite'}); 
-    sortOrder=order.join(',');
-    $.ajax({
-        method: "post",
-        url: "{% url 'update_image_priorite'  %}",
-        data: {
-            'id_produit' : {{id_produit}},
-            'order' : sortOrder,
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-        },
-        success: function(response) {
-            location.href = "{% url 'ajout_prod_image' id_produit %}";
-        }
-    });
-}
-</script>
-<script>
-    $(function () {
+$(function () {
 
     /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
     $("#id_image").change(function () {
@@ -117,6 +75,7 @@ function ajaxUpdate() {
         $("#id_image").val(null);
     }
     });
+
     /* SCRIPTS TO HANDLE THE CROPPER BOX */
     var $image = $("#image");
     var cropBoxData;
@@ -153,9 +112,10 @@ function ajaxUpdate() {
         $("#id_y").val(cropData["y"]);
         $("#id_height").val(cropData["height"]);
         $("#id_width").val(cropData["width"]);
-        $("#formUpload").submit();
+        $("#modalCrop").modal("hide");
     });
 
     });
 </script>
 {% endblock morescripts %}
+

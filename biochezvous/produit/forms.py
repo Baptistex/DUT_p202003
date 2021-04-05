@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from .models import Image, TypeProduit, Categorie, Produit
 from espace_perso.models import Producteur, Personne
-
+from PIL import Image as PILImage
 
 
 
@@ -43,13 +43,32 @@ class ProduitForm(ModelForm):
 #Formulaire pour ajouter des images a un produit
 class ImageForm(ModelForm):
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png")
-    priorite=forms.CharField(initial='1',widget=forms.HiddenInput())
-    produit = forms.ModelChoiceField(queryset=Produit.objects.all(),
-                                    to_field_name = 'nom',
-                                    empty_label="Produit à selectionner")
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    width = forms.FloatField(widget=forms.HiddenInput())
+    height = forms.FloatField(widget=forms.HiddenInput())
+
     class Meta:
         model = Image
-        fields = ['image','produit','priorite']
+        fields = ['image', 'x', 'y', 'width', 'height']
+    def save(self, priorite, produit_id):
+
+        instance = super(ImageForm, self).save(commit=False)
+        instance.priorite = priorite
+        instance.produit_id = produit_id
+        
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('width')
+        h = self.cleaned_data.get('height')
+        image = PILImage.open(instance.image)
+        cropped_image = image.crop((x, y, w+x, h+y))
+        resized_image = cropped_image.resize((200, 200), PILImage.ANTIALIAS)
+        instance.save()
+        resized_image.save(instance.image.path)
+        return instance
+
+
 
 class CategorieForm(ModelForm):
     nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
@@ -60,3 +79,18 @@ class CategorieForm(ModelForm):
     class Meta:
         model=Categorie
         fields = ['nom','typeProduit']
+
+
+class TypeProduitForm(ModelForm):
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    tva=forms.CharField(initial='0.1',widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+
+    class Meta:
+        model=TypeProduit
+        fields = ['nom','tva']
+
+
+class ContactForm(forms.Form):
+    from_email = forms.EmailField(label='',widget=forms.TextInput(attrs={'placeholder':'Votre email'}), required=True)
+    subject = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder':'Objet'}), required=True)
+    message = forms.CharField(label='',widget=forms.Textarea(attrs={'placeholder':'Message'}))
