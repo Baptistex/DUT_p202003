@@ -22,4 +22,5 @@ urlpatterns = [
     
     path('update_image_priorite', views.update_image_priorite, name='update_image_priorite'),
     path('produit/<int:id>/', views.deleteOneProd, name='deleteOneProd'),
+     path('produit/<int:id>/', views.ajout_prod_image, name='imageProd'),
 ] 

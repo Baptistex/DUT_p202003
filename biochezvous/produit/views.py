@@ -174,7 +174,7 @@ def ajout_prod(request):
             instance.producteur = u
             instance.save()
             #TODO: changer la redirection
-            return redirect('accueilEspaceProducteur')
+            return redirect('/accueilEspaceProducteur')
     else:
         form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
