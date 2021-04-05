@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from .models import Demandes
 from .forms import FormAideReponse
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.utils.html import strip_tags
 
 #Accueil
 def espace_admin(request):
@@ -115,22 +117,20 @@ def util_aide(request):
     if request.method == "POST":
         form = FormAideReponse(request.POST)
         if form.is_valid():
-
+            
             objet = form.cleaned_data['objet']
             message = form.cleaned_data['message']
             destinataire = form.cleaned_data['destinataire']
 
-            send_mail(
-                objet,
-                message,
-                'sav.biochezvous@gmail.com',
-                (destinataire,),
-                fail_silently=False, 
-                auth_user=None, 
-                auth_password=None, 
-                connection=None, 
-                html_message=None
+            html_content = render_to_string("aide_reponse.html", {'title':'test mail','content':message})
+            text_content = strip_tags(html_content)
+
+
+            email = EmailMultiAlternatives(
+                        objet, message, to=[destinataire]
             )
+            email.attach_alternative(html_content, "text/html")
+            email.send()
 
         return redirect('/listeAides')
     else:
