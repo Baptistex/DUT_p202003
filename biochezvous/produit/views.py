@@ -167,18 +167,24 @@ def liste_produit(request):
 
 
 def ajout_prod(request):
-    personne_id = request.user.pk
-    u = Producteur.objects.get(personne_ptr_id=personne_id)
-    if request.method == 'POST':
-        form = ProduitForm(request.POST, request.FILES)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.producteur = u
-            instance.save()
-            #TODO: changer la redirection
-            return redirect('/accueilEspaceProducteur')
-    else:
-        form = ProduitForm()
+    try:
+        personne_id = request.user.pk
+        u = Adresse.objects.get(personne_id=personne_id)
+        if(u.lat !=0 and u.lon !=0):
+            if request.method == 'POST':
+                form = ProduitForm(request.POST, request.FILES)
+                if form.is_valid():
+                    instance = form.save(commit=False)
+                    instance.producteur = u
+                    instance.save()
+                    #TODO: changer la redirection
+                    return redirect('/accueilEspaceProducteur')
+            else:
+                form = ProduitForm()
+        else:
+            return redirect('informationPerso')
+    except  Adresse.DoesNotExist:
+        return redirect('informationPerso')
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
 def aff_prod(request):
