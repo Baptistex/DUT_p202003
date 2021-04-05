@@ -7,9 +7,7 @@ urlpatterns = [
     path('clientlist', views.clientlist, name='clientlist'),
     path('personne/<int:id>', views.devenirPro, name='devenirPro'),
     path('listeAides', views.util_aide, name='listeAides'),
-    path('personne/', views.delete_user, name='delete_user'),
     path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
     path('demande/<int:msg_id>/', views.deleteDemande, name='deleteDemande'),
     path('orderslist', views.listeCommande, name='orderslist'),
-    #path('detailsCommande/<int:id>/', views.detailsCommande, name='detailsCommande'),
 ]

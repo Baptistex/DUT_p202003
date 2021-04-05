@@ -83,10 +83,7 @@
             <th>Identifiant</th>
             <th>Adresse mail</th>
             <th>Téléphone</th>
-            <th>
-                {% url 'deleteUser' as the_url %}
-                <button class="btn supp" id="btnSuppr" ><a href="{{ the_url }}">Supprimer tous les utilisateurs</a></button>
-            </th>
+            <th>Supprimer</th>
          </tr>
     </thead>
     {% for user in userlist %}
@@ -98,7 +95,7 @@
             <td>{{user.num_tel }}</td>
             <td>
                 {% url 'deleteOneUser' user.personne_id as the_url %}
-                <a href="{{ the_url }}" style="padding-left: 60px;">
+                <a href="{{ the_url }}" style="padding-left: 25px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
                         class="bi bi-trash-fill" viewBox="0 0 16 16">
                         <path
