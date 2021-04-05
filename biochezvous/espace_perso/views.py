@@ -349,7 +349,6 @@ def suppressionPanier(request, id):
         Justine Fouillé
     """
     #gérer le fait que ce soit les articles pour l'utilisateur donné 
-    print("hiid")
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
     produitDuPanier = panier.get(produit_id=id)

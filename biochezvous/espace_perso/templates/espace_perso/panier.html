@@ -29,7 +29,7 @@
     <tbody>
       {% for elem in panier %}
       <tr>
-          <th scope="row" style="width: 6%;"> <img src="{{MEDIA_URL}}{{ elem.produit.main_image.image}} " class="img-thumbnail w-100"  alt=""></th>
+          <th scope="row" style="width: 6%;"> <a href="{% url 'produit' elem.produit.produit_id %}"><img src="{{MEDIA_URL}}{{ elem.produit.main_image.image}} " class="img-thumbnail w-100"  alt=""></a></th>
         <td>
           <p> {{ elem.produit.nom }}</p>
           <p> ref : {{ elem.produit.produit_id }}</p>
@@ -53,7 +53,7 @@
         </td>
         <td>{{ elem.produit.prix|mul:elem.quantite }}</td>
         <td>
-          <a href="suppressionPanier/{{ elem.produit.produit_id }}"><span class="glyphicon glyphicon-pencil"> <svg
+          <a href="{% url 'suppressionPanier' elem.produit.produit_id %}"><span class="glyphicon glyphicon-pencil"> <svg
                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill"
                 viewBox="0 0 16 16">
                 <path
