@@ -24,21 +24,30 @@ class CategorieForm(ModelForm):
 #A changer pour que le choix du producteur se fasse automatiquement
 class ProduitForm(ModelForm):
     nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    quantite=forms.IntegerField(label="Quantité disponible",widget=forms.NumberInput(attrs={'class': 'form-control col-md-12 '}))
     unit=forms.CharField(initial='(ex:Kg)',label="Unité du produit",widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    prix=forms.FloatField(label="Prix",widget=forms.NumberInput(attrs={'class': 'form-control col-md-12 '}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control col-md-12 '}))
     date=forms.CharField(initial='aaaa-mm-jj',widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
-
-    #TODO : modifier la foreignkey du modele produit 
-
-
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all(),
                                     to_field_name = 'nom',
                                     empty_label="Nom de la categorie",)                                
     
     class Meta:
         model = Produit
-        fields = ['nom','quantite', 'prix', 'unit', 'description','categorie','quantite','date']
+        fields = ['nom', 'quantite', 'unit', 'prix', 'description','categorie','quantite','date']
         
+
+class FormModifProduit(ModelForm):
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}), disabled=True)
+    quantite=forms.IntegerField(label="Quantité disponible",widget=forms.NumberInput(attrs={'class': 'form-control col-md-12 '}))
+    unit=forms.CharField(label="Unité du produit",widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}), disabled=True)
+    prix=forms.FloatField(label="Prix",widget=forms.NumberInput(attrs={'class': 'form-control col-md-12 '}), disabled=True)
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control col-md-12 '}))
+    date=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    class Meta:
+        model = Produit
+        fields = ['nom', 'quantite', 'unit', 'prix', 'description','quantite','date'] 
 
 #Formulaire pour ajouter des images a un produit
 class ImageForm(ModelForm):

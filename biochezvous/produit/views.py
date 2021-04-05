@@ -4,7 +4,7 @@ from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.forms import FormSelectionQuantite
 from espace_perso.models import Personne, Producteur, Adresse
-from .forms import ProduitForm, ImageForm, ContactForm
+from .forms import ProduitForm, ImageForm, ContactForm, FormModifProduit
 from espace_perso.utils import great_circle_vec
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail, BadHeaderError
@@ -192,15 +192,31 @@ def ajout_prod(request):
         return redirect('ajout_prod_adresse')
     return render(request, 'produit/ajout_produit.html', {'form': form})
 
+@permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
+def modif_prod(request, id):
+    personne_id = request.user.pk
+    producteur = request.user.producteur
+    if  producteur.produit_set.filter(pk=id).count() > 0 :
+        if request.method == 'POST':
+            form = FormModifProduit(request.POST, request.FILES, instance = Produit.objects.get(pk=id))
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.save()
+                return redirect('aff_prod')
+        else:
+            form = FormModifProduit(instance = Produit.objects.get(pk=id))
+    else : 
+        redirect('espacePerso')
+    return render(request, 'produit/ajout_produit.html', {'form': form})
+
 def aff_prod(request):
     #u = request.user
     personne_id = request.user.personne_id
-    template = loader.get_template('produit/suppr_produit.html')
     table_prod = Produit.objects.filter(producteur_id=personne_id)
     context = { 
         'prodlist': table_prod
     }
-    return HttpResponse(template.render(context,request))
+    return render(request, 'produit/affichage_produit.html', context)
 
 
 @permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')

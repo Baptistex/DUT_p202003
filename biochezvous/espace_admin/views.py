@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from espace_perso.models import Personne, Utilisateur, Producteur
-from produit.models import Commande
+from produit.models import Commande, ContenuCommande
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from .models import Demandes
@@ -154,3 +154,13 @@ def deleteDemande(request,msg_id):
         }
 
     return HttpResponse(template.render(context,request))
+
+#Liste de toutes les commandes et afficher le détail de chaque commande
+def listeCommande(request):
+
+    context = {}
+    context['commandes'] = Commande.objects.all()   
+    context['contenuCommande'] = ContenuCommande.objects.all()
+
+    return render(request, 'espace_admin/liste_commandes.html',context)
+
