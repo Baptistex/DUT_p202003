@@ -4,7 +4,7 @@ from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.forms import FormSelectionQuantite
 from espace_perso.models import Personne, Producteur, Adresse, Preference
-from .forms import ProduitForm, ImageForm, CategorieForm
+from .forms import ProduitForm, ImageForm, CategorieForm,TypeProduitForm
 from espace_perso.utils import great_circle_vec
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import permission_required
@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import permission_required
 
 
 
-def produit_django(request):
+def catalogue(request):
     """
     Vue qui permet d'afficher les differents produits mis en vente sur le site
     Un bouton permet de filtrer les produits à ceux étant vendus par des producteurs proches
@@ -65,9 +65,11 @@ def produit_django(request):
         return JsonResponse(data=data_dict, safe=False)
 
     images_produit = Image.objects.filter(priorite=1)
-    mesPref = Preference.objects.filter(personne=request.user)
-    produits_pref = Produit.objects.filter(preference__in=mesPref)
-
+    if request.user.is_authenticated :
+        mesPref = Preference.objects.filter(personne=request.user)
+        produits_pref = Produit.objects.filter(preference__in=mesPref)
+    else : 
+        produits_pref = ""
     context = {
         'lesproduits': images_produit,
         'produits_pref' : produits_pref,
@@ -174,7 +176,7 @@ def ajout_prod(request):
             instance.producteur = u
             instance.save()
             #TODO: changer la redirection
-            return redirect('accueilEspaceProducteur')
+            return redirect('/accueilEspaceProducteur')
     else:
         form = ProduitForm()
     return render(request, 'produit/ajout_produit.html', {'form': form})
@@ -322,3 +324,15 @@ def ajout_preference(request, produit):
         return redirect('/connexion')
 
     return HttpResponseRedirect('/produits')
+
+def addType(request):
+    if request.method == 'POST':
+        form = TypeProduitForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            #TODO: changer la redirection
+            return redirect('espace_admin')
+    else:
+        form = TypeProduitForm()
+    return render(request, 'produit/ajout_typeProduit.html', {'form': form})

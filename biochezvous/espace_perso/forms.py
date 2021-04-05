@@ -27,8 +27,6 @@ class FormConnexion(AuthenticationForm):
         fields = ['username', 'password']
 
 class FormInscriptionProd(UserCreationForm):
-    confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
-    newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
     nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     prenom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     mail=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
@@ -37,6 +35,9 @@ class FormInscriptionProd(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
+        #TODO : mettre confirmation a False
+        user.confirmation = True
+        user.newsletter = True
         user.save()
         user.groups.add(prod_group)
         user.save()
@@ -47,12 +48,10 @@ class FormInscriptionProd(UserCreationForm):
         return user
     class Meta:
         model = Producteur
-        fields = ['nom','prenom','mail','num_tel','description','confirmation','newsletter']
+        fields = ['nom','prenom','mail','num_tel','description']
 
 class FormInscriptionUser(UserCreationForm):
     
-    confirmation = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
-    newsletter = forms.BooleanField(widget=forms.HiddenInput(), initial=True) 
     nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     prenom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     mail=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
@@ -60,6 +59,9 @@ class FormInscriptionUser(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         user_group, created = Group.objects.get_or_create(name='utilisateur')
+        #TODO : mettre confirmation a False
+        user.confirmation = True
+        user.newsletter = True
         user.save()
         user.groups.add(user_group)
         user.save()
@@ -73,35 +75,18 @@ class FormInscriptionUser(UserCreationForm):
 
     class Meta:
         model = Personne
-        fields = ['nom','prenom','mail','num_tel','confirmation','newsletter']
+        fields = ['nom','prenom','mail','num_tel']
 
 
 class FormDataModification(ModelForm):
     
     nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     prenom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
-    mail = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
     num_tel = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
-    #TODO Justine : Créer un nouveau formulaire pour l'adresse
-    #adresse = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
-    #ville = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12'}))
-    #code_postal = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6'}))
-
-    #def save(self):
-        #TODO Justine : Ces lignes la seront à mettre dans la vue pour ajouter une adresse
-        #user = super().save(commit=False)
-        #user.lat, user.lon = getCoords(user.adresse, user.ville, user.code_postal)
-        #user.save()
-        #Exemple test :
-        # user1 = request.user
-        # adresse1 = Adresse(code_postal="22300", ville="Lannion", adresse="untestoulapinevarientrouver")
-        # adresse1.lat, adresse1.lon = getCoords(adresse1.adresse, adresse1.ville, adresse1.code_postal)
-        # adresse1.save()
-        # user1.adresse = adresse1
-        # user1.save()
+    
     class Meta:
         model = Personne
-        fields = ['nom','prenom','mail','num_tel',]
+        fields = ['nom','prenom','num_tel',]
 
 
 class FormSelectionQuantite(ModelForm):
@@ -114,7 +99,6 @@ class FormSelectionQuantite(ModelForm):
 class FormDataModifProd(ModelForm):
     
     nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
-    mail=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     num_tel=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control col-md-12 '}))
     image=forms.ImageField(max_length=None,allow_empty_file=".jpg, .jpeg, .png", required=False)
@@ -147,7 +131,7 @@ class FormDataModifProd(ModelForm):
 
     class Meta:
         model = Producteur
-        fields = ['nom','mail','num_tel','description','image','iban', 'x', 'y', 'width', 'height']
+        fields = ['nom','num_tel','description','image','iban', 'x', 'y', 'width', 'height']
     
 class FormAide(forms.ModelForm):
     nom = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-6 container-fluid'}))

@@ -79,3 +79,12 @@ class CategorieForm(ModelForm):
     class Meta:
         model=Categorie
         fields = ['nom','typeProduit']
+
+
+class TypeProduitForm(ModelForm):
+    nom=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+    tva=forms.CharField(initial='0.1',widget=forms.TextInput(attrs={'class': 'form-control col-md-12 '}))
+
+    class Meta:
+        model=TypeProduit
+        fields = ['nom','tva']

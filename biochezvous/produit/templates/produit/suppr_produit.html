@@ -13,6 +13,8 @@
                 <th>Unité</th>
                 <th>quantité</th>
                 <th>Date d'ajout</th>
+                <th>Modifier l'image du produit</th>
+                <th>Supprimer le produit</th>
          </tr>
     </thead>
     {% for prod in prodlist %}
@@ -24,6 +26,10 @@
             <td>{{prod.unit }}</td>
             <td>{{prod.quantite }}</td>
             <td>{{prod.date }}</td>
+            <td>
+                {% url 'ajout_prod_image' prod.produit_id as the_url %}
+                <button class="btn btn-primary"><a href="{{ the_url }}">Modifier l'image</a></button>
+            </td>
             <td>
                 {% url 'deleteOneProd' prod.produit_id as the_url %}
                 <button class="btn btn-primary"><a href="{{ the_url }}">Supprimer le produit</a></button>
