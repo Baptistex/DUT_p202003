@@ -5,6 +5,7 @@
 
 {% block title %}BIO CHEZ VOUS - Nos Produits{% endblock %}
 
+{% block headeropacity %}fixed-top header-transparent{% endblock headeropacity %}
 
 {% block hero %}
     <!-- ======= Hero Section ======= -->
@@ -65,13 +66,15 @@
                 <div class="input-group mb-3">
                     <input id="searchbar" type="text" class="form-control" placeholder="Patate douce ?" aria-label="Patate douce" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn" type="button" onclick="ajaxSearch()">Button</button>
+                        <button class="btn" type="button" onclick="ajaxSearch()">Chercher</button>
                     </div>                    
                 </div>
             </div>
         </section>
         <!-- ======= Portfolio Section ======= -->
+        <section id="prod" class="prod">    
         {% include "produit/produitsearch.html" %}
+        </section>
         <!-- End Portfolio Section -->
 {% endblock %}
 

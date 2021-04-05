@@ -1,13 +1,13 @@
 {% extends "produit/base.html" %}
 {% load static %}
-{% block title %}Demandes d'aide{% endblock %}
+{% block title %}Commandes{% endblock %}
 {% block content %}
 <div class="container admin">
     <div class="row">
         <div class="col">
             <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                 <h2>Espace Administrateur</h2><br>
-                <h3>Les demandes d'aide</h3>
+                <h3>Les commandes</h3>
             </div>
         </div>
     </div>
@@ -85,86 +85,79 @@
             </li>
         </ul>
     </nav>
-
+<br>
+    {% if commandes %}
     <table id="table" class="table table-hover table-mc-light-blue">
-
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Sujet</th>
-                <th>Voir & répondre</th>
-                <th>Supprimer</th>
+                <th>Référence de la commande</th>
+                <th>Numéro client</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th>Montant total</th>
+                <th>Détails</th>
             </tr>
         </thead>
 
-        {% for demande in listeAides %}
-        <tr>
-            <td>{{ demande.nom }}</td>
-            <td>{{ demande.prenom }}</td>
-            <td>{{ demande.mail }}</td>
-            <td>{{ demande.objet }}</td>
-            <!-- <td>{{ demande.message }}</td> -->
-
-            <!--Répondre à la demande-->
-            <td>
-                <a class="" href="" data-toggle="modal" data-target="#popup{{demande.message_id}}" data-popup-url="" style="padding-left: 35px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
-                        class="bi bi-reply-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M5.921 11.9L1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
-                    </svg>
-                </a>
-
-                <!--Modal pour voir et répondre à la demande d'aide-->
-                <div id="popup{{demande.message_id}}" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="ModalCenterTitle{{demande.prenom}}" data-popup-url="">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-body">
-                            <h4 class="text-center">Récapitulatif</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5>Contact :</h5> {{ demande.mail }}
+        <tbody>
+            {% for cmd in commandes %}
+            <tr>
+                <th scope="row">{{ cmd.commande_id }}</th>
+                <td>{{ cmd.personne_id }}</td>
+                <td>{{ cmd.date }}</td>
+                <!--  ajouter statut.html -->
+                <td>statut</td>
+                <td>{{ cmd.montant }}</td>
+                <td>
+                    <a href="" class="bi bi-three-dots-vertical" data-toggle="modal" data-target="#popup{{cmd.commande_id}}" style="padding-left: 12px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                            <path
+                                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                        </svg>
+                    </a>
+    
+                    <!--Modal pour voir et répondre à la demande d'aide-->
+                    <div id="popup{{cmd.commande_id}}"  class="modal fade" role="dialog" tabindex="-1" aria-labelledby="ModalCenterTitle{{cmd.commande_id}}">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content" style="overflow:hidden;">
+                                <div class="modal-body">
+                                    <h3 class="text-center">Récapitulatif de la commande</h3>
+                                    <h4 style="font-weight: bold;">Produits</h4>
+                                    {% for ctn in contenuCommande %}
+                                    {% if cmd.commande_id == ctn.commande_id %}
+                                            <p> {{ ctn.produit.nom }} - {{ ctn.produit.prix }}€</p> 
+                                            <p> {{ ctn.produit.description }} </p> 
+                                            <br>                               
+                                    {% endif %}
+                                    {% endfor %}
+                                    <hr>
+                                    <h4 style="font-weight: bold;">Prix total</h4>
+                                    <p> {{ cmd.montant }} </p>
                                 </div>
-                                <div class="col-md-6">
-                                    <h5>Objet :</h5> {{ demande.objet }}
-                                </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-modal" data-dismiss="modal">Fermer</button>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h5>Message :</h5> {{demande.message}}
-                                </div>
-                            </div>
-                            <hr>
-                            <h4>Répondre au message de {{demande.nom}} {{demande.prenom}}</h4>
-                            <form method="POST" class="text-center post-form" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <button class="btn btn-primary " type="submit">Envoyer la réponse</button>
-                            </form>              
+                          </div>
+                          </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
-                        </div>
-                      </div>
                     </div>
-                </div>
-            </td>
+                </td>
 
-            <!--Supprimer la demande-->
-            <td>
-                {% url 'deleteDemande' demande.message_id as the_url %}
-                <a href="{{ the_url }}" style="padding-left: 25px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#00ffc6"
-                        class="bi bi-trash-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                    </svg>
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+</div>
+{% else %}
+
+<div class="row justify-content-center text-center">
+    <div class="col-md-6">
+        <p> Aucune commande n'est passée pour l'instant ! Revenez plus tard.</p>
+    </div>
+</div>
+
+{% endif %}
+
+</table>
 </div>
 {% endblock %}

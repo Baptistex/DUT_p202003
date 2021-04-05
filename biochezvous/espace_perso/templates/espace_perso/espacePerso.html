@@ -17,7 +17,7 @@
     <div class="row justify-content-around text-center">
         
         <a href="{% url 'listecommande' %}" class="col-md-3 boxEspacePerso">                
-            <div class=" ">
+            <div>
                 <i class="icofont-bar-code"></i>
                 <p> Historique des commandes </p>                
             </div>                
@@ -30,21 +30,22 @@
             </div>           
         </a>
 
-        <div class="col-md-3 boxEspacePerso">
-            <a href="{% url 'ajout_prod_adresse' %}">
+        <a href="{% url 'ajout_prod_adresse' %}" class="col-md-3 boxEspacePerso">
+            <div>
+                <i class="icofont-pencil"></i>
                 <p> Modifier mon adresse </p>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
 
     <div class="row justify-content-around text-center">
-        <a href="" class="col-md-3 boxEspacePerso">
+        <a href="#" class="col-md-3 boxEspacePerso">
             <div>
                 <i class="icofont-finger-print"></i>
                 <p> RGPD </p>
             </div>
         </a>
-        <a href="" class="col-md-3 boxEspacePerso">
+        <a href="#" class="col-md-3 boxEspacePerso">
             <div>
                 <i class="icofont-alarm"></i>
                 <p> Mes alertes </p>                

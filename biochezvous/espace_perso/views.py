@@ -35,6 +35,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template.loader import get_template
 from django.views import View
 from xhtml2pdf import pisa
+from django.contrib import messages
 
 
 # Create your views here.
@@ -76,12 +77,13 @@ def wip_inscription(request):
 
 @permission_required ('espace_perso.can_view_espace_perso')
 def paiement(request):
-    template = loader.get_template('espace_perso/paiement.html')
-    return HttpResponse(template.render({},request))
+    if not request.user.confirmation :
+        return redirect('panier')
+    return render(request, 'espace_perso/paiement.html')
 
 def send_mail_commande(request, commande_id):
     if Commande.objects.filter(produits__in=request.user.producteur.produit_set.all()).filter(commande_id=commande_id).count() <= 0 :
-        redirect("accueil")
+        return redirect("accueil")
     else:
         com = Commande.objects.get(commande_id=commande_id)
         com.statut = 1
@@ -367,6 +369,9 @@ def panier(request):
     #calcul du montant
     for prod in panier:
         montantP = montantP + (prod.produit.prix * prod.quantite)
+    if not request.user.confirmation :
+        context['erreurconfirmation'] = messages.error(request, "Vous n'avez pas encore confirmé votre adresse mail, vous ne pourrez pas commander")
+
 
     context['panier'] = panier
     context['montant'] = round(montantP,2)
