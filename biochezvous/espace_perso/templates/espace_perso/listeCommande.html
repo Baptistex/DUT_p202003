@@ -26,7 +26,7 @@
 
         <th scope="col">Statut</th>
         <th scope="col">Montant total</th>
-        <th scope="col"> Producteur</th>
+        <th scope="col"></th>
         <th scope="col"></th>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -40,15 +40,14 @@
         <td> {% include 'espace_perso/statut.html' %} </td>
         <td>{{ cmd.montant }}</td>
         <td>
-          <a href="{% url 'commande' cmd.commande_id %}"><span class="glyphicon glyphicon-pencil">Détails</span></a>
+          <a href="{% url 'commande' cmd.commande_id %}">Détails</a>
         </td>
         <td>
-          <a href="{% url 'pdf_view' cmd.commande_id %}" target="_blank"><span
-              class="glyphicon glyphicon-pencil">Facture</span></a>
+          <a href="{% url 'pdf_view' cmd.commande_id %}" target="_blank">Facture</a>
         </td>
         <td>
-          <a href="{% url 'commanderEncore' cmd.commande_id %}"><span class="glyphicon glyphicon-pencil">Commander
-              encore</span></a>
+          <a href="{% url 'commanderEncore' cmd.commande_id %}">Commander
+              encore</a>
         </td>
       </tr>
       {% endfor %}

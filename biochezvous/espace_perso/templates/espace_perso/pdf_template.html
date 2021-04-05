@@ -4,7 +4,6 @@
 
 <head>
     <style>
-        
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -12,7 +11,12 @@
             margin: 4.5em;
         }
 
-        td, th {
+        th {
+            background-color: aquamarine;
+        }
+
+        td,
+        th {
             text-align: center;
             margin: 0;
             border: 1px solid black;
@@ -39,44 +43,52 @@
         .petit {
             width: 20%;
         }
+
+
+        .infoG thead {
+            text-align: start;
+            border: none;
+            
+           
+        }
+        
+        
         .infoG td {
             text-align: start;
             border: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .infoG td {
-            text-align: start;
             font-size: 12px;
+           
         }
-
     </style>
 </head>
 
 <body>
-    <h2> commande n° {{ Commande.commande_id }}</h2>
+    <h2> Facture FA{{ Commande.commande_id }}</h2>
 
 
     <table class="infoG">
-
-            <tr> 
-             <td> BioChezVous </td>   
-             <td> Nom client </td>    
+        <thead>
+            <th> Vendeur </th>
+            <th> Acheteur </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td> BioChezVous </td>
+                <td>{{ client.nom }}  {{ client.prenom }}</td>
             </tr>
-            <tr> 
-                <td> 11 rue des champs </td>   
-                <td> Adr client </td>    
-               </tr>
-               <tr> 
-                <td> 22300 Lannion </td>   
-                <td> commune client </td>    
-               </tr>
-               <tr> 
-                <td> contact@biochezvous.com </td>   
-                <td> contact client </td>    
-               </tr>
-        
+            <tr>
+                <td> 11 rue des champs </td>
+                <td> {{ client.adresse.adresse }}  </td>
+            </tr>
+            <tr>
+                <td> 22300 Lannion </td>
+                <td> {{ client.adresse.code_postal }}  {{ client.adresse.ville }}  </td>
+            </tr>
+            <tr>
+                <td> contact@biochezvous.com </td>
+                <td> {{ client.mail }} </td>
+            </tr>
+        </tbody>
     </table>
     <table>
         <thead>
@@ -120,7 +132,7 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td> Total commande </td>
+                <th> Total commande </th>
                 <td> {{ Commande.montant }}</td>
             </tr>
         </tbody>

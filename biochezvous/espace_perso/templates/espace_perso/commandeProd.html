@@ -26,10 +26,19 @@
             <th>{{commande.date }}</th>
             <th>{{commande.montant}}</th>
             <th>{{commande.personne.nom}}</th>
+            {% if commande.statut is 1 %}
             <td>
-                <button class="btn btn-primary"><a href="{% url 'send_mail_commande' commande.commande_id %}"> Commande
+                <button type="button" class="btn btn-secondary"><a href="{% url 'terminerCommande' commande.commande_id %}"> Commande
+                        retirée </a></button>
+            </td>
+            {% else %}
+            <td>
+                <button type="button" class="btn btn-secondary"><a href="{% url 'send_mail_commande' commande.commande_id %}"> Commande
                         prête </a></button>
             </td>
+            {% endif %}
+
+            
         </tr>
         {% for com in listeproduits %}
         <tr>

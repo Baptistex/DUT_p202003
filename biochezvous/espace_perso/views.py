@@ -515,26 +515,15 @@ def render_to_pdf(template_src, context_dict={}):
 		return HttpResponse(result.getvalue(), content_type='application/pdf')
 	return None
 
-data = {
-	"company": "Dennnis Ivanov Company",
-	"address": "123 Street name",
-	"city": "Vancouver",
-	"state": "WA",
-	"zipcode": "98663",
-
-
-	"phone": "555-555-2345",
-	"email": "youremail@dennisivy.com",
-	"website": "dennisivy.com",
-	}
-
 
 
 def PDF(request, id):
     context = {}
     context['contenuCommande'] = ContenuCommande.objects.filter(commande_id=id)
     context['Commande'] = Commande.objects.get(commande_id=id)
+    context['client'] = request.user
     pdf = render_to_pdf('espace_perso/pdf_template.html', context)
+
     return HttpResponse(pdf, content_type='application/pdf')
 
 #Opens up page as PDF
@@ -561,7 +550,6 @@ def index(request):
 	return render(request, 'espace_perso/test.html', context)
 
 
-
 def commandeProducteur(request):
     context = {}
     template = loader.get_template('espace_perso/commandeProd.html')
@@ -572,7 +560,7 @@ def commandeProducteur(request):
     for c in cont:
         commandes=Commande.objects.all().filter(commande_id=c.commande_id)  
         for cmd in commandes:
-            if (cmd.statut == 0):
+            if ((cmd.statut == 0) or (cmd.statut == 1)) :
                 listeproduits.append(c)
                 if (cmd not in listeCommandes):
                     listeCommandes.append(cmd)
@@ -583,4 +571,10 @@ def commandeProducteur(request):
     return HttpResponse(template.render(context,request))
 
 
+
+def terminerCommande(request, commande_id):
+    com = Commande.objects.get(commande_id=commande_id)
+    com.statut = 2
+    com.save()
+    return redirect('commandeProducteur')
 
