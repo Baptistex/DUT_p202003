@@ -113,7 +113,8 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return HttpResponse("Merci d'avoir confirmer votre adresse mail. Vous pouvez maintenant vous connecter à votre compte.")
+        redirect('/connexion')
+        return HttpResponse("Merci d'avoir confirmer votre adresse email. Maintenant vous pouvez vous connecter à votre compte.")
     else:
         print(token)
         return HttpResponse("Le lien d'activation n'est pas valide!")
