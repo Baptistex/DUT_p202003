@@ -15,8 +15,6 @@ urlpatterns = [
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
     path('aide', views.aide, name='aide'),
-    path('personne/', views.delete_user, name='delete_user'),
-    path('personne/<int:id>/', views.deleteOneUser, name='deleteOneUser'),
     path('accueilEspaceProducteur', views.espace_producteur, name='espace_producteur'),
     path('espaceProducteur',views.espacePersoProd, name='espacePersoProd'),
     path('listeCommande',views.listeCommande, name='listeCommande'),

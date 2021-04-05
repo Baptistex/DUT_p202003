@@ -1696,3 +1696,21 @@
     .eventImage {
         border-radius: 50%;
     }
+
+#mail footer{
+    padding:10px;
+    align-items: center;
+    white-space: nowrap;
+}
+#mail h1{
+    color : #00ffc6;
+    font-family: 'Fugaz One';
+    font-size: 50px;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+#mail h4, p{
+    color: #f8fbfd;
+}
