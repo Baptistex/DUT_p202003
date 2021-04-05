@@ -279,7 +279,7 @@ def redirection(request):
     
 
 def espacePersoProd(request):
-
+    
     personne_id = request.user.personne_id
     u = Producteur.objects.get(personne_ptr_id=personne_id)
     form = FormDataModifProd(instance=u)

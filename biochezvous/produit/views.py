@@ -4,7 +4,7 @@ from django.template import loader
 from .models import TypeProduit, Produit, Image, Panier
 from espace_perso.forms import FormSelectionQuantite
 from espace_perso.models import Personne, Producteur, Adresse, Preference
-from .forms import ProduitForm, ImageForm, CategorieForm
+from .forms import ProduitForm, ImageForm, CategorieForm,TypeProduitForm
 from espace_perso.utils import great_circle_vec
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import permission_required
@@ -322,3 +322,15 @@ def ajout_preference(request, produit):
         return redirect('/connexion')
 
     return HttpResponseRedirect('/produits')
+
+def addType(request):
+    if request.method == 'POST':
+        form = TypeProduitForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            #TODO: changer la redirection
+            return redirect('espace_admin')
+    else:
+        form = TypeProduitForm()
+    return render(request, 'produit/ajout_typeProduit.html', {'form': form})
