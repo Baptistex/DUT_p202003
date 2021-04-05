@@ -128,7 +128,7 @@
                             </div>
                             <hr>
                             <h4>Répondre au message de {{demande.nom}} {{demande.prenom}}</h4>
-                            <form method="POST" class="text-center post-form php-email-form" enctype="multipart/form-data">
+                            <form method="POST" class="text-center post-form" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form.as_p }}
                                 <button class="btn btn-primary " type="submit">Envoyer la réponse</button>

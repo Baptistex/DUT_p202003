@@ -113,8 +113,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        #redirect('/connexion')
-        return HttpResponse('Merci pour votre confirmation par e-mail. Maintenant vous pouvez vous connecter à votre compte.')
+        return redirect ('/connexion')
     else:
         print(token)
         return HttpResponse("Le lien d'activation n'est pas valide!")
@@ -415,7 +414,7 @@ def incrementerArticlePanier(request, id):
         return redirect('panier')
 
 def commander(request):
-    send_mail_pay(request)
+
     
     context = {}
     personne_id = request.user.personne_id
@@ -438,8 +437,8 @@ def commander(request):
         prod.delete()
 
     #NE PAS OUBLIER LES VÉRIFICATION
-    
-    #send_mail_pay(request)
+
+    send_mail_pay(request)
     return redirect('listeCommande')
     #u = Personne.objects.get(personne_id=personne_id)
     #print(u.Commande_set(related_name))
@@ -454,6 +453,7 @@ def commander(request):
     #for prod in panier:
         #ContenuCommande.objects.create(prod)  
     #return render(request, 'espace_perso/listeCommande.html',context)
+    
 
 
 def render_to_pdf(template_src, context_dict={}):
