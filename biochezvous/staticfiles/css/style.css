@@ -41,6 +41,10 @@
         outline: none;
     }
 
+    .btn-formulaire a {
+        color:#555555;
+    }
+
     .btn-formulaire:hover,
     .btn-formulaire:active {
         background-color: #00ffc6 !important;

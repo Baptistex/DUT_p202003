@@ -4,6 +4,10 @@
 {% block title %}Liste des commandes {% endblock %}
 
 {% block content %}
+<div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+    <h2> MES COMMANDES </h2>
+  </div>
+  
  <table id="table" class="table table-hover table-mc-light-blue">
     <thead>
         <tr>
@@ -20,7 +24,7 @@
             <td>{{com.produit.nom}}</td>
             <td>
                 
-                <button class="btn btn-primary"><a href="{% url 'send_mail_commande' com.commande_id %}">Produit pret</a></button>
+                <button class="btn-formulaire"><a href="{% url 'send_mail_commande' com.commande_id %}">Produit pret</a></button>
             </td>               
         </tr>
     {% endfor %}
