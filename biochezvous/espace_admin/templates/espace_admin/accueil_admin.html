@@ -7,17 +7,18 @@
         <div class="col">
             <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                 <h2>Espace Administrateur</h2>
+                <h3>Mon accueil</h3>
             </div>
         </div>
     </div>
 
     <div class="row justify-content-around">
         <div class="col-md-3 statsAdmin">
-            <p class="stat">{{ nbPers.count }} </p>
+            <h3 class="stat">{{ nbPers.count }} </h3>
             <p> utilisateurs inscrits </p>                
         </div> 
         <div class="col-md-3 statsAdmin">
-            <p class="stat">{{ nbComm.count }} </p>
+            <h3 class="stat">{{ nbComm.count }} </h3>
             <p> commandes passées </p>                
         </div>                 
     </div>
@@ -25,14 +26,14 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="text-center">
-                <a href="transactions" class="espaceadmin">Voir les commandes</a>
+                <a href="orderslist" class="espaceadmin">Voir les commandes</a>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4 col-sm-12">
             <div class="text-center">
-                <a href="" class="espaceadmin">Gérer les demandes de producteur</a>
+                <a href="clientlist" class="espaceadmin">Gérer les demandes de producteur</a>
             </div>
         </div>
         <div class="col-md-4 col-sm-12">

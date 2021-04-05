@@ -1726,8 +1726,13 @@ input[type=range].quantite {
     color: #555555;
 }
 
+.statsAdmin p{
+    font-family: 'poppins';
+    font-size:25px;
+}
+
 .stat{
-    font-size:45px;
+    font-size:35px;
     font-style: oblique;
     font-weight: bold;
 }
