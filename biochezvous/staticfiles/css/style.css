@@ -9,8 +9,14 @@
     
     a {
         color: #67b0d1;
+        text-decoration-style: none;
     }
+
     
+    a:link {
+        text-decoration: none;
+    }
+
     a:hover {
         color: #8ec4dd;
         text-decoration: none;
@@ -1060,6 +1066,15 @@
             margin: -20px 0 30px 0;
         }
     }
+
+    .bloc-footer-row{
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    
+
     /*--------------------------------------------------------------
 #                                                                          
 #
@@ -1256,7 +1271,10 @@
     
     #moteur_recherche input {
         height: 50px;
+        font-size: 14px;
     }
+
+    
     
     .prod .prod-wrap .prod-links a+a {
         border-left: 1px solid #00ffc6;
@@ -1267,6 +1285,7 @@
         height: 50px;
         color: #00ffc6;
         background-color: #555555;
+        font-size: 14px;
     }
     
     #moteur_recherche button:focus {
