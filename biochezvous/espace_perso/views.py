@@ -484,6 +484,8 @@ def commander(request):
             produit.save()
             prod.delete()
         montantP = 0
+        
+    send_mail_pay(request)
     return redirect('listecommande')
 
 def commanderEncore(request, id):
