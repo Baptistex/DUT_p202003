@@ -21,6 +21,15 @@ class Personne(AbstractBaseUser, PermissionsMixin):
         db_table = 'personne'
         default_permissions = ()
 
+class Administrateur(Personne):
+
+    class Meta:
+        db_table = 'administrateur'
+        default_permissions = ()
+        permissions = [
+            ('can_view_espace_admin', 'Peux acceder a la page espace admin'),
+        ]
+
 class Utilisateur(Personne):
 
     class Meta:
