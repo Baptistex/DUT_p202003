@@ -137,10 +137,10 @@ def activate(request, uidb64, token):
 
 def inscription_prod(request):
     if request.method == 'POST':
-        form = FormInscriptionProd(request.POST) 
+        form = FormInscriptionProd(request.POST, request.FILES) 
+        print(request.FILES)
         if form.is_valid():
-            instance = form.save()
-            instance.save()
+            form.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/connexion')
     else:

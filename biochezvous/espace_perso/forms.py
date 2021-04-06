@@ -40,18 +40,28 @@ class FormInscriptionProd(UserCreationForm):
     width = forms.FloatField(widget=forms.HiddenInput(), required=False)
     height = forms.FloatField(widget=forms.HiddenInput(), required=False)
     def save(self):
-        user = super().save(commit=False)
+        user = super(FormInscriptionProd, self).save(commit=False)
         prod_group, created = Group.objects.get_or_create(name='producteur')
         #TODO : mettre confirmation a False
         user.confirmation = True
         user.newsletter = True
         user.save()
         user.groups.add(prod_group)
-        user.save()
-
         if created:
             permissions_producteur = Permission.objects.filter(content_type=ContentType.objects.get(app_label='espace_perso', model='producteur').id)
             prod_group.permissions.set(permissions_producteur)
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('width')
+        h = self.cleaned_data.get('height')
+
+        if x==None or y==None or w==None or h==None :
+            x, y, w, h = 0, 0, 100, 100
+        image = PILImage.open(user.image)
+        cropped_image = image.crop((x, y, w+x, h+y))
+        resized_image = cropped_image.resize((200, 200), PILImage.ANTIALIAS)
+        user.save()
+        resized_image.save(user.image.path)
         return user
     class Meta:
         model = Producteur
