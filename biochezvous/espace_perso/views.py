@@ -398,9 +398,6 @@ def suppressionPanier(request, id):
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
     produitDuPanier = panier.get(produit_id=id)
-    produit = Produit.objects.get(produit_id=id)
-    produit.quantite = produit.quantite + produitDuPanier.quantite
-    produit.save()
     produitDuPanier.delete()
     return redirect('panier')
 
@@ -473,6 +470,9 @@ def commander(request):
         produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
         for prod in produits:
             montantP = montantP + (prod.produit.prix * prod.quantite)
+            p = prod.produit
+            reste = int(p.quantite) - int(prod.quantite)
+            Produit.objects.filter(produit_id = p.pk).update(quantite = reste)
         c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
         c.save()
         produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())

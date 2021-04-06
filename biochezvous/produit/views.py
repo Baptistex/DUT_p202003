@@ -140,8 +140,7 @@ def produit(request, idProduit):
                 else:
                     p = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
                     p.save()
-                reste = int(produit.quantite) - int(request.POST['quantite'])
-                Produit.objects.filter(produit_id = idProduit).update(quantite = reste)
+                
                 return redirect('panier')
             else: 
                 return redirect('connexion')
