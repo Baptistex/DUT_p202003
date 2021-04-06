@@ -128,7 +128,7 @@ def util_aide(request):
             email.attach_alternative(html_content, "text/html")
             email.send()
 
-        return redirect('/listeAides')
+        return redirect('listeAides')
     else:
         form = FormAideReponse()
 

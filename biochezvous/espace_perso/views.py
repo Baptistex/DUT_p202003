@@ -70,7 +70,7 @@ def wip_inscription(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/connexion')
+            return redirect('connexion')
     else:
         form = FormInscription()
     return render(request, 'espace_perso/wip_inscription.html', {'form': form})
@@ -135,7 +135,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return redirect('/connexion')
+        return redirect('connexion')
     else:
         print(token)
         return HttpResponse("Le lien d'activation n'est pas valide!")
@@ -147,7 +147,7 @@ def inscription_prod(request):
         if form.is_valid():
             form.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/connexion')
+            return redirect('connexion')
     else:
         form = FormInscriptionProd()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
@@ -293,7 +293,7 @@ def aide(request):
         form = FormAide(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/aide')
+            return redirect('aide')
     else:
         form = FormAide()
     return render(request,'espace_perso/demande_aide.html', {'form':form})
@@ -325,7 +325,7 @@ def espacePersoProd(request):
         form = FormDataModifProd(request.POST, request.FILES, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/profil/adresse/edit')
+            return redirect('ajout_prod_adresse')
     return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
 
 
