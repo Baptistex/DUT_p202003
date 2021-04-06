@@ -4,11 +4,9 @@
 
 
 {% block content %}
-<br>
-<div class="text-center">
-<h3>Ajout d'une image</h3>
+<div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+    <h2>Modifier une image</h2>
 </div>
-<br>
 <table align="center" class="sort-table">
     
     <tbody id="tb">
@@ -27,7 +25,8 @@
 </table>
 {% if images_produits.count > 0 %}
 <div class="text-center">
-    <button class="btn btn-primary" type="button" onclick="ajaxUpdate()">Mettre à jour l'ordre</button>
+    <br>
+    <button class="btn-formulaire" type="button" onclick="ajaxUpdate()">Mettre à jour l'ordre</button>
 </div>
 {% endif %}
 {% if images_produits.count < 3 %}
@@ -36,7 +35,7 @@
         {% csrf_token %}
         {{ form }}
         <br>
-        <button class="btn btn-primary" type="submit">Enregistrer le produit</button>
+        <button class="btn-formulaire" type="submit">Enregistrer le produit</button>
     </form>
     <div class="modal fade" id="modalCrop">
         <div class="modal-dialog">
@@ -60,7 +59,7 @@
                     </button>
                     </div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Abandonner</button>
-                    <button type="button" class="btn btn-primary js-crop-and-upload">Redimensionner et mettre en ligne</button>
+                    <button type="button" class="btn-formulaire js-crop-and-upload">Redimensionner et mettre en ligne</button>
                 </div>
             </div>
         </div>
