@@ -27,7 +27,7 @@ SECRET_KEY = 'a)qi_eb)06$&cp#k)a!erz6(lzw(7f8n(sgl#(w%v*5$595h3q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['baptistealix.fr']
+ALLOWED_HOSTS = ['localhost','baptistealix.fr']
 
 
 # Application definition
