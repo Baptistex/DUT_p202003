@@ -1062,6 +1062,11 @@
             transform: rotate(360deg);
         }
     }
+
+.contact input {
+    border-color: #555555;
+    border-width: 1px;
+}
     /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -1603,12 +1608,10 @@
     @media screen and (max-width: 768px) {
         .admin img {
             position: absolute;
-            top: -175px;
+            top: -20px;
             left: 175px;
-        }
-        .marge {
-            margin-bottom: 50px;
-        }
+            margin-bottom: 100px;
+        }  
     }
     
     .admin .row {
@@ -1739,11 +1742,14 @@
             padding-bottom: 15px;
             padding-right: 15px;
             border-radius: 5px;
-            margin-left: 110px;
+            margin-left: 55px;
         }
         .navigation {
             display: inline;
             position: unset;
+        }
+        span .bi-plus-circle{
+            margin-right: 100px;
         }
     }
     

@@ -6,8 +6,12 @@
 {% block content %}
 
 {% if listecommandes %}
+
 <div class="container-fluid mt-5" id="commandeProd">
 
+    <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> MES COMMANDES </h2>
+      </div>
 <table id="table" class="table table-hover table-mc-light-blue">
     <thead>
         <tr>
@@ -28,12 +32,12 @@
             <th>{{commande.personne.nom}}</th>
             {% if commande.statut is 1 %}
             <td>
-                <button type="button" class="btn btn-secondary"><a href="{% url 'terminerCommande' commande.commande_id %}"> Commande
+                <button type="button" class="btn-formulaire"><a href="{% url 'terminerCommande' commande.commande_id %}"> Commande
                         retirée </a></button>
             </td>
             {% else %}
             <td>
-                <button type="button" class="btn btn-secondary"><a href="{% url 'send_mail_commande' commande.commande_id %}"> Commande
+                <button type="button" class="btn-formulaire"><a href="{% url 'send_mail_commande' commande.commande_id %}"> Commande
                         prête </a></button>
             </td>
             {% endif %}
@@ -47,10 +51,7 @@
             <td>{{com.produit.nom}}</td>
             <td>{{com.produit.stock}}</td>
             <td></td>
-            <td>
-                
-                <button class="btn-formulaire"><a href="{% url 'send_mail_commande' com.commande_id %}">Produit pret</a></button>
-            </td>               
+            <td></td>               
         </tr>
         {% endfor %}
 {% endfor %}

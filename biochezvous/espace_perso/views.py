@@ -119,9 +119,7 @@ def inscription_user(request):
             )
             email.attach_alternative(message, "text/html")
             email.send()
-            return HttpResponse('Veuillez confirmer votre adresse mail pour finaliser votre inscription')
-            #TODO: changer la redirection
-            return HttpResponseRedirect('/connexion')
+            return redirect ('confirmation')
     else:
         form = FormInscriptionUser()
     #TODO : un template propre à chaque type d'inscription
@@ -137,18 +135,17 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        redirect('/connexion')
-        return HttpResponse("Merci d'avoir confirmer votre adresse email. Maintenant vous pouvez vous connecter à votre compte.")
+        return redirect('/connexion')
     else:
         print(token)
         return HttpResponse("Le lien d'activation n'est pas valide!")
 
 def inscription_prod(request):
     if request.method == 'POST':
-        form = FormInscriptionProd(request.POST) 
+        form = FormInscriptionProd(request.POST, request.FILES) 
+        print(request.FILES)
         if form.is_valid():
-            instance = form.save()
-            instance.save()
+            form.save()
             #TODO: changer la redirection
             return HttpResponseRedirect('/connexion')
     else:
@@ -409,9 +406,6 @@ def suppressionPanier(request, id):
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
     produitDuPanier = panier.get(produit_id=id)
-    produit = Produit.objects.get(produit_id=id)
-    produit.quantite = produit.quantite + produitDuPanier.quantite
-    produit.save()
     produitDuPanier.delete()
     return redirect('panier')
 
@@ -484,6 +478,9 @@ def commander(request):
         produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
         for prod in produits:
             montantP = montantP + (prod.produit.prix * prod.quantite)
+            p = prod.produit
+            reste = int(p.quantite) - int(prod.quantite)
+            Produit.objects.filter(produit_id = p.pk).update(quantite = reste)
         c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
         c.save()
         produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
@@ -492,6 +489,8 @@ def commander(request):
             produit.save()
             prod.delete()
         montantP = 0
+        
+    send_mail_pay(request)
     return redirect('listecommande')
 
 def commanderEncore(request, id):
@@ -542,7 +541,6 @@ def PDF(request, id):
     return HttpResponse(pdf, content_type='application/pdf')
 
 
-
 def commandeProducteur(request):
     context = {}
     template = loader.get_template('espace_perso/commandeProd.html')
@@ -571,3 +569,7 @@ def terminerCommande(request, commande_id):
     com.save()
     return redirect('commandeProducteur')
 
+
+def confirmation(request):
+    template = loader.get_template('espace_perso/confirmation.html')
+    return HttpResponse(template.render({},request))

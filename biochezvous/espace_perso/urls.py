@@ -13,6 +13,7 @@ urlpatterns = [
     path('deconnexion',                     views.deconnexion,          name='deconnexion'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
+    path('confirmation',                   views.confirmation,          name='confirmation'),
     #Utilisateur        
     path('profil',                          views.espacePerso,          name='espacePerso'),
     path('profil/edit',                     views.informationPerso,     name='informationPerso'),

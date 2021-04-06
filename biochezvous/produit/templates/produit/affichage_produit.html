@@ -3,6 +3,11 @@
 
 {% block title %}Liste de mes produits{% endblock %}
 {% block content %}
+
+<div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+    <h2>Les produits</h2>
+</div>
+
 <table id="table" class="table table-hover table-mc-light-blue">
     <thead>
         <tr>
@@ -29,15 +34,15 @@
             <td>{{prod.date }}</td>
             <td>
                 {% url 'ajout_prod_image' prod.produit_id as the_url %}
-                <button class="btn btn-primary"><a href="{{ the_url }}">Modifier l'image</a></button>
+                <button class="btn-formulaire"><a href="{{ the_url }}">Modifier l'image</a></button>
             </td>
             <td>
                 {% url 'modif_prod' prod.produit_id as the_url %}
-                <button class="btn btn-primary"><a href="{{ the_url }}">Modifier le produit</a></button>
+                <button class="btn-formulaire"><a href="{{ the_url }}">Modifier le produit</a></button>
             </td>
             <td>
                 {% url 'deleteOneProd' prod.produit_id as the_url %}
-                <button class="btn btn-primary"><a href="{{ the_url }}">Supprimer le produit</a></button>
+                <button class="btn-formulaire"><a href="{{ the_url }}">Supprimer le produit</a></button>
             </td>
         </tr>
     {% endfor %}

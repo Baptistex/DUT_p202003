@@ -17,42 +17,47 @@
 
 
   {% if commandes %}
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Référence de la commande</th>
-        <th scope="col">Date</th>
-
-
-        <th scope="col">Statut</th>
-        <th scope="col">Montant total</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for cmd in commandes %}
-      <tr>
-        <th scope="row">{{ cmd.commande_id }}</th>
-        <td>{{ cmd.date }}</td>
-        <td> {% include 'espace_perso/statut.html' %} </td>
-        <td>{{ cmd.montant }}</td>
-        <td>
-          <a href="{% url 'commande' cmd.commande_id %}">Détails</a>
-        </td>
-        <td>
-          <a href="{% url 'pdf_view' cmd.commande_id %}" target="_blank">Facture</a>
-        </td>
-        <td>
-          <a href="{% url 'commanderEncore' cmd.commande_id %}">Commander
-              encore</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Référence de la commande</th>
+            <th scope="col">Date</th>
+    
+    
+            <th scope="col">Statut</th>
+            <th scope="col">Montant total</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cmd in commandes %}
+          <tr>
+            <th scope="row">{{ cmd.commande_id }}</th>
+            <td>{{ cmd.date }}</td>
+            <td> {% include 'espace_perso/statut.html' %} </td>
+            <td>{{ cmd.montant }}</td>
+            <td>
+              <a href="{% url 'commande' cmd.commande_id %}">Détails</a>
+            </td>
+            <td>
+              <a href="{% url 'pdf_view' cmd.commande_id %}" target="_blank">Facture</a>
+            </td>
+            <td>
+              <a href="{% url 'commanderEncore' cmd.commande_id %}">Commander
+                  encore</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
 
 
 </div>

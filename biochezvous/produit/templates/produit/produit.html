@@ -53,22 +53,31 @@
         </section><!-- End Services Section -->
 
         
-        <div>
-            <input type="checkbox" id="distance" name="distance" onclick="ajaxSearch()">
-            <label for="distance">Ne garder que les produits de producteurs éloignés de moins de 10km</label>
-        </div>
+        
         <section id="moteur_recherche" class="prod">
             <div class="container">
                 <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                     <h2>Une idée en tête ?</h2>
                     <p>Vous avez une envie particulière ? N'hésitez plus tapez votre demande juste en dessous dans la barre de recherche.</p>
                 </div>
-                <div class="input-group mb-3">
-                    <input id="searchbar" type="text" class="form-control" placeholder="Patate douce ?" aria-label="Patate douce" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn" type="button" onclick="ajaxSearch()">Chercher</button>
-                    </div>                    
+                <div class="row">
+                    <div class="col-md-4 col">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <input type="checkbox" id="distance" class="mr-4" name="distance" onclick="ajaxSearch()">
+                            <label for="distance">producteur à - 10 km</label>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col">
+                        <div class="input-group mb-3">
+                            <input id="searchbar" type="text" class="form-control" placeholder="Patate douce ?" aria-label="Patate douce" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn" type="button" onclick="ajaxSearch()">Chercher</button>
+                            </div>                    
+                        </div>
+                    </div>
+                    
                 </div>
+                
             </div>
         </section>
         <!-- ======= Portfolio Section ======= -->
