@@ -6,7 +6,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from espace_admin.models import Demandes
-from .models import Utilisateur,Personne, Producteur, Adresse
+from .models import Utilisateur,Personne, Producteur, Adresse, Preference
 from espace_perso.forms import FormInscriptionProd, FormAide
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
@@ -290,6 +290,14 @@ def informationPerso(request):
         context = {'formG':form}
         return render(request, 'espace_perso/informationPerso.html', context)
 
+def preferences(request):
+    context = {}
+    personne_id = request.user.personne_id
+    preferences = Preference.objects.filter(personne_id=personne_id)
+    context['pref'] = preferences
+    return render(request, 'espace_perso/mesPreferences.html', context)
+    
+
 
 def aide(request):
     if request.method == "POST":
@@ -509,7 +517,8 @@ def commanderEncore(request, id):
 
     send_mail_pay(request)
     return redirect('listeCommande')
-    
+
+
 
 
 def render_to_pdf(template_src, context_dict={}):
@@ -532,28 +541,6 @@ def PDF(request, id):
 
     return HttpResponse(pdf, content_type='application/pdf')
 
-#Opens up page as PDF
-class ViewPDF(View):
-
-	def get(self, request, *args, **kwargs):
-		pdf = render_to_pdf('espace_perso/pdf_template.html', commande)
-		return HttpResponse(pdf, content_type='application/pdf')
-
-#Automaticly downloads to PDF file
-class DownloadPDF(View):
-	def get(self, request, *args, **kwargs):
-		
-		pdf = render_to_pdf('espace_perso/pdf_template.html', data)
-
-		response = HttpResponse(pdf, content_type='application/pdf')
-		filename = "facture.pdf"
-		content = "attachment; filename='\%s\'" %(filename)
-		response['Content-Disposition'] = content
-		return response
-
-def index(request):
-	context = {}
-	return render(request, 'espace_perso/test.html', context)
 
 
 def commandeProducteur(request):
