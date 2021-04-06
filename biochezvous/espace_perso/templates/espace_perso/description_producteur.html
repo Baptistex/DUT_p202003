@@ -47,11 +47,16 @@
                     <div class="col col-lg-4 col-md-6 portfolio-item">
                         <div class="prod-wrap">
                             <img src="{{MEDIA_URL}}{{produit.image}}" class="w-100" alt="">
-                            <div class="prod-links">
-                                <a href="#" title="App 1"><i class="icofont-heart"></i></a>
+                            <div class="prod-links PC">
+                                <a href="#" title="J'aime"><i class="icofont-heart"></i></a>
                                 <a href="{% url 'produit' produit.produit_id %}" title="More Details"><i class="icofont-plus"></i></a>
                                 <a href="#" title="More Details"><i class="icofont-search-2"></i></a>
-                            </div>
+                            </div>                            
+                        </div>
+                        <div class="prod-links mobile">
+                            <a href="#" title="J'aime"><i class="icofont-heart"></i></a>
+                            <a href="{% url 'produit' produit.produit_id %}" title="More Details"><i class="icofont-plus"></i></a>
+                            <a href="#" title="More Details"><i class="icofont-search-2"></i></a>
                         </div>
                     </div>                        
                 {% endfor %}

@@ -58,15 +58,24 @@
                         <div class="col col-lg-4 col-md-6 portfolio-item {{produit.produit.categorie.typeProduit.nom}}">
                             <div class="prod-wrap">
                                 <img src="{{MEDIA_URL}}{{produit.image}}" class="w-100" alt="">
-                                <div class="prod-links">
+                                <div class="prod-links PC">
                                     {% if produit.produit in produits_pref %}                                    
-                                        <a href="{% url 'preference' produit.produit_id %}" title="App 1" style="color: red;"><i class="icofont-heart"></i></a>
+                                        <a href="{% url 'preference' produit.produit_id %}" title="J'aime" style="color: red;"><i class="icofont-heart"></i></a>
                                     {% else %}
-                                        <a href="{% url 'preference' produit.produit_id %}" title="App 1"><i class="icofont-heart"></i></a>
+                                        <a href="{% url 'preference' produit.produit_id %}" title="J'aime"><i class="icofont-heart"></i></a>
                                     {% endif %}    
                                     <a href="{% url 'produit' produit.produit_id %}" title="More Details"><i class="icofont-plus"></i></a>
                                     <a href="#" title="More Details"><i class="icofont-search-2"></i></a>
-                                </div>
+                                </div>                                
+                            </div>
+                            <div class="prod-links mobile">
+                                {% if produit.produit in produits_pref %}                                    
+                                    <a href="{% url 'preference' produit.produit_id %}" title="J'aime" style="color: red;"><i class="icofont-heart"></i></a>
+                                {% else %}
+                                    <a href="{% url 'preference' produit.produit_id %}" title="J'aime"><i class="icofont-heart"></i></a>
+                                {% endif %} 
+                                <a href="{% url 'produit' produit.produit_id %}" title="More Details"><i class="icofont-plus"></i></a>
+                                <a href="#" title="More Details"><i class="icofont-search-2"></i></a>
                             </div>
                         </div>                        
                     {% endfor %}
