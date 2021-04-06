@@ -538,17 +538,6 @@ class ViewPDF(View):
 		pdf = render_to_pdf('espace_perso/pdf_template.html', commande)
 		return HttpResponse(pdf, content_type='application/pdf')
 
-#Automaticly downloads to PDF file
-class DownloadPDF(View):
-	def get(self, request, *args, **kwargs):
-		
-		pdf = render_to_pdf('espace_perso/pdf_template.html', data)
-
-		response = HttpResponse(pdf, content_type='application/pdf')
-		filename = "facture.pdf"
-		content = "attachment; filename='\%s\'" %(filename)
-		response['Content-Disposition'] = content
-		return response
 
 def index(request):
 	context = {}
