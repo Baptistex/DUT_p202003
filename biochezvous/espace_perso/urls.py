@@ -39,6 +39,5 @@ urlpatterns = [
     #Factures
     path('test',                    views.index,                name="test"),
     path('pdf_view/<int:id>',       views.PDF,                  name="pdf_view"),
-    path('pdf_download/',           views.DownloadPDF.as_view(),name="pdf_download"),
     
 ]
