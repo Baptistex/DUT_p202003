@@ -8,62 +8,114 @@
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
+            margin: 4.5em;
         }
-        td {
-            text-align: center; 
+
+        th {
+            background-color: aquamarine;
+        }
+
+        td,
+        th {
+            text-align: center;
             margin: 0;
             border: 1px solid black;
         }
+
         tr {
             padding-top: 5px;
         }
-        p  {
+
+        p {
             margin: 0;
-            
+
         }
+
         .nom {
             margin-top: 0;
             font-size: 12px;
         }
-        th{
+
+        th {
             font-size: large;
         }
+
         .petit {
             width: 20%;
         }
+
+
+        .infoG thead {
+            text-align: start;
+            border: none;
+            
+           
+        }
         
+        
+        .infoG td {
+            text-align: start;
+            border: none;
+            font-size: 12px;
+           
+        }
     </style>
 </head>
 
 <body>
-    <h2> commande n° {{ Commande.commande_id }}</h2>
+    <h2> Facture FA{{ Commande.commande_id }}</h2>
 
+
+    <table class="infoG">
+        <thead>
+            <th> Vendeur </th>
+            <th> Acheteur </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td> BioChezVous </td>
+                <td>{{ client.nom }}  {{ client.prenom }}</td>
+            </tr>
+            <tr>
+                <td> 11 rue des champs </td>
+                <td> {{ client.adresse.adresse }}  </td>
+            </tr>
+            <tr>
+                <td> 22300 Lannion </td>
+                <td> {{ client.adresse.code_postal }}  {{ client.adresse.ville }}  </td>
+            </tr>
+            <tr>
+                <td> contact@biochezvous.com </td>
+                <td> {{ client.mail }} </td>
+            </tr>
+        </tbody>
+    </table>
     <table>
         <thead>
             <tr>
-                <th> Numéro de la commande </th>
-                <th class="petit"> Date </th>
+                <th> Numéro commande </th>
+                <th> Date </th>
                 <th class="petit">Montant</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td >{{ Commande.commande_id }}</td>
+                <td>{{ Commande.commande_id }}</td>
                 <td class="petit">{{ Commande.date }}</td>
                 <td class="petit">{{ Commande.montant }}</td>
             </tr>
         </tbody>
     </table>
-    
+
     <table>
         <thead>
             <tr>
-                <th >Produit</th>
+                <th>Produit</th>
                 <th class="petit">Prix unitaire</th>
                 <th class="petit">Quantite</th>
                 <th class="petit">Sous-Total</th>
             </tr>
-            
+
         </thead>
 
         <tbody>
@@ -71,16 +123,16 @@
 
             <tr>
                 <td>
-                    <p  class="nom">{{ ctn.produit.nom }}</p>
+                    <p class="nom">{{ ctn.produit.nom }}</p>
                 </td>
                 <td class="petit">{{ ctn.produit.prix }}</td>
                 <td class="petit">{{ ctn.quantite }}</td>
-                <td class="petit"></td>
+                <td class="petit"> </td>
                 {% endfor %}
             <tr>
                 <td></td>
                 <td></td>
-                <td> Total commande </td>
+                <th> Total commande </th>
                 <td> {{ Commande.montant }}</td>
             </tr>
         </tbody>
@@ -90,4 +142,3 @@
 </body>
 
 </html>
-
