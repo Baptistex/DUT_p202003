@@ -52,7 +52,7 @@
           </svg></span>
 
         </td>
-        <td>{{ elem.produit.prix|mul:elem.quantite }}</td>
+        <td id="prixtotal-{{ elem.produit.produit_id }}">{{ elem.produit.prix|mul:elem.quantite }}</td>
         <td>
           <a href="{% url 'suppressionPanier' elem.produit.produit_id %}"><span class="glyphicon glyphicon-trash"> </span></a></td>
       </tr>
@@ -112,6 +112,8 @@ function ajaxUpdate(id, amount) {
             location.href = "{% url 'panier' %}";
           }  
           $("#quantite-"+id).html(response["quantite"]);
+          $("#prixtotal-"+id).html(response["prixtotal"]);
+
         }
     });
 }

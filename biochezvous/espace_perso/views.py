@@ -431,9 +431,12 @@ def varierArticlePanier(request):
                 else:
                     item.quantite += 1
             item.save()
+            prixtotal = item.quantite*item.produit.prix
             data = {
                 'quantite' : item.quantite,
-                'suppression' : suppression
+                'suppression' : suppression,
+                'prixtotal' : prixtotal
+
             }
         except : 
             suppression = 2 
