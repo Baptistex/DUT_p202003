@@ -323,12 +323,7 @@ def deleteOneProd(request,id):
         personne_id = request.user.personne_id
         dest = Produit.objects.get(produit_id = id)
         dest.delete()
-        template = loader.get_template('espace_perso/wip_userlist.html')
-        table_prod = Produit.objects.filter(producteur_id=personne_id)
-        context = { 
-            'prodlist': table_prod
-        }
-    return HttpResponse(template.render(context,request))
+    return redirect('aff_prod')
 
 def email(request):
     if request.method == 'GET':

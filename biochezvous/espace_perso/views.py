@@ -54,7 +54,7 @@ def deleteOneUser(request,id):
         context = {
             'userlist': table_pers
         }
-    return HttpResponse(template.render(context,request))
+    return redirect(request, 'userlist', context)
 
 
 
