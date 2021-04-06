@@ -165,6 +165,8 @@ def connexion(request):
             if user is not None:
                 login(request, user)
             next_url = request.GET.get('next')
+            if username=='biochezvous.iut@gmail.com':
+                return redirect('espace_admin')
             if next_url:
                 return redirect(next_url)
             else:

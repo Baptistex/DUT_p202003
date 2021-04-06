@@ -1,6 +1,8 @@
-from django.urls import path,include
+from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 import produit.views
+import espace_perso.views
 
 urlpatterns = [
     path('accueilAdmin', views.espace_admin, name='espace_admin'),

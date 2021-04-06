@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from espace_perso.models import Personne, Utilisateur, Producteur
+from espace_perso.forms import FormConnexion
 from produit.models import Commande, ContenuCommande
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -9,8 +10,13 @@ from .models import Demandes
 from .forms import FormAideReponse
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.utils.html import strip_tags
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth import authenticate, login, logout
+
+
 
 #Accueil
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def espace_admin(request):
     template = loader.get_template('espace_admin/accueil_admin.html')
     nbPers = Personne.objects.all();
@@ -18,6 +24,7 @@ def espace_admin(request):
     return HttpResponse(template.render({'nbPers':nbPers,'nbComm':nbComm},request))
 
 #Liste de tous les utilisateurs
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def userlist(request):
     template = loader.get_template('espace_admin/userlist.html')
     table_pers = Personne.objects.all()
@@ -28,6 +35,7 @@ def userlist(request):
     return HttpResponse(template.render(context,request))
 
 #Supprimer tous les utilisateurs
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def delete_user(request):
 
     if request.method == "GET":
@@ -45,8 +53,8 @@ def delete_user(request):
     return HttpResponse(template.render(context,request))
 
 #Supprimer un utilisateur choisi 
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def deleteOneUser(request,id):
-
     if request.method == "GET":
 
         dest = Personne.objects.get(personne_id = id)
@@ -62,6 +70,7 @@ def deleteOneUser(request,id):
     return HttpResponse(template.render(context,request))
 
 #Liste des clients
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def clientlist(request):
 
     template = loader.get_template('espace_admin/devenir_prod.html')
@@ -75,8 +84,8 @@ def clientlist(request):
     return HttpResponse(template.render(context,request))
 
 #Faire passer un client en producteur
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def devenirPro(request,id):
-
     if request.method == "GET":
 
         client = Personne.objects.get(personne_id = id)
@@ -105,8 +114,8 @@ def devenirPro(request,id):
     return HttpResponse(template.render(context,request))
 
 #Afficher la liste des demandes d'aide et envoie d'un mail de réponse via le formulaire
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def util_aide(request):
-
     template = loader.get_template('espace_admin/aide.html')
     table_demandes = Demandes.objects.all()
 
@@ -140,6 +149,7 @@ def util_aide(request):
 
 
 #Supprimer un message de demande  
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def deleteDemande(request,msg_id):
 
     if request.method == "GET":
@@ -156,6 +166,7 @@ def deleteDemande(request,msg_id):
     return HttpResponse(template.render(context,request))
 
 #Liste de toutes les commandes et afficher le détail de chaque commande
+@permission_required ('espace_perso.can_view_espace_admin', login_url='connexion')
 def listeCommande(request):
 
     context = {}
