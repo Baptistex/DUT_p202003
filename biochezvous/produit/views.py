@@ -179,18 +179,22 @@ def ajout_prod(request):
         if(adresse.lat !=0 and adresse.lon !=0):
             if request.method == 'POST':
                 form = ProduitForm(request.POST, request.FILES)
+                formimage = ImageForm(request.POST, request.FILES)
                 if form.is_valid():
                     instance = form.save(commit=False)
                     instance.producteur = u
                     instance.save()
+                    image = formimage.save(priorite=1, produit_id=instance.pk)
+                    image.save()
                     return redirect('aff_prod')
             else:
                 form = ProduitForm()
+                formimage = ImageForm()
         else:
             return redirect('ajout_prod_adresse')
     except  Adresse.DoesNotExist:
         return redirect('ajout_prod_adresse')
-    return render(request, 'produit/ajout_produit.html', {'form': form})
+    return render(request, 'produit/ajout_produit.html', {'form': form, 'formimage' : formimage})
 
 @permission_required ('espace_perso.can_view_espace_producteur', login_url='connexion')
 def modif_prod(request, id):
