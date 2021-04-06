@@ -110,10 +110,10 @@
     <table>
         <thead>
             <tr>
-                <th>Produit</th>
+                <th class="petit">Produit</th>
                 <th class="petit">Prix unitaire</th>
                 <th class="petit">Quantite</th>
-                <th class="petit">Sous-Total</th>
+                <th ></th>
             </tr>
 
         </thead>
@@ -127,13 +127,13 @@
                 </td>
                 <td class="petit">{{ ctn.produit.prix }}</td>
                 <td class="petit">{{ ctn.quantite }}</td>
-                <td class="petit"> </td>
+                <td > </td>
                 {% endfor %}
             <tr>
                 <td></td>
                 <td></td>
                 <th> Total commande </th>
-                <td> {{ Commande.montant }}</td>
+                <td> {{ Commande.montant }} euros </td>
             </tr>
         </tbody>
     </table>
