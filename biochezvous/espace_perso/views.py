@@ -119,9 +119,7 @@ def inscription_user(request):
             )
             email.attach_alternative(message, "text/html")
             email.send()
-            return HttpResponse('Veuillez confirmer votre adresse mail pour finaliser votre inscription')
-            #TODO: changer la redirection
-            return HttpResponseRedirect('/connexion')
+            return redirect ('confirmation')
     else:
         form = FormInscriptionUser()
     #TODO : un template propre à chaque type d'inscription
@@ -137,8 +135,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        redirect('/connexion')
-        return HttpResponse("Merci d'avoir confirmer votre adresse email. Maintenant vous pouvez vous connecter à votre compte.")
+        return redirect('/connexion')
     else:
         print(token)
         return HttpResponse("Le lien d'activation n'est pas valide!")
@@ -584,3 +581,7 @@ def terminerCommande(request, commande_id):
     com.save()
     return redirect('commandeProducteur')
 
+
+def confirmation(request):
+    template = loader.get_template('espace_perso/confirmation.html')
+    return HttpResponse(template.render({},request))
