@@ -18,6 +18,7 @@ urlpatterns = [
     path('profil',                          views.espacePerso,          name='espacePerso'),
     path('profil/edit',                     views.informationPerso,     name='informationPerso'),
     path('profil/adresse/edit',             views.ajout_prod_adresse,   name='ajout_prod_adresse'),
+    path('profil/mesPreferences',             views.preferences,   name='mesPreferences'),
     #Producteur
     path('profil/producteur/commandes',     views.commandeProducteur,   name='commandeProducteur'),
     path('producteur/terminerCommander/<int:commande_id>',views.terminerCommande,name='terminerCommande'),
@@ -37,7 +38,6 @@ urlpatterns = [
     path('personne/<int:id>/supprimer',     views.deleteOneUser,     name='deleteOneUser'),
     path('aide',                    views.aide,                 name='aide'),
     #Factures
-    path('test',                    views.index,                name="test"),
     path('pdf_view/<int:id>',       views.PDF,                  name="pdf_view"),
     
 ]

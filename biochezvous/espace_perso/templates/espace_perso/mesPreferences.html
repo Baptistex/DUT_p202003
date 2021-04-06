@@ -1,0 +1,50 @@
+{% extends "produit/base.html"%}
+{% load static %}
+{% load math_filters %}
+
+{% block title %} Mes préférences {% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+
+  <div class="row">
+    <div class="col">
+      <div id="espacePersoTitle" class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Mes produits favoris </h2>
+      </div>
+    </div>
+  </div>
+  
+<div class="row">
+  <div class="col">
+    <table class="table cmd">
+      <thead>
+        <tr>
+          <th scope="col">Produit</th>
+          <th scope="col">Prix</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+        {% for p in pref %}
+  
+        <tr>
+  
+          <td>
+            <p> {{ p.produit.nom }}</p>
+            <p> {{ p.produit.description }}</p>
+          </td>
+          <td>{{ p.produit.prix }}</td>
+  
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+  
+
+  {% endblock %}
