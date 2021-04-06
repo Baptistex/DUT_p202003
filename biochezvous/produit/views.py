@@ -140,8 +140,7 @@ def produit(request, idProduit):
                 else:
                     p = Panier(personne=request.user, produit=produit, quantite=request.POST['quantite'])
                     p.save()
-                reste = int(produit.quantite) - int(request.POST['quantite'])
-                Produit.objects.filter(produit_id = idProduit).update(quantite = reste)
+                
                 return redirect('panier')
             else: 
                 return redirect('connexion')
@@ -355,7 +354,7 @@ def ajout_categorie(request):
         if form.is_valid():
             instance = form.save()
             instance.save()
-            return HttpResponseRedirect('/accueilEspaceProducteur')
+            return redirect('espacePerso')
     else:
         form = CategorieForm()
     return render(request, 'produit/categorie.html', {'form': form})
@@ -370,9 +369,9 @@ def ajout_preference(request, produit):
         else:            
             pref.save()
     else:
-        return redirect('/connexion')
+        return redirect('connexion')
 
-    return HttpResponseRedirect('/catalogue')
+    return redirect('catalogue')
 
 def addType(request):
     if request.method == 'POST':

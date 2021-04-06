@@ -6,7 +6,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from espace_admin.models import Demandes
-from .models import Utilisateur,Personne, Producteur, Adresse
+from .models import Utilisateur,Personne, Producteur, Adresse, Preference
 from espace_perso.forms import FormInscriptionProd, FormAide
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
@@ -70,7 +70,7 @@ def wip_inscription(request):
             instance = form.save()
             instance.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/connexion')
+            return redirect('connexion')
     else:
         form = FormInscription()
     return render(request, 'espace_perso/wip_inscription.html', {'form': form})
@@ -135,7 +135,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return redirect('/connexion')
+        return redirect('connexion')
     else:
         print(token)
         return HttpResponse("Le lien d'activation n'est pas valide!")
@@ -147,7 +147,7 @@ def inscription_prod(request):
         if form.is_valid():
             form.save()
             #TODO: changer la redirection
-            return HttpResponseRedirect('/connexion')
+            return redirect('connexion')
     else:
         form = FormInscriptionProd()
     return render(request, 'espace_perso/inscription_prod.html', {'form' : form})
@@ -289,13 +289,21 @@ def informationPerso(request):
         context = {'formG':form}
         return render(request, 'espace_perso/informationPerso.html', context)
 
+def preferences(request):
+    context = {}
+    personne_id = request.user.personne_id
+    preferences = Preference.objects.filter(personne_id=personne_id)
+    context['pref'] = preferences
+    return render(request, 'espace_perso/mesPreferences.html', context)
+    
+
 
 def aide(request):
     if request.method == "POST":
         form = FormAide(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/aide')
+            return redirect('aide')
     else:
         form = FormAide()
     return render(request,'espace_perso/demande_aide.html', {'form':form})
@@ -327,7 +335,7 @@ def espacePersoProd(request):
         form = FormDataModifProd(request.POST, request.FILES, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/profil/adresse/edit')
+            return redirect('ajout_prod_adresse')
     return render(request, 'espace_perso/espacePersoProd.html', {'form': form})
 
 
@@ -400,9 +408,6 @@ def suppressionPanier(request, id):
     personne_id = request.user.personne_id
     panier = Panier.objects.filter(personne_id=personne_id)  
     produitDuPanier = panier.get(produit_id=id)
-    produit = Produit.objects.get(produit_id=id)
-    produit.quantite = produit.quantite + produitDuPanier.quantite
-    produit.save()
     produitDuPanier.delete()
     return redirect('panier')
 
@@ -475,6 +480,9 @@ def commander(request):
         produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
         for prod in produits:
             montantP = montantP + (prod.produit.prix * prod.quantite)
+            p = prod.produit
+            reste = int(p.quantite) - int(prod.quantite)
+            Produit.objects.filter(produit_id = p.pk).update(quantite = reste)
         c = Commande(date=datetime.now(), statut=0, montant=montantP,personne_id=personne_id)
         c.save()
         produits = Panier.objects.all().filter(produit_id__in=u.produit_set.all())
@@ -510,7 +518,8 @@ def commanderEncore(request, id):
 
     send_mail_pay(request)
     return redirect('listeCommande')
-    
+
+
 
 
 def render_to_pdf(template_src, context_dict={}):
@@ -532,29 +541,6 @@ def PDF(request, id):
     pdf = render_to_pdf('espace_perso/pdf_template.html', context)
 
     return HttpResponse(pdf, content_type='application/pdf')
-
-#Opens up page as PDF
-class ViewPDF(View):
-
-	def get(self, request, *args, **kwargs):
-		pdf = render_to_pdf('espace_perso/pdf_template.html', commande)
-		return HttpResponse(pdf, content_type='application/pdf')
-
-#Automaticly downloads to PDF file
-class DownloadPDF(View):
-	def get(self, request, *args, **kwargs):
-		
-		pdf = render_to_pdf('espace_perso/pdf_template.html', data)
-
-		response = HttpResponse(pdf, content_type='application/pdf')
-		filename = "facture.pdf"
-		content = "attachment; filename='\%s\'" %(filename)
-		response['Content-Disposition'] = content
-		return response
-
-def index(request):
-	context = {}
-	return render(request, 'espace_perso/test.html', context)
 
 
 def commandeProducteur(request):
