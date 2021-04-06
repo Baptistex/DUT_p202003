@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col formulaire">
         <div class="form-group">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data" id="formUpload">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button class="btn-formulaire" type="submit">créer utilisateur</button> 
